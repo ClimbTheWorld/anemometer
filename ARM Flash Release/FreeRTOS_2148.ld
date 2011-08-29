@@ -34,10 +34,12 @@ SECTIONS
   .vectors_ram __SRAM_segment_start__ (NOLOAD) : AT(__SRAM_segment_start__)
   {
     __vectors_ram_start__ = .;
-    *(.vectors_ram)
+    *(.vectors_ram .vectors_ram.*)
     . = MAX(__vectors_ram_start__ + 0x3C , .);
   }
   __vectors_ram_end__ = __vectors_ram_start__ + SIZEOF(.vectors_ram);
+
+  __vectors_ram_load_end__ = __vectors_ram_end__;
 
   . = ASSERT(__vectors_ram_end__ >= __SRAM_segment_start__ && __vectors_ram_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .vectors_ram is too large to fit in SRAM memory segment");
 
@@ -49,6 +51,8 @@ SECTIONS
   }
   __vectors_end__ = __vectors_start__ + SIZEOF(.vectors);
 
+  __vectors_load_end__ = __vectors_end__;
+
   . = ASSERT(__vectors_end__ >= __FLASH_segment_start__ && __vectors_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .vectors is too large to fit in FLASH memory segment");
 
   __init_load_start__ = ALIGN(__vectors_end__ , 4);
@@ -58,6 +62,8 @@ SECTIONS
     *(.init .init.*)
   }
   __init_end__ = __init_start__ + SIZEOF(.init);
+
+  __init_load_end__ = __init_end__;
 
   . = ASSERT(__init_end__ >= __FLASH_segment_start__ && __init_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .init is too large to fit in FLASH memory segment");
 
@@ -69,6 +75,8 @@ SECTIONS
   }
   __text_end__ = __text_start__ + SIZEOF(.text);
 
+  __text_load_end__ = __text_end__;
+
   . = ASSERT(__text_end__ >= __FLASH_segment_start__ && __text_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .text is too large to fit in FLASH memory segment");
 
   __dtors_load_start__ = ALIGN(__text_end__ , 4);
@@ -78,6 +86,8 @@ SECTIONS
     KEEP (*(SORT(.dtors.*))) KEEP (*(.dtors))
   }
   __dtors_end__ = __dtors_start__ + SIZEOF(.dtors);
+
+  __dtors_load_end__ = __dtors_end__;
 
   . = ASSERT(__dtors_end__ >= __FLASH_segment_start__ && __dtors_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .dtors is too large to fit in FLASH memory segment");
 
@@ -89,6 +99,8 @@ SECTIONS
   }
   __ctors_end__ = __ctors_start__ + SIZEOF(.ctors);
 
+  __ctors_load_end__ = __ctors_end__;
+
   . = ASSERT(__ctors_end__ >= __FLASH_segment_start__ && __ctors_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .ctors is too large to fit in FLASH memory segment");
 
   __rodata_load_start__ = ALIGN(__ctors_end__ , 4);
@@ -98,6 +110,8 @@ SECTIONS
     *(.rodata .rodata.* .gnu.linkonce.r.*)
   }
   __rodata_end__ = __rodata_start__ + SIZEOF(.rodata);
+
+  __rodata_load_end__ = __rodata_end__;
 
   . = ASSERT(__rodata_end__ >= __FLASH_segment_start__ && __rodata_end__ <= (__FLASH_segment_start__ + 0x00080000) , "error: .rodata is too large to fit in FLASH memory segment");
 
@@ -120,6 +134,8 @@ SECTIONS
   }
   __fast_run_end__ = __fast_run_start__ + SIZEOF(.fast_run);
 
+  __fast_run_load_end__ = __fast_run_end__;
+
   . = ASSERT(__fast_run_end__ >= __SRAM_segment_start__ && __fast_run_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .fast_run is too large to fit in SRAM memory segment");
 
   __data_load_start__ = ALIGN(__fast_load_start__ + SIZEOF(.fast) , 4);
@@ -132,8 +148,6 @@ SECTIONS
 
   __data_load_end__ = __data_load_start__ + SIZEOF(.data);
 
-  __FLASH_segment_used_end__ = ALIGN(__fast_load_start__ + SIZEOF(.fast) , 4) + SIZEOF(.data);
-
   . = ASSERT((__data_load_start__ + SIZEOF(.data)) >= __FLASH_segment_start__ && (__data_load_start__ + SIZEOF(.data)) <= (__FLASH_segment_start__ + 0x00080000) , "error: .data is too large to fit in FLASH memory segment");
 
   .data_run ALIGN(__fast_run_end__ , 4) (NOLOAD) :
@@ -142,6 +156,8 @@ SECTIONS
     . = MAX(__data_run_start__ + SIZEOF(.data), .);
   }
   __data_run_end__ = __data_run_start__ + SIZEOF(.data_run);
+
+  __data_run_load_end__ = __data_run_end__;
 
   . = ASSERT(__data_run_end__ >= __SRAM_segment_start__ && __data_run_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .data_run is too large to fit in SRAM memory segment");
 
@@ -153,6 +169,8 @@ SECTIONS
   }
   __bss_end__ = __bss_start__ + SIZEOF(.bss);
 
+  __bss_load_end__ = __bss_end__;
+
   . = ASSERT(__bss_end__ >= __SRAM_segment_start__ && __bss_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .bss is too large to fit in SRAM memory segment");
 
   __non_init_load_start__ = ALIGN(__bss_end__ , 4);
@@ -163,16 +181,20 @@ SECTIONS
   }
   __non_init_end__ = __non_init_start__ + SIZEOF(.non_init);
 
+  __non_init_load_end__ = __non_init_end__;
+
   . = ASSERT(__non_init_end__ >= __SRAM_segment_start__ && __non_init_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .non_init is too large to fit in SRAM memory segment");
 
   __heap_load_start__ = ALIGN(__non_init_end__ , 4);
   .heap ALIGN(__non_init_end__ , 4) (NOLOAD) : AT(ALIGN(__non_init_end__ , 4))
   {
     __heap_start__ = .;
-    *(.heap)
+    *(.heap .heap.*)
     . = ALIGN(MAX(__heap_start__ + __HEAPSIZE__ , .), 4);
   }
   __heap_end__ = __heap_start__ + SIZEOF(.heap);
+
+  __heap_load_end__ = __heap_end__;
 
   . = ASSERT(__heap_end__ >= __SRAM_segment_start__ && __heap_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .heap is too large to fit in SRAM memory segment");
 
@@ -180,10 +202,12 @@ SECTIONS
   .stack ALIGN(__heap_end__ , 4) (NOLOAD) : AT(ALIGN(__heap_end__ , 4))
   {
     __stack_start__ = .;
-    *(.stack)
+    *(.stack .stack.*)
     . = ALIGN(MAX(__stack_start__ + __STACKSIZE__ , .), 4);
   }
   __stack_end__ = __stack_start__ + SIZEOF(.stack);
+
+  __stack_load_end__ = __stack_end__;
 
   . = ASSERT(__stack_end__ >= __SRAM_segment_start__ && __stack_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack is too large to fit in SRAM memory segment");
 
@@ -191,10 +215,12 @@ SECTIONS
   .stack_irq ALIGN(__stack_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_end__ , 4))
   {
     __stack_irq_start__ = .;
-    *(.stack_irq)
+    *(.stack_irq .stack_irq.*)
     . = ALIGN(MAX(__stack_irq_start__ + __STACKSIZE_IRQ__ , .), 4);
   }
   __stack_irq_end__ = __stack_irq_start__ + SIZEOF(.stack_irq);
+
+  __stack_irq_load_end__ = __stack_irq_end__;
 
   . = ASSERT(__stack_irq_end__ >= __SRAM_segment_start__ && __stack_irq_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack_irq is too large to fit in SRAM memory segment");
 
@@ -202,10 +228,12 @@ SECTIONS
   .stack_fiq ALIGN(__stack_irq_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_irq_end__ , 4))
   {
     __stack_fiq_start__ = .;
-    *(.stack_fiq)
+    *(.stack_fiq .stack_fiq.*)
     . = ALIGN(MAX(__stack_fiq_start__ + __STACKSIZE_FIQ__ , .), 4);
   }
   __stack_fiq_end__ = __stack_fiq_start__ + SIZEOF(.stack_fiq);
+
+  __stack_fiq_load_end__ = __stack_fiq_end__;
 
   . = ASSERT(__stack_fiq_end__ >= __SRAM_segment_start__ && __stack_fiq_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack_fiq is too large to fit in SRAM memory segment");
 
@@ -213,10 +241,12 @@ SECTIONS
   .stack_svc ALIGN(__stack_fiq_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_fiq_end__ , 4))
   {
     __stack_svc_start__ = .;
-    *(.stack_svc)
+    *(.stack_svc .stack_svc.*)
     . = ALIGN(MAX(__stack_svc_start__ + __STACKSIZE_SVC__ , .), 4);
   }
   __stack_svc_end__ = __stack_svc_start__ + SIZEOF(.stack_svc);
+
+  __stack_svc_load_end__ = __stack_svc_end__;
 
   . = ASSERT(__stack_svc_end__ >= __SRAM_segment_start__ && __stack_svc_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack_svc is too large to fit in SRAM memory segment");
 
@@ -224,10 +254,12 @@ SECTIONS
   .stack_abt ALIGN(__stack_svc_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_svc_end__ , 4))
   {
     __stack_abt_start__ = .;
-    *(.stack_abt)
+    *(.stack_abt .stack_abt.*)
     . = ALIGN(MAX(__stack_abt_start__ + __STACKSIZE_ABT__ , .), 4);
   }
   __stack_abt_end__ = __stack_abt_start__ + SIZEOF(.stack_abt);
+
+  __stack_abt_load_end__ = __stack_abt_end__;
 
   . = ASSERT(__stack_abt_end__ >= __SRAM_segment_start__ && __stack_abt_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack_abt is too large to fit in SRAM memory segment");
 
@@ -235,14 +267,53 @@ SECTIONS
   .stack_und ALIGN(__stack_abt_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_abt_end__ , 4))
   {
     __stack_und_start__ = .;
-    *(.stack_und)
+    *(.stack_und .stack_und.*)
     . = ALIGN(MAX(__stack_und_start__ + __STACKSIZE_UND__ , .), 4);
   }
   __stack_und_end__ = __stack_und_start__ + SIZEOF(.stack_und);
 
-  __SRAM_segment_used_end__ = ALIGN(__stack_abt_end__ , 4) + SIZEOF(.stack_und);
+  __stack_und_load_end__ = __stack_und_end__;
 
   . = ASSERT(__stack_und_end__ >= __SRAM_segment_start__ && __stack_und_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .stack_und is too large to fit in SRAM memory segment");
+
+  __tbss_load_start__ = ALIGN(__stack_und_end__ , 4);
+  .tbss ALIGN(__stack_und_end__ , 4) (NOLOAD) : AT(ALIGN(__stack_und_end__ , 4))
+  {
+    __tbss_start__ = .;
+    *(.tbss .tbss.*)
+  }
+  __tbss_end__ = __tbss_start__ + SIZEOF(.tbss);
+
+  __tbss_load_end__ = __tbss_end__;
+
+  . = ASSERT(__tbss_end__ >= __SRAM_segment_start__ && __tbss_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .tbss is too large to fit in SRAM memory segment");
+
+  __tdata_load_start__ = ALIGN(__data_load_start__ + SIZEOF(.data) , 4);
+  .tdata ALIGN(__tbss_end__ , 4) : AT(ALIGN(__data_load_start__ + SIZEOF(.data) , 4))
+  {
+    __tdata_start__ = .;
+    *(.tdata .tdata.*)
+  }
+  __tdata_end__ = __tdata_start__ + SIZEOF(.tdata);
+
+  __tdata_load_end__ = __tdata_load_start__ + SIZEOF(.tdata);
+
+  __FLASH_segment_used_end__ = ALIGN(__data_load_start__ + SIZEOF(.data) , 4) + SIZEOF(.tdata);
+
+  . = ASSERT((__tdata_load_start__ + SIZEOF(.tdata)) >= __FLASH_segment_start__ && (__tdata_load_start__ + SIZEOF(.tdata)) <= (__FLASH_segment_start__ + 0x00080000) , "error: .tdata is too large to fit in FLASH memory segment");
+
+  .tdata_run ALIGN(__tbss_end__ , 4) (NOLOAD) :
+  {
+    __tdata_run_start__ = .;
+    . = MAX(__tdata_run_start__ + SIZEOF(.tdata), .);
+  }
+  __tdata_run_end__ = __tdata_run_start__ + SIZEOF(.tdata_run);
+
+  __tdata_run_load_end__ = __tdata_run_end__;
+
+  __SRAM_segment_used_end__ = ALIGN(__tbss_end__ , 4) + SIZEOF(.tdata_run);
+
+  . = ASSERT(__tdata_run_end__ >= __SRAM_segment_start__ && __tdata_run_end__ <= (__SRAM_segment_start__ + 0x00008000) , "error: .tdata_run is too large to fit in SRAM memory segment");
 
 }
 

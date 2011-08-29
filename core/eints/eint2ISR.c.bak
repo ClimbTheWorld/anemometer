@@ -14,7 +14,6 @@
 #endif
 
 #include "eint2ISR.h"
-#include "meas_sm.h"
 
 //
 //  
@@ -31,17 +30,6 @@ static void eint2ISR_Handler (void)
 #ifdef CFG_UIP
   portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 #endif
-
-  #if CFG_LCD
-  vTaskDelay(5); // 5 ms
-  if(PCB_PINSEL1_P016_GPIO == 0) {
-    // go onwards
-    set_updateLCD();
-    incrementScreen();
-    xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
-  }
-  #endif
-
 
   SCB_EXTINT |= SCB_EXTINT_EINT2;
 

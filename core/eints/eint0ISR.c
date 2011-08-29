@@ -9,25 +9,13 @@
 #include "FreeRTOS.h"
 
 #include "eint0ISR.h"
-#include "meas_sm.h"
 
 //
 //
 //
 static void eint0ISR_Handler (void)
 {
-  #if CFG_LCD
-  if(PCB_PINSEL1_P016_GPIO == 0) {
-    // go onwards
-    set_updateLCD();
-    incrementScreen();
-    
-    xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
-  }
-  #endif
-  
   SCB_EXTINT |= SCB_EXTINT_EINT0;
-  
   // determine if Pumpenstellsignal interrupted; read IOPIN0.1 (um10139, Rev. 01 — 15 August 2005, lpp.25)
   /**
   if(P0.1-EINT0-Flag && (GPIO0_IOPIN == 0)) { // hat ausgeschaltet

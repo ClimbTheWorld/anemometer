@@ -21,7 +21,7 @@
 
 // Default values
 static portBASE_TYPE ledsMinimumDelay = 5;    // Minimum delay in ticks when toggling LED state (1 tick = 10mS)
-static portBASE_TYPE ledsDelayInTicks = 1000;  // Default delay in ticks when toggling LED state
+static portBASE_TYPE ledsDelayInTicks = 100;  // Default delay in ticks when toggling LED state
 
 // ===============
 // Private Methods

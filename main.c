@@ -11,7 +11,6 @@
 #include <time.h>
 
 #include "FreeRTOS.h"
-#include "semphr.h"
 #include "task.h"
 #include "monitor/monitor.h"
 #include "core/cpu/cpu.h"
@@ -138,31 +137,27 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
     #if defined CFG_LED && CFG_LED_RUNLEDONSTARTUP == 1
     // Start LED flasher (for testing purposes)
-    ledsTaskStart();
+    //ledsTaskStart();
+    #endif
+
+    #ifdef CFG_DATALOGGER
+//    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
+    #if 1
+    //measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
+    //measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
+    #endif
     #endif
 
     #ifdef CFG_LCD
+    #define LCDTEST
+    #ifdef LCDTEST
     /** making the contrast of the display evaluated best round 2.6V */
     PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AOUT;
     // vDAC = VALUE / 1024 * vREF -> VALUE = 2.6V * 1024 / 3.3V = 806.8
     DAC_CR = (DAC_CR & ~DAC_CR_VALUEMASK) | ((806 << DAC_CR_VALUESHIFT) & DAC_CR_VALUEMASK);
-    
-    eint0Init();
+    #endif
 
     lcdTaskStart();
-    vTaskPrioritySet(taskHandles[TASKHANDLE_LCD], (tskIDLE_PRIORITY + 3));
-    #endif
-
-    #ifdef CFG_DATALOGGER
-    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
-    #if 1
-    #ifdef testWithoutADC || testAllFunctions
-    #else
-    measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
-    vTaskSuspend(taskHandles[TASKHANDLE_MEASTASK]);
-    #endif
-    measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
-    #endif
     #endif
 
     // Start monitor task
@@ -172,8 +167,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     //xTaskCreate (vPotiTask,  (const signed portCHAR * const) "POTI", configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1), &taskHandles [TASKHANDLE_POTI]);
 
     #if CFG_PLAY_STARTUP
-    //timer1Init();
-    //beepMHALL();
+    beepMHALL();
     //beepSMOTW();
     //beepA_TEAM_THEME();
     #endif
@@ -242,7 +236,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 /*! 
     The application entry point.  Initialise the CPU, open the monitor
     'port', create the startup task and begin the task scheduler.
- */
+*/
 /**************************************************************************/
 int main(void)
 {

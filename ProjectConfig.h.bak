@@ -17,8 +17,6 @@
 #ifndef PROJECT_CONFIG_H
 #define PROJECT_CONFIG_H
 
-#include "semphr.h"
-
 // Included Peripherals
 // ====================
 // In order to make the code more portable, you can disable
@@ -36,7 +34,7 @@
 // any risk of errors
 
 #define CFG_LED 1
-#define CFG_LCD 1
+//#define CFG_LCD 1
 //#define CFG_TCS3414
 //#define CFG_TPS851
 
@@ -64,15 +62,9 @@
 #define CFG_DATALOGGER
 #define CFG_LOGDATA
 
-#define testAllFunctions
-#define testWithoutADC
-
-/** max. time between flowcount impulses that they are valid to count. If the time is longer, it must be that the pump just started. */
-#define flowCountMaxDeltaTimeInSec   40
-
 /* log summary */
 #define logCDaySummary
-#define logAllTimeSummary
+//#define logAllTimeSummary
 
 #ifndef logCDaySummary
   #undef logAllTimeSummary
@@ -99,10 +91,9 @@
       -P0.1      RXD0      PWM3        EINT0        (NOT yet used, perhabs for extern multiple ADC)
       -P0.2      SCL0      CAP0.0      GPIO*        LCD Backlight { L:off; H:on }
       -P0.3      SDA0      MAT0.0      EINT1*       Pumpenstellsignal detektieren
+
       -P0.8      TXD1      PWM4        AD1.1        (NOT yet used, perhabs UART1 needed for future Ethernet/WLAN/XBee/Bluetooth use)
       -P0.9      RXD1      PWM6        EINT3        (NOT yet used, perhabs UART1 needed for future Ethernet/XBee/Bluetooth use)
-      -P0.15     RI(UART1) EINT2*      AD1.5        Button 1: change to next screen (LCD)
-      -P0.16     EINT0*    Match0.2T0  Capture0.2T0 Button 2: change to last screen (LCD)
       -P0.21     AD1.6*    CAP13       PWM          Panel (_SLOG_ENTRY_ITEM.val_adc1)
       -P0.22     AD1.7*    CAP0.0      MAT0.0       Rücklauf (_SLOG_ENTRY_ITEM.val_adc2)
       -P0.25     AD0.4     AOUT                     contrast of display
@@ -134,7 +125,7 @@
   #define flowrateMeterImpulsVolume 2.5f
 
   /*<! standard value for Price of a Wh   */
-  #define WsPriceRappenStandardValue 0.2f
+  #define WsPriceRappenStandardValue 0.20f
   
   /*<! Temperatures/AD values to log 
        - Temperaturen: -Panel, Rücklauf, Boiler oben, Boiler unten
@@ -204,7 +195,7 @@
    */
   
   // if a allTimeSummary shall be generated
-  #define logAllTimeSummary
+  //#define logAllTimeSummary
 
 
   enum _LOG_ITEM_STATE {
@@ -216,7 +207,6 @@
     SAVEVALUE
   } LOG_ITEM_STATE;
 
-  
   
 //  #ifdef LOG_FLOWRATE
 //  #endif
@@ -307,8 +297,8 @@
     defined at a time!  By default both operate at 9600 Baud 8N1.
 */
 /**************************************************************************/
-//#define CFG_MONITOR_UART0                              // Use UART0 for the monitor console
-#define CFG_MONITOR_USBSER                                // Use USB Serial for the monitor console
+#define CFG_MONITOR_UART0                              // Use UART0 for the monitor console
+//#define CFG_MONITOR_USBSER                                // Use USB Serial for the monitor console
 #define CFG_MONITOR_PROMPT            "Command > "        // The 'command prompt' that will be displayed in the monitor
 #define CFG_MONITOR_ALLOWRESET        1                   // Whether the user is allowed to issue the reset command
 #define CFG_MONITOR_ALLOWI2C          1                   // Whether the user is allowed to send generic I2C commands
@@ -379,8 +369,6 @@ typedef enum
 taskHandle_e;
 
 void * taskHandles [TASKHANDLE_LAST];
-
-
 
 #endif
 
