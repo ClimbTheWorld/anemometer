@@ -1,0 +1,39 @@
+/**
+ * \addtogroup logging
+ * @{
+ *
+ * \author Lukas Kempf
+ * \brief Flowrate Sensor
+ *
+ *
+ */
+
+//*****************************************************************************
+//
+// flowrate_sensor.h - Flowrate Sensor
+//
+//*****************************************************************************
+
+#ifndef FLOWRATE_SENSOR_H_
+#define FLOWRATE_SENSOR_H_
+
+/* std lib includes */
+#include <stdio.h>
+
+/* FreeRTOS includes. */
+
+
+#define enFlowrateInterrupt()  (PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_MASK) | PCB_PINSEL1_P030_EINT3)
+#define disFlowrateIntuerrupt() (PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_MASK) | PCB_PINSEL1_P030_GPIO)
+
+/* function declaration */
+
+/* to calculate arithmetic median of power */
+static volatile float flowCount = 0;
+float get_FlowCount(void);
+float incr_FlowCount(void);
+float clr_FlowCount(void);
+
+
+
+#endif
