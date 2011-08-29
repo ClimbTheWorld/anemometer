@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <math.h>
 #include "meas_task.h"
-#include "meas_sm.h"
 
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
@@ -58,7 +57,7 @@ enum _LOG_ITEM_STATE meas_Temp(char meas_op_key) {
     case OFF:       { /* WILL NOT BE USED */ 
                       break; }
     case INIT:      { /* init P0.21, ADC1.6 */ 
-                      meas_op_item[meas_op_key].state = IDLE; /*  going to wait */
+//                    meas_op_item[meas_op_key].state = IDLE; /*  going to wait */
                       break; }
     case IDLE:      { /* measure and calculate from int to voltage */ 
                       meas_op_item[meas_op_key].state = START; /*  going to wait */
@@ -172,8 +171,8 @@ void doMeasure(void) {
   enum _LOG_ITEM_STATE ret_state = START;
   for(i=0; i< MEAS_OP_ITEMS; i++) {
     ret_state = meas_op_item[i].pt2func(i);
-      //      if(ret_state != SAVEVALUE)/* not every meas_op was successful (eventually there is some exception handling todo) */
-      //        printf ("not every meas_op was successful");
+//      if(ret_state != SAVEVALUE)/* not every meas_op was successful (eventually there is some exception handling todo) */
+//        printf ("not every meas_op was successful");
     meas_op_item[i].state = IDLE;
   }
   set_valuesReceived();
@@ -196,7 +195,8 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
 
   // The code within the for loop is your actual
   // task that will continously execute
-  
+  meas_task_init();
+
   for (;;)
   {
     if(valuesReceived() == -1); // wait - do nothing

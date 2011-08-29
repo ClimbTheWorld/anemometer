@@ -13,7 +13,7 @@
 #include "meas_sm.h"
 
 
-//int count=0;
+int count=0;
 //
 //
 //
@@ -36,6 +36,12 @@ static void eint3ISR_Handler (void)
   }
   SCB_EXTINT |= SCB_EXTINT_EINT3; //LUK
 
+  // Do something
+  if(count == 5) {
+    GPIO0_FIOPIN ^= (1<<11); // toggle led2
+    debug_printf("zalööö");
+  }
+  count = (count+1)%100;
   VIC_VectAddr = (unsigned portLONG) 0;
 }
 

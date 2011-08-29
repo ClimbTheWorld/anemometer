@@ -28,7 +28,6 @@
 #include "lpc214x.h"
 #include <string.h>      // Stingfunktionen
 #include "lcd204_4.h"
-#include "core/eints/eint2.h"
 
 // ********************************************************************
 // Verzögerungsschleife für kurze Zeit
@@ -209,6 +208,7 @@ void clear_lcd(void) {
 void init_lcd(void) {
   //LUK 2011-05-11 delay(5); // ca. 50ms Wartezeit nach dem Einschalten
   delay(5);
+  //vTaskDelay(50 / portTICK_RATE_MS);
   LCD_RES_CLR(); //LUK 2011-04-28
   delay(1); //LUK 2011-04-28
   LCD_RES_SET();
@@ -250,7 +250,8 @@ void init_system (void) {
 //  GPIO1_FIOMASK2 &= ~(1<<0);
   GPIO1_FIODIR2 |= 0xFF; // P1.16..P1.23 as output
   GPIO1_FIOPIN2 |= 0xFF;
-  vTaskDelay(5);
+  //LUK 2011-05-11 delay(255);
+  vTaskDelay(900 / portTICK_RATE_MS); // eigentlich müssten es, so war es original, 2.5s gewartet werden, funktioniert jedoch. LUK 2011-03-11
   GPIO1_FIOPIN2 |= 0x00;
   //GPIO1_FIOSET2 |= (1<<0);
   //delay(255);
@@ -441,26 +442,24 @@ static portTASK_FUNCTION(vLCDTask, pvParameters __attribute__((unused)))
 
   // ToDo: ...
   init_system();
+  vTaskDelay(10);
   init_lcd();
   LCD_BLIGHT_ON();
+
+  vTaskDelay( 900 / portTICK_RATE_MS);  // eigentlich müssten es, so war es original, 2.5s gewartet werden, funktioniert jedoch. LUK 2011-03-11
+  vTaskDelay( 900 / portTICK_RATE_MS);  // eigentlich müssten es, so war es original, 2.5s gewartet werden, funktioniert jedoch. LUK 2011-03-11
+  vTaskDelay( 900 / portTICK_RATE_MS);  // eigentlich müssten es, so war es original, 2.5s gewartet werden, funktioniert jedoch. LUK 2011-03-11
+
   // The code within the for loop is your actual
   // task that will continously execute
-  
-  // write welcome
-  printf_lcd(0,0,"Salute!             ",1); // Einschaltmeldung  
-  printf_lcd(0,1,"z System started    ",1);  
-  printf_lcd(0,2,"ä Momänt            ",1);  
-  printf_lcd(0,3,"...zalü             ",1);  
-
-  // step down priority
-  vTaskPrioritySet(taskHandles[TASKHANDLE_LCD], (tskIDLE_PRIORITY + 1));
-
   for (;;)  {
-    if(get_updateLCD()) {
-      LCD_RS_SET();
+    //if(get_updateLCD())
+    LCD_RS_SET();
       feedLCD();
-    }
-    vTaskSuspend(NULL);
+   
+    // vTaskDelay will cause the task to be delayed for 
+    // a specified number of ticks
+    //vTaskDelay(100);  // Wait 100 ticks or 1 second
   }
 }
 
@@ -475,9 +474,9 @@ signed portBASE_TYPE lcdTaskStart (void)
   return xTaskCreate (
     vLCDTask,
     (const signed portCHAR * const) "LCD Task",
-    (unsigned portSHORT) 1024,//configMINIMAL_STACK_SIZE,
+    (unsigned portSHORT) 376, //configMINIMAL_STACK_SIZE,
     NULL,
-    (tskIDLE_PRIORITY + 3),
+    (tskIDLE_PRIORITY + 1),
     &taskHandles [TASKHANDLE_LCD]);
 }
 

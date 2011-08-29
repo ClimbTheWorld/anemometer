@@ -9,42 +9,24 @@
 #include "FreeRTOS.h"
 
 #include "eint0ISR.h"
-#include "meas_sm.h"
 
 //
 //
 //
 static void eint0ISR_Handler (void)
 {
-  #if CFG_LCD
-  if(PCB_PINSEL1_P016_GPIO == 0) {
-    // go onwards
-    set_updateLCD();
-    incrementScreen();
-    xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
-  }
-  #endif
-  
   SCB_EXTINT |= SCB_EXTINT_EINT0;
-  
   // determine if Pumpenstellsignal interrupted; read IOPIN0.1 (um10139, Rev. 01 — 15 August 2005, lpp.25)
   /**
   if(P0.1-EINT0-Flag && (GPIO0_IOPIN == 0)) { // hat ausgeschaltet
     disFlowrateInterrupt();
-    updateMeasure_timestamp();
-
-    calc volume from flowCount
-
-    update slog; write2SD
-    update cdaylog that it switched off
+    update slog that it switched off
   }
   else if(P0.1-EINT0-Flag && (GPIO0_IOPIN == 1)) // hat eingeschaltet
-    clearFlowCount();
-    enFlowrateSensor();
-    updateMeasure_timestamp();
-    
   */
-  
+  if( && (GPIO0_IOPIN & GPIO_IO_P1)) {
+    enFlowrateInterrupt();
+  }
 
   VIC_VectAddr = (unsigned portLONG) 0;
 }
