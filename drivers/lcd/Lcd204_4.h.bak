@@ -1,0 +1,213 @@
+/**
+ * \addtogroup lcd
+ * @{
+ *
+ * \author Lukas Kempf
+ * \brief Logging entries and message and queue2file handling
+ * 
+ * 
+ *
+ *
+ */
+
+//*****************************************************************************
+//
+// logging.h - Prototypes for handling log files
+//
+//*****************************************************************************
+
+#ifndef _LCDTASK_H_
+#define _LCDTASK_H_
+
+#include "FreeRTOS.h"
+#include "task.h"
+
+// Typendefinition
+//typedef unsigned char BYTE;
+//typedef unsigned int  word;
+//typedef unsigned long dword;
+
+/** TODO: LCD on wird später über GPIO und FET geschaltet. Bis dahin fix eingeschaltet. */
+
+#define LCD_BLIGHT_ON() (GPIO0_FIOSET  |= (1<<2))  // P0.2         
+#define LCD_E1_SET()    (GPIO1_FIOPIN2 |= (1<<5)) // P1.21
+#define LCD_RS_SET()    (GPIO1_FIOPIN2 |= (1<<7)) // P1.23
+#define LCD_RW_SET()    (GPIO1_FIOPIN2 |= (1<<6)) // P1.22
+#define LCD_RES_SET()   (GPIO1_FIOPIN2 |= (1<<0)) // P1.16 Reset 
+#define LCD_DATA7_SET() (GPIO1_FIOPIN2 |= (1<<1)) // P1.17
+#define LCD_DATA6_SET() (GPIO1_FIOPIN2 |= (1<<2)) // P1.18
+#define LCD_DATA5_SET() (GPIO1_FIOPIN2 |= (1<<3)) // P1.19
+#define LCD_DATA4_SET() (GPIO1_FIOPIN2 |= (1<<4)) // P1.20
+
+#define LCD_BLIGHT_OFF() (GPIO0_FIOCLR |= (1<<2))            
+#define LCD_E1_CLR()    (GPIO1_FIOPIN2 &= ~(1<<5)) 
+#define LCD_RS_CLR()    (GPIO1_FIOPIN2 &= ~(1<<7)) 
+#define LCD_RW_CLR()    (GPIO1_FIOPIN2 &= ~(1<<6)) 
+#define LCD_RES_CLR()   (GPIO1_FIOPIN2 &= ~(1<<0)) 
+#define LCD_DATA7_CLR() (GPIO1_FIOPIN2 &= ~(1<<1))
+#define LCD_DATA6_CLR() (GPIO1_FIOPIN2 &= ~(1<<2)) 
+#define LCD_DATA5_CLR() (GPIO1_FIOPIN2 &= ~(1<<3)) 
+#define LCD_DATA4_CLR() (GPIO1_FIOPIN2 &= ~(1<<4)) 
+
+#define LCD_ON
+#define LCD_E1()    (GPIO1_FIOPIN2 |= (1>>5)) 
+#define LCD_RS()    (GPIO1_FIOPIN2 |= (1>>7)) 
+#define LCD_RW()    (GPIO1_FIOPIN2 |= (1>>6)) 
+#define LCD_RES()   (GPIO1_FIOPIN2 |= (1>>0)) 
+#define LCD_DATA7() (GPIO1_FIOPIN2 & (1<<1))
+#define LCD_DATA6() (GPIO1_FIOPIN2 |= (1>>2)) 
+#define LCD_DATA5() (GPIO1_FIOPIN2 |= (1>>3)) 
+#define LCD_DATA4() (GPIO1_FIOPIN2 |= (1>>4)) 
+#define SPALTEN_MAX   20
+#define ZEILEN_MAX    4
+
+signed portBASE_TYPE lcdTaskStart (void);
+signed portBASE_TYPE lcdTaskStop (void);
+
+void init_screenpool(void);
+
+/** [12]: number of screens
+   *  [4]:  number of rows
+   *  [20]: Text-Template without variable values to be written on screen
+   */
+static const char reportScreen[12][4][20] = {
+   {"aktuelle Werte 1/2  ", // screen 0
+    "aktiv seit      :  h",
+    "Panel         %3d °C",
+    "Rücklauf      %3d °C"},
+  
+   {"aktuelle Werte 2/2  ", // 1
+    "Boiler oben   %3d °C",
+    "Boiler unten  %3d °C",
+    "Durchfluss    %2ds/l"},
+  
+   {"Tageswerte     1/2  ", // 2
+    "Laufzeit      %3d ' ",
+    "umges. Vol.   %3d l ",
+    "Energie       %3d Wh"},
+  
+   {"aktuelle Werte 2/2  ", // 3
+    "Leistung      %3d W ",
+    "Profit        %3d Fr",
+    "                    "},
+  
+   {"Monatswerte    1/3  ", // 4
+    "Messtage          d ",
+    "Laufzeit       h  m ",
+    "Energie           Wh"},
+  
+   {"Monatswerte    2/3  ", // 5
+    "Volumen           l ",
+    "Profit            Fr",
+    "Mw tPumpe/T       m "},
+  
+   {"Monatswerte    3/3  ", // 6
+    "Mw Volumen/T      l ",
+    "Mw Energie/T      Wh",
+    "Mw Profit/T       Fr"},
+  
+   {"kont. Log      1/3  ", // 7
+    "Messtage          d ",
+    "Laufzeit       h  m ",
+    "Energie           Wh"},
+  
+   {"kont. Log      2/3  ", // 8
+    "Volumen           l ",
+    "Profit            Fr",
+    "Mw tPumpe/T       m "},
+  
+   {"kont. Log      3/3  ", // 9
+    "Mw Volumen/T      l ",
+    "Mw Energie/T      Wh",
+    "Mw Profit/T       Fr"},
+
+   {"if no one else can  ", // Werbung / Startup 1/2 (knacksen aus Lautsprecher)
+    "help, and if you can",
+    "find them, may be   ",
+    "you can hire...     "},
+
+   {"        the         ", // Werbung / Startup 2/2 (opening title)
+    "                    ",
+    "       A-TEAM       ",
+    "                    "}
+
+
+
+    /*(Ten years ago / In 1972), a crack commando unit was sent to prison by a military court 
+    for a crime they didn't commit. These men promptly escaped from a maximum security stockade 
+    to the Los Angeles underground. Today, still wanted by the government, they survive as soldiers
+    of fortune. If you have a problem, if no one else can help, and if you can find them, maybe you can hire... 
+    The A-Team.*/
+  };
+
+//static const char AUSWERTUNGSBILDSCHIRME[40][20];
+
+
+/** [12]: number of screens
+   *  [4]:  number of rows
+   *  [2]:  [0]: at which column the first letter of the number is located
+   *        [1]: number format of float
+   */
+static const float reportScreenConfig[12][4][2] = {
+  { 0 ,0,    // screen 0
+   14, 5.2,
+   16, 3,
+   16, 3},
+  
+  { 0, 0,    // 1
+   16, 3,
+   16, 3,
+   16, 3,},
+
+  { 0, 0,    // 2
+   16, 3,
+   16, 3,
+   14, 5.1},
+
+  { 0, 0,    // 3
+   14, 5.1,
+   16, 3,
+    0, 0},
+
+  { 0, 0,    // 4
+   16, 3,
+   15, 4,
+   14, 5.1},
+
+  { 0, 0,    // 5
+   15, 4,
+   16, 3,
+   16, 3},
+
+  { 0, 0,    // 6
+   16, 3,
+   16, 3,
+   16, 3,},
+
+  { 0, 0,    // 7
+   16, 3,
+   16, 3,
+   14, 5.1,},
+
+  { 0, 0,    // 8
+   15, 4,
+   16, 3,
+   16, 3},
+
+  { 0, 0,    // 9
+   16, 3,
+   16, 3,
+   16, 3,},
+
+  { 0, 0,    // Werbung / Startup 1/2 (knacksen aus Lautsprecher)
+    0, 0,
+    0, 0,
+    0, 0,},
+  
+  { 0, 0,    // Werbung / Startup 2/2 (opening title)
+    0, 0,
+    0, 0,
+    0, 0,},
+};
+
+#endif

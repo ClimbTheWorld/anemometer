@@ -1,0 +1,61 @@
+/**
+ * \addtogroup logging
+ * @{
+ *
+ * \author Lukas Kempf
+ * \brief Flowrate Sensor
+ *
+ *
+ */
+
+//*****************************************************************************
+//
+// flowrate_sensor.c - Flowrate Sensor
+//
+//*****************************************************************************
+
+/* std lib includes */
+#include <stdio.h>
+
+/* FreeRTOS includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+//#include "queue.h"
+
+/* FatFs includes */
+#include "flowrate_sensor.h"
+
+#include "logging.h"
+#include "fatfs/ff.h"
+
+/* Measurement driver includes*/
+
+int initFlowrateSensor(void) {
+  #if 1
+  // P0.3 as EINT1 Pumpenstellsignal
+  PCB_PINSEL0 = (PCB_PINSEL0 & ~PCB_PINSEL0_P03_MASK) | PCB_PINSEL0_P03_EINT1;
+
+  /* rest of EINT0 initialisation is done in \core\eints\eint0.c\eint0Init() -> already done for LPC-P2148\Button2 */
+  // things will be done in eint0ISR() 
+  #endif
+
+  // P0.30 as EINT3 FlowrateSensor
+  PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_EINT3) | PCB_PINSEL1_P030_EINT3;
+  eint3Init();
+  // things will be done in eint3ISR()
+
+  clr_FlowCount();
+  
+  return 0;
+}
+
+float get_FlowCount(void) { return flowCount; }
+float incr_FlowCount(void) { flowCount += (float)flowrateMeterImpulsVolume; return flowCount; }
+float clr_FlowCount(void) { float endValue = flowCount; flowCount = 0; return endValue; }
+
+//*****************************************************************************
+//
+// Close the Doxygen group.
+//! @}
+//
+//*****************************************************************************
