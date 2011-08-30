@@ -13,6 +13,10 @@
 //
 //
 void timer0Init (void);
+void timer0FlowRateInit(void);
+static void timer0ISR_Handler (void);
+void timer0ISR(void);
+
 void timer1Init (void);
 void timer1FlowRateInit(void);
 static void timer1ISR_Handler (void);

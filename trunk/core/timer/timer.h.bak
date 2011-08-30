@@ -15,6 +15,7 @@
 void timer0Init (void);
 void timer1Init (void);
 void timer1FlowRateInit(void);
+static void timer1ISR_Handler (void);
 void timer1ISR(void);
 
 static short timer1OverflowCnt = 0;

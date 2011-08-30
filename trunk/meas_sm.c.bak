@@ -68,9 +68,11 @@ enum _LOG_ITEM_STATE meas_sm() {
                       initMeasure_timestamp();
                       clr_measure();
                       clr_valuesReceived();
+                      #if CFG_LCD == 1
                       clr_updateLCD();
+                      #endif
 
-                      setWsPrice(WsPriceRappenStandardValue);
+                      //setWsPrice(WsPriceRappenStandardValue);
                       init_daysLogging(); 
                       
                       // init meas_op items
@@ -181,7 +183,6 @@ enum _LOG_ITEM_STATE meas_sm() {
                       #if 1
                       #ifdef LOG2FATFS
                       int ret=-1;
-                      //printf("meas_sm_SAVEVALUE\r\n");
 /* append to continuous log file created on startup */
                       //printf("OPEN contLog.txt %d\n", f_open(&FileContLog, "contLog.txt", FA_OPEN_EXISTING | FA_WRITE | FA_READ));
                       getLogFilename(contLog, logFilename);
@@ -369,9 +370,11 @@ void set_measure(char value) { __measure = value; }
 void clr_measure(void) { __measure = 0; }
 char get_measure(void) { return __measure; }
 
+#if CFG_LCD == 1
 void set_updateLCD(void) { __updateLCD = 1; }
 void clr_updateLCD(void) { __updateLCD = 0; }
 char get_updateLCD(void) { return __updateLCD; }
+#endif
 
 void set_trackLog(void) { __trackLog = 1; }
 void clr_trackLog(void) { __trackLog = 0; }

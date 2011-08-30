@@ -52,7 +52,7 @@
   \endverbatim
  *
  */
-enum _LOG_ITEM_STATE meas_Temp(char meas_op_key) {
+enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
   switch (meas_op_item[meas_op_key].state) {
     case OFF:       { /* WILL NOT BE USED */ 
                       break; }
@@ -69,13 +69,13 @@ enum _LOG_ITEM_STATE meas_Temp(char meas_op_key) {
                       meas_op_item[meas_op_key].measInit(); // adcInit
                       //LUK enter critical
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
-
                       //LUK quit critical
                       portEXIT_CRITICAL ();
+                      while ( meas_op_item[meas_op_key].value == -1 ); // wait
                       // LED2 ausschalten
                       GPIO0_FIOSET |= (1<<11);
-                      meas_op_item[meas_op_key].value = getTemperatureOfADCValue(meas_op_item[meas_op_key].value);
-                      while ( meas_op_item[meas_op_key].value == -1 ); // wait
+                     
+                      
                       meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
                     }
 //      WAITING:   { /* waiting on end of conversion */ 
@@ -89,77 +89,17 @@ enum _LOG_ITEM_STATE meas_Temp(char meas_op_key) {
   return meas_op_item[meas_op_key].state;
 }
 
-double getTemperatureOfADCValue(int valADC) {
-
-  /*
-   *   Rth(uADC) = uADC * R25 / (Vcc - uADC ) = uADC * 12000 / (5 - uADC)
-   *
-   *   t(Rth) = (1/T0 + 1/B * ln(Rth/R25))^(-1)
-   */
-    volatile double rTh = 0;
-    volatile double temperature = 0, temp=0;
-    volatile double uADC = 0; // [mV]
-    if (valADC == 0) {
-
-    }
-    else {
-      /* Berechnung: 
-       *
-       * für Temperaturwiderstand 12kOhm @ 25°C (Typ 2322 640 90004 12kOhm/25°C, http://www.ortodoxism.ro/datasheets/vishay/__23226409.pdf)
-       *
-       *                      AD->V           calc value to 5V
-       * uADC = valADC      * 3.3/1024      * 5/3.3
-       *
-       * Rth(uADC)
-       * rTh  = uADC        * R25           / (Vcc - uADC)
-       *
-       * T'   = 1/298.15    + 1/3750        * ln(rTh/12000)
-       *
-       * T[°C]= 1/T'        -293.15
-       */
-      uADC        = (double)valADC*5/1024.0;
-      rTh         = (double) (uADC * 12000 / (5 - uADC));
-      temp        = 1/298.15 + 1/3750.0 * (log(rTh)-log(12000));
-      temperature = 1/ temp -273.15;
-    }
-
-    return temperature;
-}
-              
+         
 void meas_task_init(void) {
-//  strcpy(meas_op_item[0].name, "TPanel");
-  meas_op_item[0].value    = -1;
-  meas_op_item[0].pt2func  = meas_Temp;
-  meas_op_item[0].measInit = adcPanelInit;
-  meas_op_item[0].measRead = adcPanelRead;
-  meas_op_item[0].state    = INIT;
-  
-//  strcpy(meas_op_item[1].name, "TBoiler_oben");
-  meas_op_item[1].value    = -1;
-  meas_op_item[1].pt2func  = meas_Temp;
-  meas_op_item[1].measInit = adcBoilerObenInit;
-  meas_op_item[1].measRead = adcBoilerObenRead;
-  meas_op_item[1].state    = INIT;
-  
-//  strcpy(meas_op_item[2].name, "TBoiler_unten");
-  meas_op_item[2].value   = -1;
-  meas_op_item[2].pt2func = meas_Temp;
-  meas_op_item[2].measInit = adcBoilerUntenInit;
-  meas_op_item[2].measRead = adcBoilerUntenRead;
-  meas_op_item[2].state   = INIT;
-  
 //  strcpy(meas_op_item[3].name, "TRuecklauf");
-  meas_op_item[3].value   = -1;
-  meas_op_item[3].pt2func = meas_Temp;
-  meas_op_item[3].measInit = adcRuecklaufInit;
-  meas_op_item[3].measRead = adcRuecklaufRead;
-  meas_op_item[3].state   = INIT;
+  meas_op_item[0].value    =  -1;
+  meas_op_item[0].pt2func  = meas_winddirection;
+  meas_op_item[0].measInit = adcWindDirectionInit;
+  meas_op_item[0].measRead = adcWindDirectionRead;
+  meas_op_item[0].state    = INIT;
      
-  /** meas_op_item: [0]:  Temperatur Panel
-   *                [1]:  Temperatur Boiler oben
-   *                [2]:  Temeratur Boiler unten
-   *                [3]:  Temperatur Rücklauf
-   *                [4]:  Flowmeter
+  /** meas_op_item: [0]:  Wind direction
+   *                [1]:  Wind velocity
    */
 }
 

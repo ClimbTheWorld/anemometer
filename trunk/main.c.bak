@@ -52,52 +52,6 @@
   #include "meas_sm.h"
   #include "flowrate_sensor.h"
 #endif
-/**************************************************************************/
-/*! 
-    Starts the PotiTask task and performs any initialisation activity
-*/
-/**************************************************************************/
-//static portTASK_FUNCTION(vPotiTask, pvParameters __attribute__((unused))) 
-//{
-//  /* The LEDs are updated every 200 ticks, about 200 ms */
-//  const long blinkDelay = 200;
-//
-//  
-//  FATFS Fatfs[_DRIVES]; /* File system object for each logical drive */
-//  FIL File1; /* File objects */
-//  printf("DISKINIT %d\r", diskInitialize(0));
-//  /* Initialize logical drive */
-//  //LUKFRESULT res = f_mount(0, &Fatfs[0]);
-//  printf("MOUNT %d\n\r", f_mount(0, &Fatfs[0]));
-//
-//  /* Create file system */
-//  
-//  printf("MKFS %d\n", f_mkfs((U8) 0, (U8) 0, (U8) 512));
-//
-//  printf("MKDIR %d\n", f_mkdir("100602_wast_log\0")); // Ordner anlegen
-//
-//  printf("OPEN %d\n", f_open(&File1, "log.txt", FA_CREATE_ALWAYS | FA_WRITE | FA_READ));
-//
-//  //f_printf(&File1, "%6d", -200);
-//  UINT byte_len;
-//  U16 bw;
-//
-//  printf("WRITE %d\n", f_write(&File1, "zalue", strlen("zalue"), &bw));
-//
-//  printf("CLOSE %d\n", f_close(&File1));
-//
-//  /* Unregister work area prior to discard it */
-//  printf("UMOUNT %d\n", f_mount(0, NULL));
-//
-//  while (1)
-//  {
-//    /* Block the task for the defined time */
-//    vTaskDelay(blinkDelay);
-//
-//  }
-//
-//}
-
 
 /**************************************************************************/
 /*! 
@@ -118,15 +72,6 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     rtcInit();
     #endif
 
-//    struct tm alarm;
-//    alarm.tm_sec = 30;
-//    alarm.tm_min = 12;
-//    alarm.tm_hour = 16;
-//    alarm.tm_year = 2011;
-//    alarm.tm_mday = 25;
-//    alarm.tm_mon = 1;
-//    rtcSetAlarm(&alarm);
-
     // LED2 einschalten
     GPIO0_FIODIR |= (1<<11);
     GPIO0_FIOCLR |= (1<<11);
@@ -137,7 +82,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
     #if defined CFG_LED && CFG_LED_RUNLEDONSTARTUP == 1
     // Start LED flasher (for testing purposes)
-    //ledsTaskStart();
+    ledsTaskStart();
     #endif
 
     #ifdef CFG_DATALOGGER
@@ -148,16 +93,21 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     #endif
     #endif
 
-    #ifdef CFG_LCD
+    #if CFG_LCD == 1
     #define LCDTEST
-    #ifdef LCDTEST
+    #if LCDTEST == 1
+    /** making the contrast of the display evaluated best round 2.6V */
     PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AOUT;
     // vDAC = VALUE / 1024 * vREF -> VALUE = 2.6V * 1024 / 3.3V = 806.8
     DAC_CR = (DAC_CR & ~DAC_CR_VALUEMASK) | ((806 << DAC_CR_VALUESHIFT) & DAC_CR_VALUEMASK);
     #endif
-
     lcdTaskStart();
     #endif
+
+    PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AOUT;
+    // vDAC = VALUE / 1024 * vREF -> VALUE = 2.6V * 1024 / 3.3V = 806.8
+    unsigned int test = dacSetMV (2600);
+
 
     // Start monitor task
     monitorTaskStart();

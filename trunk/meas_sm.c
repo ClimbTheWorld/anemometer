@@ -68,16 +68,18 @@ enum _LOG_ITEM_STATE meas_sm() {
                       initMeasure_timestamp();
                       clr_measure();
                       clr_valuesReceived();
+                      #if CFG_LCD == 1
                       clr_updateLCD();
+                      #endif
 
-                      setWsPrice(WsPriceRappenStandardValue);
+                      //setWsPrice(WsPriceRappenStandardValue);
                       init_daysLogging(); 
                       
                       // init meas_op items
                       for(i=0; i<(MEAS_OP_ITEMS); i++) {
                         meas_op_item[i].pt2func(i);
                       }
-                      initFlowrateSensor();
+                      
                       
                       state_LOGGER = IDLE; /* state change from INIT to IDLE*/
                       clr_measure();
@@ -368,9 +370,11 @@ void set_measure(char value) { __measure = value; }
 void clr_measure(void) { __measure = 0; }
 char get_measure(void) { return __measure; }
 
+#if CFG_LCD == 1
 void set_updateLCD(void) { __updateLCD = 1; }
 void clr_updateLCD(void) { __updateLCD = 0; }
 char get_updateLCD(void) { return __updateLCD; }
+#endif
 
 void set_trackLog(void) { __trackLog = 1; }
 void clr_trackLog(void) { __trackLog = 0; }

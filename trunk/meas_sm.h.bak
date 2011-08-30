@@ -82,7 +82,7 @@ static volatile short flowCount = 0;
 static enum _LOG_ITEM_STATE state_LOGGER        = INIT;
 
 //static char buf[_SLOG_ENTRY_ITEM_SIZE];                      
-static char buf[21];                      
+char buf[21];                      
 
 //static char value[5]; // wert von Int to Char[] Buffer
 static volatile char __measure = 0;

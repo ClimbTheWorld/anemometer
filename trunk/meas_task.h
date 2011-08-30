@@ -68,10 +68,9 @@ _MEAS_OP_ITEM meas_op_item[5];
  */
 
 /* declaration of measure functions */
-enum _LOG_ITEM_STATE meas_Temp(char meas_op_key);
+enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key);
 enum _LOG_ITEM_STATE meas_Flowrate(char meas_op_key);
  
-double getTemperatureOfADCValue(int valADC);
 
 /** ADCPool enthält die InitFunktion- und ReadFunktion-Pointer der ADCs wiefolgt:
  *  ADCPool[i][j] -> i -> Wahl des MEAS_OP_ITEM, gleicher Index

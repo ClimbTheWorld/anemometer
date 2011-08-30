@@ -9,7 +9,9 @@
 #include "FreeRTOS.h"
 
 #include "dac.h"
+#include <stdio.h>
 
+//#include <math.h>
 //
 //
 //
@@ -24,6 +26,24 @@ unsigned int dacSet (unsigned int newValue)
 {
   unsigned int dacCR;
   unsigned int dacCurrentValue;
+
+  dacCR = DAC_CR;
+  dacCurrentValue = (dacCR & DAC_CR_VALUEMASK) >> DAC_CR_VALUESHIFT;
+  dacCR = (dacCR & ~DAC_CR_VALUEMASK) | ((newValue << DAC_CR_VALUESHIFT) & DAC_CR_VALUEMASK);
+  DAC_CR = dacCR;
+
+  return dacCurrentValue;
+}
+
+unsigned int dacSetMV (unsigned int newValueInMV)
+{
+  unsigned int dacCR;
+  unsigned int dacCurrentValue;
+  unsigned int newValue;
+  float tmp;
+  tmp = 1024/3300;
+  tmp *= newValueInMV;
+  newValue = (unsigned int) tmp;
 
   dacCR = DAC_CR;
   dacCurrentValue = (dacCR & DAC_CR_VALUEMASK) >> DAC_CR_VALUESHIFT;

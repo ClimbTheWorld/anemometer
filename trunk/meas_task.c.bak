@@ -229,7 +229,7 @@ signed portBASE_TYPE measTaskStart (void)
     (const signed portCHAR * const) "Measure_Task",
     configMINIMAL_STACK_SIZE, // ^= ((unsigned portSHORT) 128)^=configMINIMAL_STACK_SIZE
     NULL,
-    (tskIDLE_PRIORITY + 3),
+    (tskIDLE_PRIORITY + 4),
     &taskHandles [TASKHANDLE_MEASTASK]);
 }
 

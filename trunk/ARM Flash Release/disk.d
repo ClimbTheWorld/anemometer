@@ -1,7 +1,7 @@
 ARM\ Flash\ Release/disk.o: \
- C:/Users/lukas/Desktop/2011-05-31__1_LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/Source/fatfs/disk.c \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/fatfs/disk.c \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/stdio.h \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/__crossworks.h \
- C:/Users/lukas/Desktop/2011-05-31__1_LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/Source/fatfs/../drivers/sd/mmc.h \
- C:/Users/lukas/Desktop/2011-05-31__1_LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/Source/./sysdefs.h \
- C:/Users/lukas/Desktop/2011-05-31__1_LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/LPC2148CodeBase_v0.1__ff-v0-04/Source/fatfs/disk.h
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/fatfs/../drivers/sd/mmc.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/./sysdefs.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/fatfs/disk.h
