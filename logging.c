@@ -68,10 +68,10 @@ void fillSlogEntryItem(unsigned short adc1, unsigned short adc2, unsigned short 
   //slog_entry_item.flowvolume = cdaylog_entry_item.sum_flowvolume;
   #endif
   /* E[Ws] = V[l] * dT * cH20 */
-  unsigned short temp_energy = (unsigned short) (get_FlowCount() * (slog_entry_item.val_adc2 - slog_entry_item.val_adc4) * thermalCapacityFluid);         /* Value in Ws */
+  //unsigned short temp_energy = (unsigned short) (get_FlowCount() * (slog_entry_item.val_adc2 - slog_entry_item.val_adc4) * thermalCapacityFluid);         /* Value in Ws */
   /* P[W] = E[Ws] / getMeasure_timestamp_diff()[s] */
   if(getMeasure_timestamp_diff()) {
-    slog_entry_item.power = (float) (temp_energy / getMeasure_timestamp_diff());
+    //slog_entry_item.power = (float) (temp_energy / getMeasure_timestamp_diff());
   }
 }
 
@@ -429,7 +429,7 @@ void updateCDayLogEntryItem(void) {
     if (get_FlowCount() != 0) {
       /* cdaylog_entry_item.sum_flowvolume is directly incremented when a flowrate sensor impuls kicks */
       cdaylog_entry_item.sum_flowtime     += (unsigned short)getMeasure_timestamp_diff(); /* pumptime[s] */
-      cdaylog_entry_item.sum_energy       += (unsigned short) get_FlowCount() * (slog_entry_item.val_adc2 - slog_entry_item.val_adc4) * thermalCapacityFluid;         /* Value in Ws */
+      //cdaylog_entry_item.sum_energy       += (unsigned short) get_FlowCount() * (slog_entry_item.val_adc2 - slog_entry_item.val_adc4) * thermalCapacityFluid;         /* Value in Ws */
       cdaylog_entry_item.sum_profit       += cdaylog_entry_item.sum_energy / 3600 * getWhPriceRappen();           /* Value in Rappen */
     }
 }

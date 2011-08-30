@@ -11,5 +11,6 @@
 
 void dacInit (void);
 unsigned int dacSet (unsigned int newValue);
+unsigned int dacSetMV (unsigned int newValueInMV);
 
 #endif

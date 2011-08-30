@@ -55,13 +55,11 @@ char valuesReceived(void);
 void set_valuesReceived(void); 
 void clr_valuesReceived(void);
 
+#if CFG_LCD == 1
 char get_updateLCD(void);
 void set_updateLCD(void);
 void clr_updateLCD(void);
-
-double get_pumpLastControlSignalOn(void);
-void set_pumpLastControlSignalOn(void);
-void clr_pumpLastControlSignalOn(void);
+#endif
 
 float get_FlowCount(void);
 float incr_FlowCount(void);
@@ -87,6 +85,8 @@ char buf[21];
 //static char value[5]; // wert von Int to Char[] Buffer
 static volatile char __measure = 0;
 static volatile char __valuesReceived = -1; /* -1=stop, 0=start, 1=received */
+#if CFG_LCD == 1
 static volatile char __updateLCD = 0;
+#endif
 static volatile char __trackLog = 0;
 #endif

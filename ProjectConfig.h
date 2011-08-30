@@ -34,13 +34,12 @@
 // any risk of errors
 
 #define CFG_LED 1
-#define CFG_LCD 1
+#define CFG_LCD 0
 //#define CFG_TCS3414
 //#define CFG_TPS851
 
 // General Project Settings
 // ========================
-
 /**************************************************************************/
 /*! 
     General project settings
@@ -49,8 +48,10 @@
 #define CFG_PROJECT_NAME              (portCHAR *) "Olimex LPC-P2148 Evaluation Board"  // The name of this project if you wish to display it
 #define CFG_PROJECT_VERSION_MAJOR     0                                       // The 'major' version of this project
 #define CFG_PROJECT_VERSION_MINOR     1                                       // The 'minor' version of this project
-#define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010" // The copyright notice for this project if you wish to display it
+#define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010-2011" // The copyright notice for this project if you wish to display it
 
+
+#define configGENERATE_RUN_TIME_STATS 1
 /**************************************************************************/
 /*! 
     DataLogger settings
@@ -73,16 +74,6 @@
 #ifdef  CFG_LOGDATA
   #define LOG2FATFS                   // Log into File on SD
   #define LOG2MONITOR                 // Log continuosly to monitor (uart0/usb/[lan])
-  
-  /*<! Log interval time in seconds  */
-  #define TIME1S                     1
-  #define TIME2S                     2
-  #define TIME10S                    10
-  #define TIME60S                    60
-  #define TIME120S                   120
-  #define TIME300S                   300
-  #define TIME600S                   600
-  #define LOGINTERVAL                TIME1S   
   
   /*! available Ports WITH special functions available and how are they used at Olimex's LPC-P2148 Evaluation Board.
       It would be possible using just AD0 with the advantage of power reduction, nevertheless I use both (AD0 and AD1) considering leave AOUT free for future uses
@@ -124,75 +115,55 @@
   /*<! Resolution of the flowmeter (2.5 liter per impuls)  */
   #define flowrateMeterImpulsVolume 2.5f
 
-  /*<! standard value for Price of a Wh   */
-  #define WsPriceRappenStandardValue 0.20f
-  
-  /*<! Temperatures/AD values to log 
-       - Temperaturen: -Panel, Rücklauf, Boiler oben, Boiler unten
+  /*<! Winddirection/AD values to log 
+       - Winddirection: -[0-360°]
   */
-  #define TEMPERATUR_PANEL_PORT           P021_AD16
-  #define TEMPERATUR_RUECKLAUF_PORT       P22_AD17
-  #define TEMPERATUR_BOILER_OBEN_PORT     P028_AD01
-  #define TEMPERATUR_BOILER_UNTEN_PORT    P029_AD02
+  #define WINDDIRECTION                   P021_AD16
+  
+  #define adcWindDirectionRead            adcRead1_6
+  #define adcWindDirectionInit            adcInit1_6
 
-  #define adcBoilerUntenRead              adcRead0_2
-  #define adcBoilerUntenInit              adcInit0_2
-  #define adcBoilerObenRead               adcRead0_1
-  #define adcBoilerObenInit               adcInit0_1
-  #define adcRuecklaufRead                adcRead1_7
-  #define adcRuecklaufInit                adcInit1_7
-  #define adcPanelRead                    adcRead1_6
-  #define adcPanelInit                    adcInit1_6
-
-  /* Temperaturfühler: 
-   *   Typ 2322 640 90004 12kOhm/25°C
-   *   http://www.ortodoxism.ro/datasheets/vishay/__23226409.pdf
-   *   Schaltung
-   *   B=3750K, R25=12kOhm, Vcc=5V
-   *               \frac{1}{T}=\frac{1}{T_0} + \frac{1}{B}\ln \left(\frac{R}{R_0}\right) 
-             
-
-   *   Rth(uADC) = uADC * R25 / (Vcc - uADC ) = uADC * 12000 / (5 - uADC)
-   *
-   *   t(Rth) = (1/T0 + 1/B * ln(Rth/R25))^(-1)
-   *
+  /* Winddirection Sensor:
+   *   A LM334Z run by a 120Ohm/1% resistor delivers a constant current of Iset=67.7mV/Rset=67.7mV/120Ohm=564uA
+   *   
    *   circuit:
    *   
 
             +5V
 
-             |
+             |(2)
             .-.
-            | |15kOhm
-            | |
+    LM334Z  | | (1)
+            | |-----.
+            | |     |
+            '-'     |
+             |(3)   |
+             |     .-.
+             |     | |120Ohm
+             |     | |
+             |     '-'
+             |      |
+             0------.
+             |
+             |      
+             v Iset=564uA          
+             o---------------------o uADC
+             |                     
+             |                    
+             | (schwarz)                      
+            .-.                     
+            | |Sensor [3,4]kOhm; Ulow=3000*564uA=1.6925V, Uhigh=4000*564uA=2.2566V                  
+            | |                  dU=564.166mV @ (10Bit, 3.3V ADC) => 1024/3.3*0.564166=175 => 360°/175 => resolution 2.0564°
             '-'
-             |     1.5kOhm
-             |      ___
-       u_ADC o-----|___|------------
-             |                     |
-             |                     |
-             |                     |
-            .-.                    |
-            | |12kOhm@25°C        ---  100nF
-            | |                   ---
-            '-'                    |
-             '---------------------'
+             |(weiss)
+             |
+             '---------------------o GND ADC
              |
             ===
-            GND
+            GND 
    *
    */
 
-  /* specific thermal capacity (c) of water: 4.19 kJ/(kg*K) 
-   * thermal capacity of water-glycol-mixture
-  */
-  #define thermalCapacityFluid                    4.19
-
-  /* Berechnung der Wärmeenergie:
-   *
-   * Q = c*m*dT
-   * Q = c(H2O=4.19, Glykol) * m(Ticks vom Volumenzähler, Wasser-Glykol-Gemisch) * (TRücklauf - TVorlauf)   // TVorlauf == TBoiler_unten
-   */
   
   // if a allTimeSummary shall be generated
   //#define logAllTimeSummary
@@ -354,7 +325,7 @@ typedef enum
 //  TASKHANDLE_POTI,
 //  TASKHANDLE_SETTIME,
 //  TASKHANDLE_UIP,
-//#ifdef CFG_LCD
+//#if CFG_LCD == 1
   TASKHANDLE_LCD,
 //#endif
   TASKHANDLE_TRACKLOG,
