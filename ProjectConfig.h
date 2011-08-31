@@ -23,7 +23,7 @@
 // certain peripherals that may not be available on all
 // devices (for example, RTC isn't available on certain chips)
 
-#define CFG_RTC
+#define CFG_RTC 1
 #define CFG_ADC
 #define CFG_FATFS
 
