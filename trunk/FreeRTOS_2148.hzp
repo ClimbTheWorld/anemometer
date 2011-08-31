@@ -70,6 +70,7 @@
           <file file_name="core/timer/beep.h"/>
           <file file_name="core/timer/timer.c"/>
           <file file_name="core/timer/timer.h"/>
+          <file file_name="freqCounter.c"/>
         </folder>
         <folder Name="dac">
           <file file_name="core/dac/dac.c"/>

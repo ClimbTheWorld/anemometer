@@ -67,7 +67,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
 /* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
     
-    #if defined CFG_RTC
+    #if CFG_RTC == 1
     // Initialise RTC
     rtcInit();
     #endif
@@ -76,7 +76,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     GPIO0_FIODIR |= (1<<11);
     GPIO0_FIOCLR |= (1<<11);
     
-    #if 1
+    #if 0
     rtcSetAlarmCIIR(RTC_CIIR_IMMIN);
     #endif
 
@@ -104,10 +104,24 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     lcdTaskStart();
     #endif
 
-    PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AOUT;
-    // vDAC = VALUE / 1024 * vREF -> VALUE = 2.6V * 1024 / 3.3V = 806.8
-    unsigned int test = dacSetMV (2600);
- 
+    #if 0
+    /** winddirection init */
+    unsigned int direction=0, directionMax=0, directionMin=1024;
+    adcInit1_6();
+    while(1){
+      direction = adcRead1_6();
+      if(direction < directionMin) directionMin = direction;
+      if(direction > directionMax) directionMax = direction;
+      printf("Min: %d, Max: %d, Act: %d\r\n", directionMin, directionMax, direction);
+      delay(20);
+    }
+    #endif
+
+    #if 1
+    /** windvelocity init */
+    capture13Init();
+
+    #endif
 
     // Start monitor task
     monitorTaskStart();
@@ -116,7 +130,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     //xTaskCreate (vPotiTask,  (const signed portCHAR * const) "POTI", configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1), &taskHandles [TASKHANDLE_POTI]);
 
     #if CFG_PLAY_STARTUP
-    beepMHALL();
+    //beepMHALL();
     //beepSMOTW();
     //beepA_TEAM_THEME();
     #endif
