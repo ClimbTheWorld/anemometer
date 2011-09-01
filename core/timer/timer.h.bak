@@ -12,18 +12,17 @@
 //
 //
 //
+static short fintcount = -1;
+static long __windPeriod = -1;
+
 void timer1Init (void);
+void capture13Init(void);
 void timer1FlowRateInit(void);
 static void timer1ISR_Handler (void);
-//void timer0ISR(void);
+void timer0ISR(void);
 void timer1ISR(void) __attribute__ ((naked));
 
-// counts the capture interrupts. after 10 periods the frequency will be calculated.
-static short T1capIntCount = -1;
-
-// after 10 periods the value of the T1_CR13 will be saved in this variable. It's the 1/10 frequency.
-static long T1capTimeCount = 0;
-void clrT1capIntCount(void);
-
-long getT1capTimeCount(void);
+short getWindPeriod(void);
+void clrWindPeriod(void);
+void startWindMeasurement(void);
 #endif

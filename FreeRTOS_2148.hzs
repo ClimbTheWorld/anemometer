@@ -4,7 +4,7 @@
  <Breakpoints/>
  <ExecutionCountWindow/>
  <Memory1>
-  <MemoryWindow autoEvaluate="0" addressText="0x40000a7c" numColumns="8" sizeText="4" dataSize="1" radix="10" addressSpace="" />
+  <MemoryWindow autoEvaluate="0" addressText="0x400053e4" numColumns="8" sizeText="40" dataSize="4" radix="10" addressSpace="" />
  </Memory1>
  <Memory2>
   <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
@@ -21,13 +21,15 @@
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;FreeRTOS" name="unnamed" />
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files" name="unnamed" />
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Core Peripherals" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Core Peripherals;cpu" name="unnamed" />
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Core Peripherals;timer" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;System Files" name="unnamed" />
  </Project>
  <Register1>
-  <RegisterWindow openNodes="CPU - All/cpsr;AD0/AD0CR;AD0/AD0GDR;AD0/ADGSR;AD0/AD0DR3;AD1/AD1CR;AD1/AD1GDR;AD1/AD1INTEN;AD1/AD1DR7;PCB/PINSEL1;RTC/CTIME0;RTC/CTIME1;RTC/CTIME2;SCB/MAMCR;SCB/MAMTIM;SCB/MEMMAP;SCB/PLL0CON;SCB/SCS;SCB/EXTINT;SCB/INTWAKE;SCB/EXTMODE;SCB/EXTPOLAR;SCB/USBIntSt;SSP/SSPCPSR;TIMER0/T0CTCR;TIMER1;TIMER1/T1IR;TIMER1/T1CCR;TIMER1/T1CTCR;VIC;VIC/VICIRQStatus" binaryNodes="SSP/SSPCPSR;SSP/SSPCPSR/CPSDVSR" hiddenNodes="" unsignedNodes="" visibleGroups="AD0;PCB;SCB;VIC;AD1;SSP;GPIO;FIO;RTC;DAC;CPU - Current Mode;CPU - All;TIMER1;TIMER0" decimalNodes="AD0/AD0CR/SEL;AD0/AD0GDR/RESULT;AD0/AD0DR3/RESULT;AD1/AD1CR/SEL;AD1/AD1CR/CLKDIV;AD1/AD1GDR/RESULT;PCB/PINSEL1/P0_28;RTC/CTIME0/Seconds;RTC/CTIME0/Minutes;RTC/CTIME0/Hours;RTC/CTIME0/Day_of_Week;RTC/CTIME1;RTC/CTIME1/Month;RTC/CTIME1/Year;TIMER0/T0TC;TIMER0/T0MR0;TIMER0/T0CR0;TIMER1/T1TC" octalNodes="" asciiNodes="" />
+  <RegisterWindow openNodes="AD0/AD0CR;AD0/AD0GDR;AD0/ADGSR;AD0/AD0DR3;AD1/AD1CR;AD1/AD1GDR;AD1/AD1INTEN;AD1/AD1DR7;PCB/PINSEL1;RTC/CTIME0;RTC/CTIME1;RTC/CTIME2;SSP/SSPCPSR;TIMER0/T0CTCR;TIMER1;TIMER1/T1TCR;TIMER1/T1MCR;TIMER1/T1CTCR;VIC/VICIRQStatus" binaryNodes="SSP/SSPCPSR;SSP/SSPCPSR/CPSDVSR" hiddenNodes="" unsignedNodes="" visibleGroups="AD0;PCB;SCB;VIC;AD1;SSP;GPIO;FIO;RTC;DAC;TIMER1;TIMER0;CPU - Current Mode" decimalNodes="AD0/AD0CR/SEL;AD0/AD0GDR/RESULT;AD0/AD0DR3/RESULT;AD1/AD1CR/SEL;AD1/AD1CR/CLKDIV;AD1/AD1GDR/RESULT;PCB/PINSEL1/P0_28;RTC/CTIME0/Seconds;RTC/CTIME0/Minutes;RTC/CTIME0/Hours;RTC/CTIME0/Day_of_Week;RTC/CTIME1;RTC/CTIME1/Month;RTC/CTIME1/Year;TIMER0/T0TC;TIMER0/T0MR0;TIMER0/T0CR0;TIMER1/T1TC;TIMER1/T1PR" octalNodes="" asciiNodes="" />
  </Register1>
  <Register2>
-  <RegisterWindow openNodes="" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="" decimalNodes="" octalNodes="" asciiNodes="" />
+  <RegisterWindow openNodes="TIMER1;TIMER1/T1TCR" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="TIMER1" decimalNodes="TIMER1/T1TC;TIMER1/T1PR;TIMER1/T1PC;TIMER1/T1CR3" octalNodes="" asciiNodes="" />
  </Register2>
  <Register3>
   <RegisterWindow openNodes="" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="" decimalNodes="" octalNodes="" asciiNodes="" />
@@ -41,32 +43,9 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Each Second" >
-   <Watchpoint linenumber="0" radix="16" name="valueIn" expression="valueIn" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="uADC" expression="uADC" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="ret_state" expression="ret_state" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="1" radix="10" name="from" expression="from" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="temperature" expression="temperature" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="valADC" expression="valADC" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="1" radix="16" name="filename" expression="filename" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="newValue" expression="newValue" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="temp" expression="temp" filename="" />
-   <Watchpoint linenumber="0" radix="-1" name="test" expression="test" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="tmp" expression="tmp" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="rTh" expression="rTh" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="16" name="logFilename" expression="logFilename" filename="" />
-   <Watchpoint linenumber="0" radix="-1" name="length" expression="length" filename="" />
-   <Watchpoint linenumber="0" radix="-1" name="lcd_busy" expression="lcd_busy" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="__valuesReceived" expression="__valuesReceived" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="count" expression="count" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="counter" expression="counter" filename="" />
-   <Watchpoint evalMode="1" linenumber="0" evalType="1" radix="16" name="ts" expression="ts" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="cdaylog_entry_item" expression="cdaylog_entry_item" filename="" />
-   <Watchpoint linenumber="0" radix="16" name="slog_entry_item" expression="slog_entry_item" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="16" name="buf" expression="buf" filename="" />
-   <Watchpoint evalMode="2" linenumber="0" numelements="5" evalType="0" radix="16" name="meas_op_item" expression="meas_op_item" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="__measure" expression="__measure" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="10" name="datetime" expression="datetime" filename="" />
-   <Watchpoint linenumber="0" radix="10" name="flowCount" expression="flowCount" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="hoi" expression="hoi" filename="" />
+   <Watchpoint linenumber="0" radix="1" name="tencounter" expression="tencounter" filename="" />
+   <Watchpoint linenumber="0" radix="2" name="tencounts" expression="tencounts" filename="" />
   </Watches>
  </Watch1>
  <Watch2>
@@ -79,12 +58,14 @@
   <Watches active="0" update="Never" />
  </Watch4>
  <Files>
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="4" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" y="119" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" left="0" selected="1" name="unnamed" top="96" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" y="204" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" left="0" selected="0" name="unnamed" top="185" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" y="1580" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" left="0" selected="0" name="unnamed" top="1561" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" y="121" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" left="0" selected="0" name="unnamed" top="108" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="8" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\lpc214x.h" y="875" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\lpc214x.h" left="0" selected="0" name="unnamed" top="852" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="12" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" y="26" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="28" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" y="116" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" left="0" selected="0" name="unnamed" top="90" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="10" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" y="218" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" left="0" selected="0" name="unnamed" top="199" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" y="1583" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" left="0" selected="1" name="unnamed" top="1566" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" y="121" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" left="0" selected="0" name="unnamed" top="109" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="24" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\lpc214x.h" y="923" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\lpc214x.h" left="0" selected="0" name="unnamed" top="906" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\AppData\Local\Rowley Associates Limited\CrossWorks for ARM\packages\targets\Philips_LPC210X\Philips_LPC210X_Startup.s" y="294" path="C:\Users\lukas\AppData\Local\Rowley Associates Limited\CrossWorks for ARM\packages\targets\Philips_LPC210X\Philips_LPC210X_Startup.s" left="0" selected="0" name="unnamed" top="275" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" y="27" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" left="0" selected="0" name="unnamed" top="1" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\cpu\cpu.c" y="63" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\cpu\cpu.c" left="0" selected="0" name="unnamed" top="43" />
  </Files>
  <ARMCrossStudioWindow activeProject="FreeRTOS_2148" autoConnectTarget="Olimex ARM-USB-OCD" debugSearchFileMap="" fileDialogInitialDirectory="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer" fileDialogDefaultFilter="" autoConnectCapabilities="388479" debugSearchPath="" buildConfiguration="ARM Flash Debug" />
 </session>

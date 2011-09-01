@@ -28,7 +28,7 @@
 #include "logging.h"
 #include "fatfs/ff.h"
 #include "flowrate_sensor.h"
-
+#include "core/timer/timer.h"
 
 /* Measurement driver includes*/
 #include "core/adc/adc.h"
@@ -52,7 +52,7 @@
   \endverbatim
  *
  */
-enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
+enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
   switch (meas_op_item[meas_op_key].state) {
     case OFF:       { /* WILL NOT BE USED */ 
                       break; }
@@ -91,12 +91,19 @@ enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
 
          
 void meas_task_init(void) {
-//  strcpy(meas_op_item[3].name, "TRuecklauf");
+  //  strcpy(meas_op_item[0].name, "WindDirection");
   meas_op_item[0].value    =  -1;
-  meas_op_item[0].pt2func  = meas_winddirection;
+  meas_op_item[0].pt2func  = meas_wind;
   meas_op_item[0].measInit = adcWindDirectionInit;
   meas_op_item[0].measRead = adcWindDirectionRead;
   meas_op_item[0].state    = INIT;
+
+  //  strcpy(meas_op_item[1].name, "WindVelocity");
+  meas_op_item[1].value    =  -1;
+  meas_op_item[1].pt2func  = meas_wind;
+  meas_op_item[1].measInit = capture13Init;
+  meas_op_item[1].measRead = getWindPeriod();
+  meas_op_item[1].state    = INIT;
      
   /** meas_op_item: [0]:  Wind direction
    *                [1]:  Wind velocity

@@ -16,7 +16,6 @@
 #include "core/cpu/cpu.h"
 #include "sysdefs.h"
 
-
 #ifdef CFG_LED && (CFG_LED_RUNLEDONSTARTUP == 1)
 #include "drivers/leds/leds.h"
 #endif
@@ -46,6 +45,8 @@
 #ifdef CFG_PLAY_STARTUP
   #include "core/timer/beep.h"
 #endif
+
+#include "core/timer/timer.h"
 
 #ifdef CFG_DATALOGGER
   #include "logging.h"/* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
@@ -120,7 +121,6 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     #if 1
     /** windvelocity init */
     capture13Init();
-
     #endif
 
     // Start monitor task
@@ -192,9 +192,6 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
 
 
-
-
-
 /**************************************************************************/
 /*! 
     The application entry point.  Initialise the CPU, open the monitor
@@ -215,6 +212,8 @@ int main(void)
   // Configure USB Serial Port for Monitor input/output (9600/8N1)
   usbserInit();
   #endif
+
+  //malloc(tencounts, sizeof(10*sizeof(long)));
 
   // Create the startup task
   xTaskCreate (vStartupTask, (const signed portCHAR * const)"Startup", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES, &taskHandles[TASKHANDLE_STARTUP]);
