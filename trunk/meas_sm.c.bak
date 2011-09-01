@@ -79,7 +79,7 @@ enum _LOG_ITEM_STATE meas_sm() {
                       for(i=0; i<(MEAS_OP_ITEMS); i++) {
                         meas_op_item[i].pt2func(i);
                       }
-                      initFlowrateSensor();
+                      
                       
                       state_LOGGER = IDLE; /* state change from INIT to IDLE*/
                       clr_measure();

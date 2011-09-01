@@ -51,7 +51,7 @@
 #define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010-2011" // The copyright notice for this project if you wish to display it
 
 
-#define configGENERATE_RUN_TIME_STATS 1
+#define configGENERATE_RUN_TIME_STATS 0 // Timer 1 is used as counter for the windvelocity measurement
 /**************************************************************************/
 /*! 
     DataLogger settings
@@ -203,7 +203,7 @@
 */
 /**************************************************************************/
 #define CFG_LED_RUNLEDONSTARTUP       1                                       // Run the led task on startup (to confirm board is OK)
-#define CFG_PLAY_STARTUP              1
+#define CFG_PLAY_STARTUP              0
 
 /**************************************************************************/
 /*! 

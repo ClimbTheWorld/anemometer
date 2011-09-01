@@ -115,7 +115,7 @@ enum _LOG_ITEM_STATE meas_sm() {
 //                      //        printf ("not every meas_op was successful");
 //                          meas_op_item[i].state = IDLE;
 //                        }
-  //set_valuesReceived();
+//set_valuesReceived();
 
                       //startMeasure();
                       //vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);

@@ -23,7 +23,7 @@
 // certain peripherals that may not be available on all
 // devices (for example, RTC isn't available on certain chips)
 
-#define CFG_RTC
+#define CFG_RTC 1
 #define CFG_ADC
 #define CFG_FATFS
 
@@ -51,7 +51,7 @@
 #define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010-2011" // The copyright notice for this project if you wish to display it
 
 
-#define configGENERATE_RUN_TIME_STATS 1
+#define configGENERATE_RUN_TIME_STATS 0 // Timer 1 is used as counter for the windvelocity measurement
 /**************************************************************************/
 /*! 
     DataLogger settings
