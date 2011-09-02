@@ -62,8 +62,8 @@ void capture13Init(void)
   
   // Interrupt will be enabled as soon as the system wants to take a measurement
   //VIC_IntEnable = VIC_IntEnable_Timer1;
+  VIC_IntEnable |= VIC_IntEnable_Timer1;
   portEXIT_CRITICAL ();
-
 }
 
 void timer1ISR(void) __attribute__ ((naked));
@@ -84,10 +84,10 @@ static void timer1ISR_Handler (void)
   {
     fintcount++;
     if(fintcount==10) {
-      __windPeriod = val;
       // Interrupt Disable
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
-      }
+      __windPeriod = val/10;
+    }
   }
   else if(fintcount == -1) 
   {
@@ -101,7 +101,11 @@ static void timer1ISR_Handler (void)
 
 short getWindPeriod(void)
 {
-  return (short)__windPeriod;
+  float windFrequency = (10000./__windPeriod);
+      // v(f) = 1/1.8112*f+0.7572 [m/s]
+      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
+      float windVelocity = 1/1.8112*windFrequency+0.7572;
+  return (short)windFrequency;
 }
 
 void clrWindPeriod(void)
@@ -109,10 +113,6 @@ void clrWindPeriod(void)
   __windPeriod = -1;
 }
 
-void startWindMeasurement(void)
-{
-  VIC_IntEnable |= VIC_IntEnable_Timer1;
-}
 
 //void clrT1capIntCount(void)
 //{

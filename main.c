@@ -89,8 +89,8 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     #ifdef CFG_DATALOGGER
 //    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
     #if 1
-    //measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
-    //measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
+//    measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
+//    measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
     #endif
     #endif
 
@@ -108,9 +108,9 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     #if 0
     /** winddirection init */
     unsigned int direction=0, directionMax=0, directionMin=1024;
-    adcInit1_6();
+    adcInit0_2();
     while(1){
-      direction = adcRead1_6();
+      direction = adcRead0_2();
       if(direction < directionMin) directionMin = direction;
       if(direction > directionMax) directionMax = direction;
       printf("Min: %d, Max: %d, Act: %d\r\n", directionMin, directionMax, direction);
@@ -118,17 +118,10 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     }
     #endif
 
-    #if 1
-    /** windvelocity init */
-    capture13Init();
-    #endif
-
+    
     // Start monitor task
     monitorTaskStart();
-    //xTaskCreate (vMonitorTask,  (const signed portCHAR * const) "Monitor", 3000, NULL, (tskIDLE_PRIORITY + 3), &taskHandles [TASKHANDLE_MONITOR]);
-    //xTaskCreate (vPotiTask, (const signed portCHAR * const)"Poti", 3000, NULL, configMAX_PRIORITIES, &taskHandles[TASKHANDLE_POTI]);
-    //xTaskCreate (vPotiTask,  (const signed portCHAR * const) "POTI", configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1), &taskHandles [TASKHANDLE_POTI]);
-
+    
     #if CFG_PLAY_STARTUP
     //beepMHALL();
     //beepSMOTW();
@@ -213,6 +206,19 @@ int main(void)
   usbserInit();
   #endif
 
+  while(1){
+    //adcWindDirectionInit();
+    capture13Init();
+    short tmp=0;
+    //tmp = adcWindDirectionRead();
+    while(getWindPeriod()==-1){}
+    printf("WV: %d, WD: %d\r\n", getWindPeriod(), tmp);
+    clrWindPeriod();
+    //vTaskDelay(30);
+    int i=0;
+    for(i=0;i<1000;i++){}
+  }
+  
   //malloc(tencounts, sizeof(10*sizeof(long)));
 
   // Create the startup task

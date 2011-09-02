@@ -25,7 +25,7 @@
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
-//#include "queue.h"
+#include "semphr.h"
 
 /* FatFs includes */
 #include "logging.h"
@@ -35,8 +35,8 @@
 #include "core/adc/adc.h"
 #include "meas_task.h"
 
-#define enFlowrateInterrupt()  (PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_MASK) | PCB_PINSEL1_P030_EINT3)
-#define disFlowrateIntuerrupt() (PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_MASK) | PCB_PINSEL1_P030_GPIO)
+/* Semaphore to lock access to SD Card. Needed because trackLog() and meas_sm() are writing to the SD Card, so we have to lock the access. */
+xSemaphoreHandle xSemaphoreSDCard;
 
 /* function declaration */
 enum _LOG_ITEM_STATE meas_sm();
@@ -74,7 +74,6 @@ static U16 bw;
 time_t measure_timestamp[3];
 static time_t pumpLastControlSignalOn; // when the pump control signal last time changed to high (pump switched on)
 struct tm *ts;
-static volatile short flowCount = 0;
 //char datetime[20];
 
 static enum _LOG_ITEM_STATE state_LOGGER        = INIT;

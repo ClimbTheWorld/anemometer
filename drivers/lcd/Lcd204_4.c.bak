@@ -452,13 +452,11 @@ static portTASK_FUNCTION(vLCDTask, pvParameters __attribute__((unused)))
 
   // The code within the for loop is your actual
   // task that will continously execute
-  for (;;)
-  {
+  for (;;)  {
     //if(get_updateLCD())
     LCD_RS_SET();
       feedLCD();
-      }
-      
+   
     // vTaskDelay will cause the task to be delayed for 
     // a specified number of ticks
     //vTaskDelay(100);  // Wait 100 ticks or 1 second

@@ -84,10 +84,11 @@ static void timer1ISR_Handler (void)
   {
     fintcount++;
     if(fintcount==10) {
-      __windPeriod = val;
       // Interrupt Disable
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
-      }
+      __windPeriod = val/10;
+      fintcount = -1;
+    }
   }
   else if(fintcount == -1) 
   {
@@ -101,7 +102,11 @@ static void timer1ISR_Handler (void)
 
 short getWindPeriod(void)
 {
-  return (short)__windPeriod;
+  float windFrequency = (10000./__windPeriod);
+      // v(f) = 1/1.8112*f+0.7572 [m/s]
+      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
+      float windVelocity = 1/1.8112*windFrequency+0.7572;
+  return (short)windFrequency;
 }
 
 void clrWindPeriod(void)

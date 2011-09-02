@@ -28,7 +28,7 @@
 #include "logging.h"
 #include "fatfs/ff.h"
 #include "flowrate_sensor.h"
-#include "core/timer/timer.h"
+#include "core/timer/timer.h" // for T1cap13
 
 /* Measurement driver includes*/
 #include "core/adc/adc.h"
@@ -64,18 +64,34 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
                     }
     case START:     { /* launch of measure */
                       meas_op_item[meas_op_key].value = -1;
-                      /** TODO: start AD conversion here */
+                      
+                      // ADC config
+                      if(meas_op_key==0)
+                      {
+                        // Force pin 0.28 to function as GPIO 'high' to power the current-source for the winddirection
+                        PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P028_MASK) | PCB_PINSEL1_P028_GPIO;
+                        GPIO1_FIOSET |= GPIO_IO_P28;
+                      }
+                      /** TODO: start the measurement here */
                       portENTER_CRITICAL ();
                       meas_op_item[meas_op_key].measInit(); // adcInit
+                      
                       //LUK enter critical
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
                       //LUK quit critical
                       portEXIT_CRITICAL ();
+
                       while ( meas_op_item[meas_op_key].value == -1 ); // wait
+
                       // LED2 ausschalten
                       GPIO0_FIOSET |= (1<<11);
                      
-                      
+                      // safe power; (current-source)
+                      if(meas_op_key==0)
+                      {
+                        // Force pin 0.28 to function as GPIO 'low' to safe power by the current-source for the winddirection
+                        GPIO1_FIOCLR |= GPIO_IO_P28;
+                      }
                       meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
                     }
 //      WAITING:   { /* waiting on end of conversion */ 
@@ -102,7 +118,7 @@ void meas_task_init(void) {
   meas_op_item[1].value    =  -1;
   meas_op_item[1].pt2func  = meas_wind;
   meas_op_item[1].measInit = capture13Init;
-  meas_op_item[1].measRead = getWindPeriod();
+  meas_op_item[1].measRead = getWindPeriod;
   meas_op_item[1].state    = INIT;
      
   /** meas_op_item: [0]:  Wind direction

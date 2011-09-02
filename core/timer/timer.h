@@ -12,8 +12,8 @@
 //
 //
 //
-static short fintcount = -1;
-static long __windPeriod = -1;
+static volatile short fintcount = -1;
+static volatile long __windPeriod = -1;
 
 void timer1Init (void);
 void capture13Init(void);

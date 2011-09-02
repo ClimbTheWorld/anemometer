@@ -42,11 +42,13 @@
 #define monthLog 2
 #define allTimeSummary  3
 
+#if CFG_LCD == 1
 /* special characters for LCD */
 #define charANTENNA     0x95
 #define charDEGREES     0x80
-
+    
 #define numberOfReportScreens 12
+#endif
 //*****************************************************************************
 //
 /// global pointer to the log file
@@ -73,7 +75,7 @@ signed portBASE_TYPE loggingStop (void);
 /**
  * single Log entry item structure
  *
- * { Date/Time; ADC1 [°C]; ADC2 [°C]; ADC3 [°C]; ADC4 [°C]; Volumenstrom [l/s]; }
+ * { Date/Time; Wind Direction [0-359°N]; Wind velocity [m/s]; }
  *
  */
 volatile typedef struct 
@@ -81,12 +83,8 @@ volatile typedef struct
     /* sizeof (_SLOG_ENTRY_ITEM = (19+1)+2+2+2+2+2+2 = 32 */
     //char  datetime[20];     /* YYYY-MM-DD_HH-mm(24h)-ss'\0' */
     time_t datetime;
-    unsigned short val_adc1;         /* Value 0-Aref(3300) [°C] */
-    unsigned short val_adc2;         /* Value 0-Aref(3300) [°C] */
-    unsigned short val_adc3;         /* Value 0-Aref(3300) [°C] */
-    unsigned short val_adc4;         /* Value 0-Aref(3300) [°C] */
-    float flowvolume;                /* summed-up over a whole day */
-    float power;            /* power of machinery for the last 15 minutes, always new calculated (flowrate, temp) */
+    unsigned short winddirection;         /* Value 0-Aref(3300) [0-359°N] */
+    unsigned short windvelocity;    /* summed-up over a whole day */
 } /* __attribute__ ((packed)) */ _SLOG_ENTRY_ITEM;
 _SLOG_ENTRY_ITEM slog_entry_item;
 #define _SLOG_ENTRY_ITEM_SIZE 32
@@ -138,7 +136,7 @@ _CLOG_ENTRY_ITEM clog_entry_item;
 
 //void fillSlogEntryItem(char *datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4/*, unsigned short flowrate*/);
 //void fillSlogEntryItem(time_t datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4/*, unsigned short flowrate*/); --> the struct tm ts is already global, no need to give it as a parameter
-void fillSlogEntryItem(unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4/*, unsigned short flowrate*/);
+void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity);
 void getLogFilename(char log, char *filename);
 
 static float WhPriceRappen; // price of a Wh in CHRp.
@@ -173,7 +171,7 @@ void updateCDayLogEntryItem(void);
 void updateCLogEntryItem(void);
 
 
-
+#if CFG_LCD == 1
 /**********************************************************************************************************************
  ******************* LCD Routines *************************************************************************************
 **********************************************************************************************************************/
@@ -349,6 +347,7 @@ static const float reportScreenConfig[12][4][2] = {
 #define FILL_BUF_WITH_VALUES(value, position)          { if(value != 0) { b_itoab(*numberAsChar, value); for(count=0; count < nrOfDigits(value, 10); count++) { buf[(int)(position - count)] = numberAsChar[count]; } } strcpy(numberAsChar, "     "); }
 
 void luk_strcpy(char *to, char *from, char howMany);
+#endif // #if CFG_LCD == 1
 #endif
 
 //*****************************************************************************

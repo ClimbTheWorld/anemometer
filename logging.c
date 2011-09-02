@@ -54,22 +54,14 @@ char time_buf[30];
 
 //void fillSlogEntryItem(char *datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
 //void fillSlogEntryItem(time_t datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
-void fillSlogEntryItem(unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
+void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity) {
   /* YYYY-MM-DD_HH(24h)-mm-ss */
 
   //strcpy((char *)slog_entry_item.datetime, datetime); /* YYYY-MM-DD;HH(24h)-mm-ss */
  slog_entry_item.datetime = ts;
   //slog_entry_item.datetime = datetime;
-  slog_entry_item.val_adc1 = adc1;
-  slog_entry_item.val_adc2 = adc2;
-  slog_entry_item.val_adc3 = adc3;
-  slog_entry_item.val_adc4 = adc4;
-  #ifdef logCDaySummary
-  //slog_entry_item.flowvolume = cdaylog_entry_item.sum_flowvolume;
-  #endif
-  /* E[Ws] = V[l] * dT * cH20 */
-  //unsigned short temp_energy = (unsigned short) (get_FlowCount() * (slog_entry_item.val_adc2 - slog_entry_item.val_adc4) * thermalCapacityFluid);         /* Value in Ws */
-  /* P[W] = E[Ws] / getMeasure_timestamp_diff()[s] */
+  slog_entry_item.winddirection = winddirection;
+  slog_entry_item.windvelocity = windvelocity;
   if(getMeasure_timestamp_diff()) {
     //slog_entry_item.power = (float) (temp_energy / getMeasure_timestamp_diff());
   }
@@ -457,23 +449,23 @@ void updateCLogEntryItem(void) {
 }
 #endif
 
-void incr_SumFlowvolume(void) { 
-  slog_entry_item.flowvolume += flowrateMeterImpulsVolume;
-
-  #ifdef logCDaySummary
-  cdaylog_entry_item.sum_flowvolume += flowrateMeterImpulsVolume;
-  #endif
-
-  #ifdef logAllTimeSummary
-  clog_entry_item.sum_flowvolume    += flowrateMeterImpulsVolume; 
-  #endif
-}
+//void incr_SumFlowvolume(void) { 
+//  slog_entry_item.flowvolume += flowrateMeterImpulsVolume;
+//
+//  #ifdef logCDaySummary
+//  cdaylog_entry_item.sum_flowvolume += flowrateMeterImpulsVolume;
+//  #endif
+//
+//  #ifdef logAllTimeSummary
+//  clog_entry_item.sum_flowvolume    += flowrateMeterImpulsVolume; 
+//  #endif
+//}
 
 
 void init_daysLogging(void) { daysLogging = 1; }
 unsigned short incr_daysLogging(void) { daysLogging++; return daysLogging; };
 
-
+#if CFG_LCD == 1
 void feedLCD(void)
 {
   //GPIO1_FIOSET2 |= (1<<0); // CS
@@ -600,6 +592,7 @@ void feedLCD(void)
   }
   actReportScreen = 0;
 }
+#endif
 
 /** int to string
     to bypass the sprintf-function because of too much stack usage we have this function which uses less stack.
