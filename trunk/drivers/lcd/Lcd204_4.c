@@ -25,9 +25,11 @@
 
 //#include "at89c51ed2.h"   // Register des AT89C51ED2
 //#include "at89s8253.h"   // Register des AT89S8253
+#if CFG_LCD == 1
 #include "lpc214x.h"
 #include <string.h>      // Stingfunktionen
 #include "lcd204_4.h"
+
 
 // ********************************************************************
 // Verzögerungsschleife für kurze Zeit
@@ -426,7 +428,6 @@ void init_screenpool(void) {
 
 }
 
-
 /**************************************************************************/
 /*! 
     The main code that will execute as long as the task is active.
@@ -495,3 +496,4 @@ signed portBASE_TYPE lcdTaskStop (void)
 
   return 1;
 }
+#endif

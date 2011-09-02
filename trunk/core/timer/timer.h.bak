@@ -24,5 +24,4 @@ void timer1ISR(void) __attribute__ ((naked));
 
 short getWindPeriod(void);
 void clrWindPeriod(void);
-void startWindMeasurement(void);
 #endif

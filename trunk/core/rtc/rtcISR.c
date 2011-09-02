@@ -47,7 +47,7 @@ static void rtcISR_Handler (void)
   RTC_CCR = (RTC_CCR_CLKEN | RTC_CCR_CLKSRC);
   SCB_PCONP |= SCB_PCONP_PCRTC;
 
-  /* if increment alarm interrupt fired */
+  /* if increment alarm interrupt fired - here every minute */
   if (RTC_ILR & RTC_ILR_RTCCIF) 
   {
     U8 c = 0xff;
@@ -63,14 +63,15 @@ static void rtcISR_Handler (void)
 
     /* flowCount will be cleared always after the measurement at 23.55h*/
 
+    #if CFG_LCD == 1
     // updateLCD every 5 minutes with an offset of 4 minutes
     if((RTC_MIN == 42) | (RTC_MIN == 4) | (RTC_MIN == 9) | (RTC_MIN == 14) | (RTC_MIN == 19) | (RTC_MIN == 24) | (RTC_MIN == 29) | (RTC_MIN == 34) | (RTC_MIN == 39) | (RTC_MIN == 44) | (RTC_MIN == 49) | (RTC_MIN == 54) | (RTC_MIN == 59)) {
-      #if CFG_LCD == 1
       set_updateLCD();
       //xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
-      #endif
-    RTC_ILR = RTC_ILR_RTCCIF;
+      RTC_ILR = RTC_ILR_RTCCIF;
     }
+    #endif
+    
   }
 
   /* if time specific alarm interrupt fired */

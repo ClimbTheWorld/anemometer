@@ -33,6 +33,8 @@ ARM\ Flash\ Debug/main.o: \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/string.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/meas_sm.h \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/stdio.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/semphr.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/queue.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/meas_task.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/ProjectConfig.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/flowrate_sensor.h

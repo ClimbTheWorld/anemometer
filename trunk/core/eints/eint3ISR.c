@@ -19,29 +19,9 @@ int count=0;
 //
 static void eint3ISR_Handler (void)
 {
-  //LUK SCB_EXTINT |= SCB_EXTINT_EINT3;
-  
-  /**
-  if(flowrate_interrupt)
-    incrementFlowCount();
-    updateMeasure_timestamp();
-    update slog_entry_item -> power
-           cdaylog_entry_item -> flowvolume, sum of day
-  */
-  /* flowmeter interrupt */
-//  vTaskDelay(1 / portTICK_RATE_MS);
-  if((VIC_IRQStatus & VIC_IRQStatus_EINT3) && ((GPIO0_FIOPIN & GPIO_IO_P30)==0)) { 
-    incr_SumFlowvolume(); /* summing up over the day(slog_entry_item) and all the time(clog_entry_item) */
-    incr_FlowCount(); /* to calculate power every 5min interrupt */
-  }
   SCB_EXTINT |= SCB_EXTINT_EINT3; //LUK
 
   // Do something
-  if(count == 5) {
-    GPIO0_FIOPIN ^= (1<<11); // toggle led2
-    debug_printf("zalööö");
-  }
-  count = (count+1)%100;
   VIC_VectAddr = (unsigned portLONG) 0;
 }
 

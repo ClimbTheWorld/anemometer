@@ -59,7 +59,7 @@ typedef struct
     enum _LOG_ITEM_STATE state; /* state of procedure { OFF, INIT, IDLE, START, SAVEVALUE } */
     //int op; /*  */
 }  _MEAS_OP_ITEM;
-_MEAS_OP_ITEM meas_op_item[5];
+_MEAS_OP_ITEM meas_op_item[MEAS_OP_ITEMS];
 /** meas_op_item: [0]:  Temperatur Panel
  *                [1]:  Temperatur Boiler oben
  *                [2]:  Temeratur Boiler unten
@@ -68,8 +68,8 @@ _MEAS_OP_ITEM meas_op_item[5];
  */
 
 /* declaration of measure functions */
-enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key);
-enum _LOG_ITEM_STATE meas_Flowrate(char meas_op_key);
+enum _LOG_ITEM_STATE meas_wind(char meas_op_key);
+enum _LOG_ITEM_STATE meas_wind(char meas_op_key);
  
 
 /** ADCPool enthält die InitFunktion- und ReadFunktion-Pointer der ADCs wiefolgt:

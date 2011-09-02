@@ -115,42 +115,32 @@ enum _LOG_ITEM_STATE meas_sm() {
 //                      //        printf ("not every meas_op was successful");
 //                          meas_op_item[i].state = IDLE;
 //                        }
-  //set_valuesReceived();
-
-                      //startMeasure();
-                      //vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);
-                      //vTaskSuspend(NULL);
+#if testWithoutADC
+                      meas_op_item[0].value = 30;
+#else
+                      startMeasure();
+                      vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);
+                      vTaskSuspend(NULL);
                       // waiting until 
-                      //while(0 == valuesReceived()) {
-                      //  taskYIELD();                      
-                      //}
-                        meas_op_item[0].value = 30;
-                        meas_op_item[1].value = 33;
-                        meas_op_item[2].value = 32;
-                        meas_op_item[3].value = 31;
-                        //meas_op_item[].value = 66;
+                      while(!valuesReceived()) {
+                        taskYIELD();                      
+                      }
                       stopMeasure();
-
-                      //strcpy(datetime, "YYYY-MM-DD;HH-mm-ss");
+#endif
                       getRtcRead (ts);
-//                      ts.tm_year += 1900;
-//                      ts.tm_mon += 1;
+
                       /*LUK 2011-03-24: wird in Pumpenstellsignal/ und Pumpenstellsignal\ verwendet.*/ //updateMeasure_timestamp(mktime(ts)); /** TODO: mktime macht vermutlich nicht die richtige Zeit aus ts */
                       updateMeasure_timestamp(mktime(ts));
                       /* Format and print the time, "YYYY-MM-DD;HH(24h)-mm-ss" */
                       //getDateTime(datetime);
-                      fillSlogEntryItem(meas_op_item[0].value, meas_op_item[1].value, meas_op_item[2].value, meas_op_item[3].value);
-                      //fillSlogEntryItem(datetime, (unsigned short)3300, (unsigned short)2300, (unsigned short)1200, (unsigned short)1024, (unsigned short)100);
+                      #if testAllFunctions
+                      //flowCount = 15.5;
+                      #endif
+                      fillSlogEntryItem((unsigned short)meas_op_item[0].value, (unsigned short)meas_op_item[1].value);
                       
-                      // add to SDCARD BUFFER
-                      // slog_entry_item.datetime, .val_adc1, .val_adc2, .val_adc3, .val_adc4, .flowvolume, .power
+                      
             //LUK 2011-05-25: neu ist buf von 59 auf 20 verkleinert worden. Erhoffe mir weniger stack probleme.
-//                      strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
-                      
-                      //sprintf(buf+20, "%d;%d;%d;%d;%2.1f;%d;\r\n", slog_entry_item.val_adc1, slog_entry_item.val_adc2, slog_entry_item.val_adc3, slog_entry_item.val_adc4, slog_entry_item.flowvolume, slog_entry_item.power);
-//                      sprintf(buf+20, "%d;%d;%d;%d;%f;%d;\r\n", slog_entry_item.val_adc1, slog_entry_item.val_adc2, slog_entry_item.val_adc3, slog_entry_item.val_adc4, slog_entry_item.flowvolume, slog_entry_item.power);
-                      
-                     
+
                       state_LOGGER = SAVEVALUE; // go directly to the SAVEVALUE state
                       //taskYIELD();
                       //clr_measure();
@@ -180,43 +170,79 @@ enum _LOG_ITEM_STATE meas_sm() {
                       /*********************************************************************/
                         
                       /*********************************************************************/
-                      #if 1
                       #ifdef LOG2FATFS
                       int ret=-1;
 /* append to continuous log file created on startup */
-                      //printf("OPEN contLog.txt %d\n", f_open(&FileContLog, "contLog.txt", FA_OPEN_EXISTING | FA_WRITE | FA_READ));
-                      getLogFilename(contLog, logFilename);
-                      if(FR_EXIST == f_open(&FileContLog, logFilename, FA_CREATE_NEW | FA_WRITE | FA_READ)) {
-                        ret = f_open(&FileContLog, logFilename, FA_OPEN_EXISTING | FA_WRITE | FA_READ);
+                      if(xSemaphoreSDCard != NULL) {
+                        /* see if the semaphore can be obtained. If the semaphore isn't available,
+                           wait 10 ticks à 1ms to see if it becomes free. */
+                        if( xSemaphoreTake( xSemaphoreSDCard, 10) == pdTRUE ) {
+                          /* The semaphore was successfully obtained so the shared resource can be accessed safely. */
+                          getLogFilename(contLog, logFilename);
+                          if(FR_EXIST == f_open(&FileContLog, logFilename, FA_CREATE_NEW | FA_WRITE | FA_READ)) {
+                            ret = f_open(&FileContLog, logFilename, FA_OPEN_EXISTING | FA_WRITE | FA_READ);
+                            /* Move to end of the file to append data */
+                            ret = f_lseek(&FileContLog, FileContLog.fsize); //LUK param2 von f_lseek war FileContLog->fsize --> error 2011-01-08
+                          }
+                          else { /* if !FR_EXIST */
+                            /* add header to file; which data is going to be logged in which order and unit. */
+                            /* Move to end of the file to append data */
+                            ret = f_write(&FileContLog, "salue", strlen("salue"), &bw);
+                            ret = f_lseek(&FileContLog, FileContLog.fsize); //LUK param2 von f_lseek war FileContLog->fsize --> error 2011-01-08
+                            
+                            ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
+                            ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
+                            ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
+                            ret = f_write(&FileContLog, "Filename: YYYYcont.txt\r\n", strlen("Filename: YYYYcont.txt\r\n"), &bw);
+                            ret = f_write(&FileContLog, "Content:  single log entry items each taking one line.\r\n", strlen("Content:  single log entry items each taking one line.\r\n"), &bw);
+                            ret = f_write(&FileContLog, "Savetime: Data is going to be written every single minute.\r\n", strlen("Savetime: Data is going to be written every single minute.\r\n"), &bw);
+                            ret = f_write(&FileContLog, "LineConf: YYYY-MM-DD;hh-mm-ss;\r\n", strlen("LineConf: YYYY-MM-DD;hh-mm-ss;\r\n"), &bw);
+                            ret = f_write(&FileContLog, "          Wind direction [0-360°N];\r\n", strlen("          Wind direction [0-360°N];\r\n"), &bw);
+                            ret = f_write(&FileContLog, "          Wind velocity [m/s];\r\n", strlen("          Wind velocity [m/s];\r\n"), &bw);
+                            ret = f_write(&FileContLog, "Author:   Lukas Kempf, lukaskempf@gmail.com\r\n", strlen("Author:   Lukas Kempf, lukaskempf@gmail.com\r\n"), &bw);
+                            ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
+                            ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
+                            ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
+                            ret = f_write(&FileContLog, "YYYY-MM-DD;hh-mm-ss;Wind direction;Wind velocity;\r\n", strlen("YYYY-MM-DD;hh-mm-ss;Wind direction;Wind velocity;\r\n"), &bw);
+                          }
+                          
+                          strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
+                          ret = f_write(&FileContLog, buf, strlen(buf), &bw);
+                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windvelocity);
+                          ret = f_write(&FileContLog, buf, strlen(buf), &bw);
+                          ret = f_close(&FileContLog);
+                          #endif 
+                          
+                          /* Access to the shared resource is complete, so the semaphore is returned. */
+                          xSemaphoreGive(xSemaphoreSDCard);
+                        }
+                        else {
+                          /* The semaphore could not be obtained even after waiting 10 ticks, so the shared resource cannot be accessed. */
+
+                        }
                       }
-                      /* Move to end of the file to append data */
-                      ret = f_lseek(&FileContLog, FileContLog.fsize); //LUK param2 von f_lseek war FileContLog->fsize --> error 2011-01-08
+                      #ifdef logCDaySummary || logAllTimeSummary
                       
-                      strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
-                      ret = f_write(&FileContLog, buf, strlen(buf), &bw);
-                      sprintf(buf, "%d;%d;%d;%d;%3.1f;%d;\r\n", slog_entry_item.val_adc1, slog_entry_item.val_adc2, slog_entry_item.val_adc3, slog_entry_item.val_adc4, slog_entry_item.flowvolume, slog_entry_item.power);
-                      ret = f_write(&FileContLog, buf, strlen(buf), &bw);
-                      ret = f_close(&FileContLog);
-                      #endif 
+                      #endif
 
                       #ifdef logCDaySummary
                       /** update cdayLog; will be saved to SD from trackLog Task */
-                      updateCDayLogEntryItem();
+                      updateCDayLogEntryItem(&tmpDeltaEnergy, &tmpDeltaProfit);
                       #endif
                      
                       #ifdef logAllTimeSummary
                       /** update clog; will be saved every last day of month in getLogFilename(allTimeSummery) */  
-                      updateCLogEntryItem();
+                      updateCLogEntryItem(&tmpDeltaEnergy, &tmpDeltaProfit);
                       #endif
                       
-                      int i=0;
+                      char i=0;
                       for(i=0;i<MEAS_OP_ITEMS;i++) {
                         meas_op_item[i].state = IDLE;
                       }
                       state_LOGGER = IDLE;
+                      
+                      clrWindPeriod();
                       clr_measure();
-                      //trackLogTaskStart();
-                      #endif
                     }
   }
   return state_LOGGER;
@@ -249,12 +275,9 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
   
   /* set structs to a defined state */
 //  strcpy(slog_entry_item.datetime, "00000000000000000000");       /* YYYY-MM-DD_HH-mm(24h)-ss */
-  slog_entry_item.val_adc1=-1;      /* Value 0-Aref(3300) [mV] */
-  slog_entry_item.val_adc2=-1;      /* Value 0-Aref(3300) [mV] */
-  slog_entry_item.val_adc3=-1;      /* Value 0-Aref(3300) [mV] */
-  slog_entry_item.val_adc4=-1;      /* Value 0-Aref(3300) [mV] */
-  //slog_entry_item.val_flowrate=-1;  /* Value to be defined */
-
+  slog_entry_item.winddirection=-1;      /* Value 0-Aref(3300) [0-359°N] */
+  slog_entry_item.windvelocity =-1;      /* Value 0-Aref(3300) [m/s] */
+  
   // meas_task_init is called at meas_task startup
     
 //#if 0
@@ -416,31 +439,6 @@ char valuesReceived(void) { return __valuesReceived; }
 
 void stopMeasure(void) { __valuesReceived = -1; }
 void startMeasure(void) { __valuesReceived = 0; }
-
-/* flowcount is for counting the flow-impulses/ exchanged-volume */
-float get_FlowCount(void) { return flowCount; }
-float incr_FlowCount(void) { flowCount += (float)flowrateMeterImpulsVolume; return flowCount; }
-float clr_FlowCount(void) { float endValue = flowCount; flowCount = 0; return endValue; }
-
-int initFlowrateSensor(void) {
-  #if 1
-  // P0.3 as EINT1 Pumpenstellsignal
-  PCB_PINSEL0 = (PCB_PINSEL0 & ~PCB_PINSEL0_P03_MASK) | PCB_PINSEL0_P03_EINT1;
-
-  /* rest of EINT0 initialisation is done in \core\eints\eint0.c\eint0Init() -> already done for LPC-P2148\Button2 */
-  // things will be done in eint0ISR() 
-  #endif
-
-  // P0.30 as EINT3 FlowrateSensor
-  PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P030_EINT3) | PCB_PINSEL1_P030_EINT3;
-  eint3Init();
-  // things will be done in eint3ISR()
-
-  clr_FlowCount();
-  
-  return 0;
-}
-
 
 //*****************************************************************************
 //
