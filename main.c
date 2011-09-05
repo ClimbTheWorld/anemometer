@@ -47,6 +47,7 @@
 #endif
 
 #include "core/timer/timer.h"
+#include "core/timer/fiq.h"
 
 #ifdef CFG_DATALOGGER
   #include "logging.h"/* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
@@ -205,13 +206,22 @@ int main(void)
   // Configure USB Serial Port for Monitor input/output (9600/8N1)
   usbserInit();
   #endif
-
+//unsigned _cpsr;
+//#define FIQ_MASK 0x00000040
+//  _cpsr = __get_cpsr();
+//  __set_cpsr(_cpsr & ~FIQ_MASK);
+  
   while(1){
     //adcWindDirectionInit();
     capture13Init();
+    fiqFIQISRCopyToRAM();
+//taskDISABLE_INTERRUPTS();
+    fiqEnable();
+VIC_IntEnable |= VIC_IntEnable_Timer1;
     short tmp=0;
+    
     //tmp = adcWindDirectionRead();
-    while(getWindPeriod()==-1){}
+    while(getWindPeriod()==-10000){}
     printf("WV: %d, WD: %d\r\n", getWindPeriod(), tmp);
     clrWindPeriod();
     //vTaskDelay(30);

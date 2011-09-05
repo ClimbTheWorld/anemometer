@@ -56,17 +56,20 @@ void capture13Init(void)
 //  T1_CTCR |= T_CTCR_MODE_PCLK | T_CTCR_CIS_CAPN3;
   // Enable the timer:
 
-  VIC_IntSelect &= ~VIC_IntSelect_Timer1; // (IRQ Interrupt)
+  VIC_IntSelect |= VIC_IntSelect_Timer1; // (IRQ Interrupt)
   VIC_VectAddr12 = (portLONG) timer1ISR; // VectAddr12 hab ich mal so gewählt (ohne Hintergründe)
   VIC_VectCntl12 = VIC_VectCntl_ENABLE | VIC_Channel_Timer1;
   
+  // disable all interrupts except timer1
+  //long interruptEn = 
+
   // Interrupt will be enabled as soon as the system wants to take a measurement
   //VIC_IntEnable = VIC_IntEnable_Timer1;
-  VIC_IntEnable |= VIC_IntEnable_Timer1;
+//  VIC_IntEnable |= VIC_IntEnable_Timer1;
   portEXIT_CRITICAL ();
 }
 
-void timer1ISR(void) __attribute__ ((naked));
+void timer1ISR(void) __attribute__ ((interrupt ("FIQ")));
 void timer1ISR(void) 
 {
   portSAVE_CONTEXT ();
@@ -104,7 +107,7 @@ short getWindPeriod(void)
 {
   float windFrequency = (10000./__windPeriod);
       // v(f) = 1/1.8112*f+0.7572 [m/s]
-      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
+      //__windFrequency = 1/1.8112*__windFrequency+0.7572; // equation and values out of a interpolation based on measurements done in a wind tunnel.
       float windVelocity = 1/1.8112*windFrequency+0.7572;
   return (short)windFrequency;
 }
