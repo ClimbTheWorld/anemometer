@@ -55,7 +55,6 @@ __attribute__ ((packed)) intVects_t;
 //  
 //  
 //  
-//extern unsigned int __intvects; 
 unsigned int __intvects; 
 
 /**************************************************************************/
