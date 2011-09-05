@@ -1,0 +1,87 @@
+<!DOCTYPE CrossStudio_for_ARM_Session_File>
+<session>
+ <Bookmarks/>
+ <Breakpoints>
+  <BreakpointListItem line="169" action="" hardwareBreakpoint="" trigger="" useHWbreakpoint="false" group="Breakpoints" type="Breakpoint" state="3" counter="0" isFunctionBreakpoint="false" filename="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\core\adc\adc.c" expression="" />
+  <BreakpointListItem line="72" action="" hardwareBreakpoint="" trigger="" useHWbreakpoint="false" group="Breakpoints" type="Breakpoint" state="3" counter="0" isFunctionBreakpoint="false" filename="C:\users\lukas\desktop\lpc2148codebase_v0.1__ff-v0-04\lpc2148codebase_v0.1__ff-v0-04\source\meas_task.c" expression="" />
+ </Breakpoints>
+ <ExecutionCountWindow/>
+ <Memory1>
+  <MemoryWindow autoEvaluate="0" addressText="0x40001618" numColumns="8" sizeText="4" dataSize="1" radix="10" addressSpace="" />
+ </Memory1>
+ <Memory2>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory2>
+ <Memory3>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory3>
+ <Memory4>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory4>
+ <Project>
+  <ProjectSessionItem path="FreeRTOS_2148" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Drivers" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Drivers;lcd" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;System Files" name="unnamed" />
+ </Project>
+ <Register1>
+  <RegisterWindow openNodes="FIO;GPIO;PCB/PINSEL1;AD0/AD0CR;AD0/AD0GDR;AD0/ADGSR;AD0/AD0DR3;AD1/AD1CR;AD1/AD1GDR;AD1/AD1INTEN;AD1/AD1DR7;SSP/SSPCPSR;SCB/PCONP;SCB/SCS;SCB/EXTINT;SCB/INTWAKE;SCB/EXTMODE;SCB/EXTPOLAR;SCB/USBIntSt" binaryNodes="SSP/SSPCPSR;SSP/SSPCPSR/CPSDVSR" unsignedNodes="" visibleGroups="AD0;PCB;SCB;VIC;AD1;SSP;GPIO;FIO" decimalNodes="PCB/PINSEL1/P0_28;AD0/AD0CR/SEL;AD0/AD0GDR/RESULT;AD0/AD0DR3/RESULT;AD1/AD1CR/SEL;AD1/AD1CR/CLKDIV;AD1/AD1GDR/RESULT" octalNodes="" asciiNodes="" />
+ </Register1>
+ <Register2>
+  <RegisterWindow openNodes="" binaryNodes="" unsignedNodes="" visibleGroups="" decimalNodes="" octalNodes="" asciiNodes="" />
+ </Register2>
+ <Register3>
+  <RegisterWindow openNodes="" binaryNodes="" unsignedNodes="" visibleGroups="" decimalNodes="" octalNodes="" asciiNodes="" />
+ </Register3>
+ <Register4>
+  <RegisterWindow openNodes="" binaryNodes="" unsignedNodes="" visibleGroups="" decimalNodes="" octalNodes="" asciiNodes="" />
+ </Register4>
+ <TargetWindow programAction="" uploadFileType="" programLoadAddress="" programSize="" uploadFileName="" uploadMemoryInterface="" programFileName="" uploadStartAddress="" programFileType="" uploadSize="" programMemoryInterface="" />
+ <TraceWindow>
+  <Trace enabled="Yes" />
+ </TraceWindow>
+ <Watch1>
+  <Watches active="1" update="Each Second" >
+   <Watchpoint linenumber="0" radix="10" name="_valuesReceived" expression="_valuesReceived" filename="" />
+   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="16" name="logFilename" expression="logFilename" filename="" />
+   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="2" name="datetime" expression="datetime" filename="" />
+   <Watchpoint evalMode="1" linenumber="0" evalType="1" radix="16" name="ts" expression="ts" filename="" />
+   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="16" name="buf" expression="buf" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="_measure" expression="_measure" filename="" />
+   <Watchpoint evalMode="2" linenumber="0" numelements="5" evalType="0" radix="16" name="meas_op_item" expression="meas_op_item" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="slog_entry_item" expression="slog_entry_item" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="cdaylog_entry_item" expression="cdaylog_entry_item" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="count" expression="count" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="ret_state" expression="ret_state" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="i" expression="i" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="temp" expression="temp" filename="" />
+   <Watchpoint linenumber="0" radix="-1" name="rTh" expression="rTh" filename="" />
+   <Watchpoint evalMode="3" linenumber="0" evalType="1" radix="16" name="filename" expression="filename" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="temperature" expression="temperature" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="valADC" expression="valADC" filename="" />
+   <Watchpoint linenumber="0" radix="16" name="uADC" expression="uADC" filename="" />
+  </Watches>
+ </Watch1>
+ <Watch2>
+  <Watches active="0" update="Never" />
+ </Watch2>
+ <Watch3>
+  <Watches active="0" update="Never" />
+ </Watch3>
+ <Watch4>
+  <Watches active="0" update="Never" />
+ </Watch4>
+ <Files>
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="8" debugPath="C:\users\lukas\desktop\lpc2148codebase_v0.1__ff-v0-04\lpc2148codebase_v0.1__ff-v0-04\source\meas_task.c" y="54" path="C:\users\lukas\desktop\lpc2148codebase_v0.1__ff-v0-04\lpc2148codebase_v0.1__ff-v0-04\source\meas_task.c" left="0" selected="0" name="unnamed" top="28" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="14" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\meas_sm.c" y="302" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\meas_sm.c" left="0" selected="0" name="unnamed" top="271" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\main.c" y="241" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\main.c" left="0" selected="0" name="unnamed" top="241" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\core\adc\adc.c" y="164" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\core\adc\adc.c" left="0" selected="0" name="unnamed" top="146" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\FreeRTOS\Source\tasks.c" y="1583" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\FreeRTOS\Source\tasks.c" left="0" selected="0" name="unnamed" top="1583" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\ProjectConfig.h" y="16" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\ProjectConfig.h" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\users\lukas\desktop\lpc2148codebase_v0.1__ff-v0-04\lpc2148codebase_v0.1__ff-v0-04\source\monitor\monitor.c" y="1772" path="C:\users\lukas\desktop\lpc2148codebase_v0.1__ff-v0-04\lpc2148codebase_v0.1__ff-v0-04\source\monitor\monitor.c" left="0" selected="0" name="unnamed" top="1759" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\drivers\lcd\Lcd204_s.c" y="39" path="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\drivers\lcd\Lcd204_s.c" left="0" selected="1" name="unnamed" top="0" />
+ </Files>
+ <ARMCrossStudioWindow activeProject="FreeRTOS_2148" autoConnectTarget="Olimex ARM-USB-OCD" debugSearchFileMap="" fileDialogInitialDirectory="C:\Users\lukas\Desktop\LPC2148CodeBase_v0.1__ff-v0-04\LPC2148CodeBase_v0.1__ff-v0-04\Source\drivers\lcd" fileDialogDefaultFilter="" autoConnectCapabilities="1151" debugSearchPath="" buildConfiguration="ARM Flash Release" />
+</session>
