@@ -14,7 +14,7 @@
 //
 static volatile short fintcount = -1;
 static volatile long __windPeriod = -1;
-
+static volatile long save_interrupts=0;
 void timer1Init (void);
 void capture13Init(void);
 void timer1FlowRateInit(void);

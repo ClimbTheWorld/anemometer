@@ -89,8 +89,8 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     #ifdef CFG_DATALOGGER
 //    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
     #if 1
-//    measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
-//    measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
+    measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
+    measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
     #endif
     #endif
 
@@ -120,7 +120,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
     
     // Start monitor task
-    monitorTaskStart();
+    //monitorTaskStart();
     
     #if CFG_PLAY_STARTUP
     //beepMHALL();
@@ -205,22 +205,7 @@ int main(void)
   // Configure USB Serial Port for Monitor input/output (9600/8N1)
   usbserInit();
   #endif
-
-  while(1){
-    //adcWindDirectionInit();
-    capture13Init();
-    short tmp=0;
-    //tmp = adcWindDirectionRead();
-    while(getWindPeriod()==-1){}
-    printf("WV: %d, WD: %d\r\n", getWindPeriod(), tmp);
-    clrWindPeriod();
-    //vTaskDelay(30);
-    int i=0;
-    for(i=0;i<1000;i++){}
-  }
   
-  //malloc(tencounts, sizeof(10*sizeof(long)));
-
   // Create the startup task
   xTaskCreate (vStartupTask, (const signed portCHAR * const)"Startup", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES, &taskHandles[TASKHANDLE_STARTUP]);
 

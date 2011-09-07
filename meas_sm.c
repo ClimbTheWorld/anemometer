@@ -115,18 +115,20 @@ enum _LOG_ITEM_STATE meas_sm() {
 //                      //        printf ("not every meas_op was successful");
 //                          meas_op_item[i].state = IDLE;
 //                        }
-#if testWithoutADC
-                      meas_op_item[0].value = 30;
-#else
+//#if testWithoutADC == 1
+//                      meas_op_item[0].value = 30;
+//#else
                       startMeasure();
                       vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);
+                      int i = 0;
+                      for(i=0;i<100;i++){}
                       vTaskSuspend(NULL);
                       // waiting until 
                       while(!valuesReceived()) {
                         taskYIELD();                      
                       }
                       stopMeasure();
-#endif
+//#endif
                       getRtcRead (ts);
 
                       /*LUK 2011-03-24: wird in Pumpenstellsignal/ und Pumpenstellsignal\ verwendet.*/ //updateMeasure_timestamp(mktime(ts)); /** TODO: mktime macht vermutlich nicht die richtige Zeit aus ts */

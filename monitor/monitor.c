@@ -1772,5 +1772,5 @@ static portTASK_FUNCTION (vMonitorTask, pvParameters __attribute__ ((unused)))
 /**************************************************************************/
 signed portBASE_TYPE monitorTaskStart (void)
 {
-  return xTaskCreate (vMonitorTask,  (const signed portCHAR * const) "Monitor", 3000, NULL, (tskIDLE_PRIORITY + 3), &taskHandles [TASKHANDLE_MONITOR]);
+  return xTaskCreate (vMonitorTask,  (const signed portCHAR * const) "Monitor", 1024, NULL, (tskIDLE_PRIORITY + 3), &taskHandles [TASKHANDLE_MONITOR]);
 }
