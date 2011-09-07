@@ -170,11 +170,11 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
 
     vTaskResume(taskHandles[TASKHANDLE_MEASSM]);
     // suspend this task
-    vTaskSuspend(NULL);
+    //vTaskSuspend(NULL);
 
     // vTaskDelay will cause the task to be delayed for 
     // a specified number of ticks
-    // vTaskDelay(100);  // Wait 100 ticks or 1 second
+     vTaskDelay(100);  // Wait 100 ticks or 1 second
   }
 }
 
@@ -190,7 +190,7 @@ signed portBASE_TYPE measTaskStart (void)
   return xTaskCreate (
     vMeasTask,
     (const signed portCHAR * const) "Measure_Task",
-    configMINIMAL_STACK_SIZE, // ^= ((unsigned portSHORT) 128)^=configMINIMAL_STACK_SIZE
+    256, //configMINIMAL_STACK_SIZE, // ^= ((unsigned portSHORT) 128)^=configMINIMAL_STACK_SIZE
     NULL,
     (tskIDLE_PRIORITY + 4),
     &taskHandles [TASKHANDLE_MEASTASK]);

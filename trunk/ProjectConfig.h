@@ -203,7 +203,7 @@
 */
 /**************************************************************************/
 #define CFG_LED_RUNLEDONSTARTUP       1                                       // Run the led task on startup (to confirm board is OK)
-#define CFG_PLAY_STARTUP              0
+#define CFG_PLAY_STARTUP              1
 
 /**************************************************************************/
 /*! 

@@ -28,9 +28,17 @@ void timer1Init (void)
 // CAP0.0 at P0.22
 void capture13Init(void) 
 {
+  #define P021CAP13
+  //#define P022CAP00
   timer1Init();
+  #ifdef P021CAP13
+  save_interrupts = VIC_IntEnable;
+  VIC_IntEnClr = save_interrupts;
   PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P021_MASK) | PCB_PINSEL1_P021_CAP13;
-
+  #endif
+  #ifdef P022CAP00
+  PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P022_MASK) | PCB_PINSEL1_P022_CAP00;
+  #endif
   portENTER_CRITICAL();
   
   // Prescale to a frequency that is good enough to get a decent resolution,
@@ -49,16 +57,27 @@ void capture13Init(void)
   
   //  Reset timer counter and prescaler counter registers:  
   T1_TCR = 2;
+  T1_TCR = 1;
   // Configure capture channel 0 to capture on the rising edge: 
+  #ifdef P021CAP13
   T1_CCR |= T_CCR_CAP3RE | T_CCR_CAP3I;
   T1_CCR &= ~T_CCR_CAP3FE;
   //Counter Mode: TC is incremented on rising edges on the CAP1.3@P0.21
-//  T1_CTCR |= T_CTCR_MODE_PCLK | T_CTCR_CIS_CAPN3;
+  T1_CTCR |= T_CTCR_MODE_PCLK | T_CTCR_CIS_CAPN3;
+  #endif
+  #ifdef P022CAP00
+  T1_CCR |= (T_CCR_CAP0RE | T_CCR_CAP0I);
+  T1_CCR &= ~T_CCR_CAP0FE;
+  //Counter Mode: TC is incremented on rising edges on the CAP1.3@P0.21
+  T1_CTCR |= T_CTCR_MODE_PCLK;
+  T1_CTCR &= ~T_CTCR_CIS_CAPN0;
+  #endif
   // Enable the timer:
 
   VIC_IntSelect &= ~VIC_IntSelect_Timer1; // (IRQ Interrupt)
   VIC_VectAddr12 = (portLONG) timer1ISR; // VectAddr12 hab ich mal so gewählt (ohne Hintergründe)
-  VIC_VectCntl12 = VIC_VectCntl_ENABLE | VIC_Channel_Timer1;
+  //VIC_VectCntl12 = (VIC_VectCntl_ENABLE | VIC_Channel_Timer1);
+  VIC_VectCntl12 = 5;
   
   // Interrupt will be enabled as soon as the system wants to take a measurement
   //VIC_IntEnable = VIC_IntEnable_Timer1;
@@ -66,7 +85,8 @@ void capture13Init(void)
   portEXIT_CRITICAL ();
 }
 
-void timer1ISR(void) __attribute__ ((naked));
+//void timer1ISR(void) __attribute__ ((naked));
+void timer1ISR(void)__attribute__ ((interrupt("IRQ")));
 void timer1ISR(void) 
 {
   portSAVE_CONTEXT ();
@@ -87,6 +107,7 @@ static void timer1ISR_Handler (void)
       // Interrupt Disable
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
       __windPeriod = val/10;
+      fintcount = -1;
     }
   }
   else if(fintcount == -1) 
@@ -95,6 +116,7 @@ static void timer1ISR_Handler (void)
     T1_TCR = 2;
     T1_TCR = 1;
   }
+  VIC_IntEnable = save_interrupts;
   VIC_VectAddr = (unsigned portLONG) 0;
 }
 
