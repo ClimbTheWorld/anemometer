@@ -13,15 +13,17 @@
 //
 //
 static volatile short fintcount = -1;
-static volatile long __windPeriod = -1;
-static volatile save_interrupts=0;
+static volatile short __windPeriod = -1;
+static volatile float _tmp = -1.0;
+static volatile long save_interrupts=0;
+static volatile long val=-1;
 void timer1Init (void);
-void capture13Init(void);
+int capture13Init(void);
 void timer1FlowRateInit(void);
 static void timer1ISR_Handler (void);
 void timer0ISR(void);
 void timer1ISR(void) __attribute__ ((naked));
 
-short getWindPeriod(void);
+int getWindPeriod(void);
 void clrWindPeriod(void);
 #endif

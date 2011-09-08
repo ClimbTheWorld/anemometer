@@ -161,6 +161,11 @@ FIL FileContLog, FileDayLog, /*FileMonthLog,*/ FileAllTimeLog; /* File objects *
  */
 static char logFilename[18];
 
+static volatile float __windFrequency=-1;
+setWindFrequency(short value);
+int getWindFrequency(void);
+void clrWindFrequency(void);
+
 void incr_SumFlowvolume(void);
 
 static volatile unsigned short daysLogging; /** counts the days the system is logging. Is going to be increment for the following day at 23.55h */

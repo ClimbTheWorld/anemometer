@@ -330,6 +330,7 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
       set_measure(2);
       //updateMeasure_timestamp(mktime(ts));
       item_state = meas_sm();
+      debug_printf("WF: %d\r\n", meas_op_item[1].value);
     }
 
     //debug_printf("Counted: %d\r\n", timer1FlowRateStop());
@@ -341,8 +342,8 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
 //    #endif
 
     // suspend this task
-    //vTaskSuspend(NULL);
-    vTaskDelay(100);
+    vTaskSuspend(NULL);
+    //vTaskDelay(100);
   }
 }
 

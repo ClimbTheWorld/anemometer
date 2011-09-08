@@ -648,6 +648,26 @@ void luk_strcpy(char *to, char *from, char howMany) {
   }
 }
 
+
+setWindFrequency(short value)
+{
+  __windFrequency = value;
+}
+
+int getWindFrequency(void)
+{
+  float tmpa=-1;
+   tmpa= __windFrequency / 1000.0; // Basiswechsel [1ms]=>[1s]
+  //__windFrequency /= 30.0; // 10T=>1T
+  __windFrequency = 1.0 / tmpa; // f=1/T
+  return __windFrequency;
+}
+
+void clrWindFrequency(void)
+{
+  __windFrequency = 0;
+}
+
 //*****************************************************************************
 //
 // Close the Doxygen group.

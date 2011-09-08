@@ -120,7 +120,8 @@ enum _LOG_ITEM_STATE meas_sm() {
 //#else
                       startMeasure();
                       vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);
-                      taskDelay(100);
+                      int i = 0;
+                      for(i=0;i<100;i++){}
                       vTaskSuspend(NULL);
                       // waiting until 
                       while(!valuesReceived()) {
@@ -329,6 +330,7 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
       set_measure(2);
       //updateMeasure_timestamp(mktime(ts));
       item_state = meas_sm();
+      debug_printf("WF: %d\r\n", meas_op_item[1].value);
     }
 
     //debug_printf("Counted: %d\r\n", timer1FlowRateStop());

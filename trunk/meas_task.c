@@ -73,11 +73,15 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
                         GPIO1_FIOSET |= GPIO_IO_P28;
                       }
                       /** TODO: start the measurement here */
-                      portENTER_CRITICAL ();
+                      //portENTER_CRITICAL ();
                       meas_op_item[meas_op_key].measInit(); // adcInit
-                      
+                      if(meas_op_key==1)
+                      {
+                        vTaskSuspend(NULL);
+                      }
                       //LUK enter critical
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
+                      //printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
                       //LUK quit critical
                       portEXIT_CRITICAL ();
 
@@ -118,7 +122,7 @@ void meas_task_init(void) {
   meas_op_item[1].value    =  -1;
   meas_op_item[1].pt2func  = meas_wind;
   meas_op_item[1].measInit = capture13Init;
-  meas_op_item[1].measRead = getWindPeriod;
+  meas_op_item[1].measRead = getWindFrequency;
   meas_op_item[1].state    = INIT;
      
   /** meas_op_item: [0]:  Wind direction
@@ -165,16 +169,18 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
     if(valuesReceived() == -1); // wait - do nothing
     else if(valuesReceived() == 0) {  // start measure
       doMeasure();
+      if(valuesReceived())
+        printf("MT: %d\r\n", meas_op_item[1].value);
     }
     
 
     vTaskResume(taskHandles[TASKHANDLE_MEASSM]);
     // suspend this task
-    //vTaskSuspend(NULL);
+    vTaskSuspend(NULL);
 
     // vTaskDelay will cause the task to be delayed for 
     // a specified number of ticks
-     vTaskDelay(100);  // Wait 100 ticks or 1 second
+    // vTaskDelay(100);  // Wait 100 ticks or 1 second
   }
 }
 
