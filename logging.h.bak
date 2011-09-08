@@ -161,6 +161,11 @@ FIL FileContLog, FileDayLog, /*FileMonthLog,*/ FileAllTimeLog; /* File objects *
  */
 static char logFilename[18];
 
+static volatile int __windFrequency=-1;
+setWindFrequency(short value);
+int getWindFrequency(void);
+void clrWindFrequency(void);
+
 void incr_SumFlowvolume(void);
 
 static volatile unsigned short daysLogging; /** counts the days the system is logging. Is going to be increment for the following day at 23.55h */
@@ -171,7 +176,7 @@ void updateCDayLogEntryItem(void);
 void updateCLogEntryItem(void);
 
 
-
+#if CFG_LCD == 1
 /**********************************************************************************************************************
  ******************* LCD Routines *************************************************************************************
 **********************************************************************************************************************/
@@ -347,6 +352,7 @@ static const float reportScreenConfig[12][4][2] = {
 #define FILL_BUF_WITH_VALUES(value, position)          { if(value != 0) { b_itoab(*numberAsChar, value); for(count=0; count < nrOfDigits(value, 10); count++) { buf[(int)(position - count)] = numberAsChar[count]; } } strcpy(numberAsChar, "     "); }
 
 void luk_strcpy(char *to, char *from, char howMany);
+#endif // #if CFG_LCD == 1
 #endif
 
 //*****************************************************************************

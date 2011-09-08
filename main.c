@@ -68,7 +68,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
 /* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
     
-    #if CFG_RTC == 1
+    #ifdef CFG_RTC
     // Initialise RTC
     rtcInit();
     #endif
@@ -77,7 +77,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     GPIO0_FIODIR |= (1<<11);
     GPIO0_FIOCLR |= (1<<11);
     
-    #if 0
+    #if 1
     rtcSetAlarmCIIR(RTC_CIIR_IMMIN);
     #endif
 
@@ -120,7 +120,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
     
     // Start monitor task
-    //monitorTaskStart();
+    monitorTaskStart();
     
     #if CFG_PLAY_STARTUP
     //beepMHALL();
@@ -128,7 +128,6 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     //beepA_TEAM_THEME();
     #endif
 
-    
     // Remove startup task.  The monitor will only start after the current
     // task is deleted since 'Startup' has a higher priority.
     vTaskDelete(NULL);

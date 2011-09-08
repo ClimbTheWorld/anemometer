@@ -449,23 +449,23 @@ void updateCLogEntryItem(void) {
 }
 #endif
 
-void incr_SumFlowvolume(void) { 
-  slog_entry_item.flowvolume += flowrateMeterImpulsVolume;
-
-  #ifdef logCDaySummary
-  cdaylog_entry_item.sum_flowvolume += flowrateMeterImpulsVolume;
-  #endif
-
-  #ifdef logAllTimeSummary
-  clog_entry_item.sum_flowvolume    += flowrateMeterImpulsVolume; 
-  #endif
-}
+//void incr_SumFlowvolume(void) { 
+//  slog_entry_item.flowvolume += flowrateMeterImpulsVolume;
+//
+//  #ifdef logCDaySummary
+//  cdaylog_entry_item.sum_flowvolume += flowrateMeterImpulsVolume;
+//  #endif
+//
+//  #ifdef logAllTimeSummary
+//  clog_entry_item.sum_flowvolume    += flowrateMeterImpulsVolume; 
+//  #endif
+//}
 
 
 void init_daysLogging(void) { daysLogging = 1; }
 unsigned short incr_daysLogging(void) { daysLogging++; return daysLogging; };
 
-
+#if CFG_LCD == 1
 void feedLCD(void)
 {
   //GPIO1_FIOSET2 |= (1<<0); // CS
@@ -592,6 +592,7 @@ void feedLCD(void)
   }
   actReportScreen = 0;
 }
+#endif
 
 /** int to string
     to bypass the sprintf-function because of too much stack usage we have this function which uses less stack.
@@ -645,6 +646,26 @@ void luk_strcpy(char *to, char *from, char howMany) {
     to[howMany-1] = from[howMany-1];
     howMany--;
   }
+}
+
+
+setWindFrequency(short value)
+{
+  __windFrequency = value;
+}
+
+int getWindFrequency(void)
+{
+  float tmpa=-1;
+   tmap= __windFrequency / 1000.0; // Basiswechsel [1ms]=>[1s]
+  //__windFrequency /= 30.0; // 10T=>1T
+  __windFrequency = 1.0 / tmpa; // f=1/T
+  return __windFrequency;
+}
+
+void clrWindFrequency(void)
+{
+  __windFrequency = 0;
 }
 
 //*****************************************************************************

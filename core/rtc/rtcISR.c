@@ -65,13 +65,13 @@ static void rtcISR_Handler (void)
 
     #if CFG_LCD == 1
     // updateLCD every 5 minutes with an offset of 4 minutes
-    if((RTC_MIN == 42) | (RTC_MIN == 4) | (RTC_MIN == 9) | (RTC_MIN == 14) | (RTC_MIN == 19) | (RTC_MIN == 24) | (RTC_MIN == 29) | (RTC_MIN == 34) | (RTC_MIN == 39) | (RTC_MIN == 44) | (RTC_MIN == 49) | (RTC_MIN == 54) | (RTC_MIN == 59)) {
-      set_updateLCD();
-      //xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
-      RTC_ILR = RTC_ILR_RTCCIF;
-    }
+//    if((RTC_MIN == 42) | (RTC_MIN == 4) | (RTC_MIN == 9) | (RTC_MIN == 14) | (RTC_MIN == 19) | (RTC_MIN == 24) | (RTC_MIN == 29) | (RTC_MIN == 34) | (RTC_MIN == 39) | (RTC_MIN == 44) | (RTC_MIN == 49) | (RTC_MIN == 54) | (RTC_MIN == 59)) {
+//      set_updateLCD();
+//      xTaskResumeFromISR(taskHandles[TASKHANDLE_LCD]);
+//      
+//    }
     #endif
-    
+    RTC_ILR = RTC_ILR_RTCCIF;
   }
 
   /* if time specific alarm interrupt fired */

@@ -13,7 +13,8 @@
 #include <time.h>
 #include "FreeRTOS.h"
 #include "core/rtc/rtc.h"
-
+#include "meas_sm.h"
+#include "logging.h"
 #include "timer.h"
 
 
@@ -26,14 +27,12 @@ void timer1Init (void)
 }
 
 // CAP0.0 at P0.22
-void capture13Init(void) 
+int capture13Init(void) 
 {
   #define P021CAP13
   //#define P022CAP00
   timer1Init();
   #ifdef P021CAP13
-  save_interrupts = VIC_IntEnable;
-  VIC_IntEnClr = save_interrupts;
   PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P021_MASK) | PCB_PINSEL1_P021_CAP13;
   #endif
   #ifdef P022CAP00
@@ -48,7 +47,7 @@ void capture13Init(void)
      configCPU_CLOCK_HZ ^= 48MHz
     */
 
-  T1_PR =  4799;//100us// 4799//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
+  T1_PR =  47999;//4799;//100us// 4799//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
 
   /* TimerCounter and MR3 enables the system to recognize that there is a flowrate=0.  
      After 10 seconds of no reaction we decide the system-pump is in halt mode / flowrate = 0.
@@ -72,8 +71,6 @@ void capture13Init(void)
   T1_CTCR |= T_CTCR_MODE_PCLK;
   T1_CTCR &= ~T_CTCR_CIS_CAPN0;
   #endif
-  // Enable the timer:
-
   VIC_IntSelect &= ~VIC_IntSelect_Timer1; // (IRQ Interrupt)
   VIC_VectAddr12 = (portLONG) timer1ISR; // VectAddr12 hab ich mal so gewählt (ohne Hintergründe)
   VIC_VectCntl12 = (VIC_VectCntl_ENABLE | VIC_Channel_Timer1);
@@ -81,6 +78,7 @@ void capture13Init(void)
   // Interrupt will be enabled as soon as the system wants to take a measurement
   VIC_IntEnable |= VIC_IntEnable_Timer1;
   portEXIT_CRITICAL ();
+  return 0;
 }
 
 //void timer1ISR(void) __attribute__ ((naked));
@@ -94,43 +92,56 @@ void timer1ISR(void)
 
 static void timer1ISR_Handler (void)
 {
+  val = (long) T1_TC;
+
   T1_IR |= T_IR_CR3;
   //acknowledge timer1 interrupt (overflow)
-  long val = (long) T1_CR3;
-
-  if((fintcount >= 0) && (fintcount <= 10))
+  
+  
+  //if((fintcount >= 0) && (fintcount <= 1))
+  if(fintcount == 1)
   {
-    fintcount++;
-    if(fintcount==10) {
       // Interrupt Disable
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
-      __windPeriod = val/10;
-      fintcount = -1;
-    }
+      SCB_PCONP |= SCB_PCONP_PCTIM1; // Powerdown timer1
+      meas_op_item[1].value = val;
+      setWindFrequency(val);
+      fintcount = 0;
+      xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
+      VIC_IntEnable = save_interrupts;
   }
-  else if(fintcount == -1) 
+  // first time in this routine; start timer. Do NOT enter this routine when finished, that's why the check on '&& (VIC_IntEnable & VIC_IntEnable_Timer1)'
+  else if((fintcount == 0) && (VIC_IntEnable & VIC_IntEnable_Timer1)) 
   {
-    fintcount=0;
+    fintcount=1;
     T1_TCR = 2;
+    save_interrupts = VIC_IntEnable & ~VIC_IntEnable_Timer1;
+    VIC_IntEnClr = save_interrupts;
+    //VIC_IntEnable |= VIC_IntEnable_Timer1;
     T1_TCR = 1;
   }
-  VIC_IntEnable = save_interrupts;
   VIC_VectAddr = (unsigned portLONG) 0;
 }
 
 
-short getWindPeriod(void)
+int getWindPeriod(void)
 {
-  float windFrequency = (10000./__windPeriod);
-      // v(f) = 1/1.8112*f+0.7572 [m/s]
-      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
-      float windVelocity = 1/1.8112*windFrequency+0.7572;
-  return (short)windFrequency;
+//  float windFrequency = (10000./__windPeriod);
+//      // v(f) = 1/1.8112*f+0.7572 [m/s]
+//      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
+//      float windVelocity = 1/1.8112*windFrequency+0.7572;
+//  return (short)windFrequency;
+  return __windPeriod;
 }
 
 void clrWindPeriod(void)
 {
   __windPeriod = -1;
+}
+
+void setWindPeriod(short value)
+{
+  __windPeriod = value;
 }
 
 
