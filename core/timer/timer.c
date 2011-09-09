@@ -47,7 +47,7 @@ int capture13Init(void)
      configCPU_CLOCK_HZ ^= 48MHz
     */
 
-  T1_PR =  47999;//4799;//100us// 4799//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
+  T1_PR =  11999;//Abtastfrequenz:4kHz//4799;//100us//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
 
   /* TimerCounter and MR3 enables the system to recognize that there is a flowrate=0.  
      After 10 seconds of no reaction we decide the system-pump is in halt mode / flowrate = 0.
@@ -97,7 +97,7 @@ static void timer1ISR_Handler (void)
   T1_IR |= T_IR_CR3;
   //acknowledge timer1 interrupt (overflow)
   
-  
+  meas_op_item[1].value = 0;
   //if((fintcount >= 0) && (fintcount <= 1))
   if(fintcount == 1)
   {
@@ -105,18 +105,20 @@ static void timer1ISR_Handler (void)
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
       SCB_PCONP |= SCB_PCONP_PCTIM1; // Powerdown timer1
       meas_op_item[1].value = val;
-      setWindFrequency(val);
+      setWindPeriodTime(val);
       fintcount = 0;
-      xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
-      VIC_IntEnable = save_interrupts;
+      // not in use 'cause of the task is on-going and has to stop the interrupt when no interrupt fires(no wind)
+      // xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
+      //VIC_IntEnable = save_interrupts;
   }
   // first time in this routine; start timer. Do NOT enter this routine when finished, that's why the check on '&& (VIC_IntEnable & VIC_IntEnable_Timer1)'
   else if((fintcount == 0) && (VIC_IntEnable & VIC_IntEnable_Timer1)) 
   {
     fintcount=1;
     T1_TCR = 2;
-    save_interrupts = VIC_IntEnable & ~VIC_IntEnable_Timer1;
-    VIC_IntEnClr = save_interrupts;
+    T1_CR3 = 0;
+    //save_interrupts = VIC_IntEnable & ~VIC_IntEnable_Timer1;
+    //VIC_IntEnClr = save_interrupts;
     //VIC_IntEnable |= VIC_IntEnable_Timer1;
     T1_TCR = 1;
   }
@@ -142,6 +144,11 @@ void clrWindPeriod(void)
 void setWindPeriod(short value)
 {
   __windPeriod = value;
+}
+
+int getFIntCount(void)
+{
+  return fintcount;
 }
 
 

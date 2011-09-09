@@ -51,7 +51,7 @@
 #define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010-2011" // The copyright notice for this project if you wish to display it
 
 
-#define configGENERATE_RUN_TIME_STATS 0 // Timer 1 is used as counter for the windvelocity measurement
+//#define configGENERATE_RUN_TIME_STATS 0 // Timer 1 is used as counter for the windvelocity measurement
 /**************************************************************************/
 /*! 
     DataLogger settings
@@ -112,6 +112,8 @@
   #define ADSPAN 1024 /* 10Bit conversion*/
   #define get_AD_mV(intval) (AREF/ADSPAN*intval)
 
+  #define WindDirectionOffset
+
   /*<! Resolution of the flowmeter (2.5 liter per impuls)  */
   #define flowrateMeterImpulsVolume 2.5f
 
@@ -122,6 +124,9 @@
   
   #define adcWindDirectionRead            adcRead0_2
   #define adcWindDirectionInit            adcInit0_2
+
+  #define adcWindDirectionPowerRead       adcRead0_1
+  #define adcWindDirectionPowerInit       adcInit0_1
 
   /* Winddirection Sensor:
    *   A LM334Z run by a 120Ohm/1% resistor delivers a constant current of Iset=67.7mV/Rset=67.7mV/120Ohm=564uA

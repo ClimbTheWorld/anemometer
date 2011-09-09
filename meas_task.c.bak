@@ -65,20 +65,20 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
     case START:     { /* launch of measure */
                       meas_op_item[meas_op_key].value = -1;
                       
-                      // ADC config
-                      if(meas_op_key==0)
-                      {
-                        // Force pin 0.28 to function as GPIO 'high' to power the current-source for the winddirection
-                        PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P028_MASK) | PCB_PINSEL1_P028_GPIO;
-                        GPIO0_FIODIR |= GPIO_IO_P28;
-                        GPIO0_FIOSET |= GPIO_IO_P28;
-                      }
                       /** TODO: start the measurement here */
                       //portENTER_CRITICAL ();
+                      while(1){}
                       meas_op_item[meas_op_key].measInit(); // adcInit
                       if(meas_op_key==1)
                       {
-                        vTaskSuspend(NULL);
+                        vTaskDelay(20); // 2sec break, wait for interrupt(frequency counting), if value is still zero turn off the interrupt (there is no wind)
+                        if(getFIntCount()==0)
+                        {
+                          VIC_IntEnable &= ~VIC_IntEnable_Timer1;
+                          SCB_PCONP |= SCB_PCONP_PCTIM1; // Powerdown timer1
+                          meas_op_item[1].value = 0;
+                          printf("disabled\r\n");
+                        }
                       }
                       //LUK enter critical
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
@@ -90,15 +90,9 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
 
                       // LED2 ausschalten
                       GPIO0_FIOSET |= (1<<11);
-                     
-                      // safe power; (current-source)
-                      if(meas_op_key==0)
-                      {
-                        // Force pin 0.28 to function as GPIO 'low' to safe power by the current-source for the winddirection
-                        GPIO1_FIOCLR |= GPIO_IO_P28;
-                      }
+                    
                       meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
-                    }
+                  }
 //      WAITING:   { /* waiting on end of conversion */ 
 //                   break; }
     case SAVEVALUE: { /** - data ready to be saved into queue, SD card / UART....., 
@@ -123,9 +117,15 @@ void meas_task_init(void) {
   meas_op_item[1].value    =  -1;
   meas_op_item[1].pt2func  = meas_wind;
   meas_op_item[1].measInit = capture13Init;
-  meas_op_item[1].measRead = getWindFrequency;
+  meas_op_item[1].measRead = getWindSpeed;
   meas_op_item[1].state    = INIT;
-     
+  
+  //  strcpy(meas_op_item[1].name, "WindVelocity");
+  meas_op_item[2].value    =  -1;
+  meas_op_item[2].pt2func  = meas_wind;
+  meas_op_item[2].measInit = adcWindDirectionInit;//adcWindDirectionPowerInit;
+  meas_op_item[2].measRead = adcWindDirectionRead;//adcWindDirectionPowerRead;
+  meas_op_item[2].state    = INIT;
   /** meas_op_item: [0]:  Wind direction
    *                [1]:  Wind velocity
    */
@@ -137,7 +137,7 @@ void doMeasure(void) {
   */
   int i=0;
   enum _LOG_ITEM_STATE ret_state = START;
-  for(i=0; i< MEAS_OP_ITEMS; i++) {
+  for(i=0; i< 1/*MEAS_OP_ITEMS*/; i++) {
     ret_state = meas_op_item[i].pt2func(i);
 //      if(ret_state != SAVEVALUE)/* not every meas_op was successful (eventually there is some exception handling todo) */
 //        printf ("not every meas_op was successful");
@@ -171,7 +171,7 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
     else if(valuesReceived() == 0) {  // start measure
       doMeasure();
       if(valuesReceived())
-        printf("MT: %d\r\n", meas_op_item[1].value);
+        printf("WD: %d, WS:%d, PV: %d\r\n", meas_op_item[0].value, meas_op_item[1].value, meas_op_item[2].value);
     }
     
 

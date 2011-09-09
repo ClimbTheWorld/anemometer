@@ -26,4 +26,5 @@ void timer1ISR(void) __attribute__ ((naked));
 
 int getWindPeriod(void);
 void clrWindPeriod(void);
+int getFIntCount(void);
 #endif
