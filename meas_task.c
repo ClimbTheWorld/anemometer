@@ -70,7 +70,8 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
                       {
                         // Force pin 0.28 to function as GPIO 'high' to power the current-source for the winddirection
                         PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P028_MASK) | PCB_PINSEL1_P028_GPIO;
-                        GPIO1_FIOSET |= GPIO_IO_P28;
+                        GPIO0_FIODIR |= GPIO_IO_P28;
+                        GPIO0_FIOSET |= GPIO_IO_P28;
                       }
                       /** TODO: start the measurement here */
                       //portENTER_CRITICAL ();
@@ -94,7 +95,7 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
                       if(meas_op_key==0)
                       {
                         // Force pin 0.28 to function as GPIO 'low' to safe power by the current-source for the winddirection
-                        GPIO1_FIOCLR |= GPIO_IO_P28;
+                        GPIO0_FIOCLR |= GPIO_IO_P28;
                       }
                       meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
                     }
