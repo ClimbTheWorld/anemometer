@@ -33,7 +33,7 @@
 #include "core/adc/adc.h"
 #include "ProjectConfig.h"
 
-#define MEAS_OP_ITEMS 2
+#define MEAS_OP_ITEMS 3
 
 /**
  * Measurement State Machine States

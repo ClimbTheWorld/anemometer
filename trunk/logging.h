@@ -84,7 +84,7 @@ volatile typedef struct
     //char  datetime[20];     /* YYYY-MM-DD_HH-mm(24h)-ss'\0' */
     time_t datetime;
     unsigned short winddirection;         /* Value 0-Aref(3300) [0-359°N] */
-    unsigned short windvelocity;    /* summed-up over a whole day */
+    unsigned short windspeed;    /* summed-up over a whole day */
 } /* __attribute__ ((packed)) */ _SLOG_ENTRY_ITEM;
 _SLOG_ENTRY_ITEM slog_entry_item;
 #define _SLOG_ENTRY_ITEM_SIZE 32
@@ -161,10 +161,10 @@ FIL FileContLog, FileDayLog, /*FileMonthLog,*/ FileAllTimeLog; /* File objects *
  */
 static char logFilename[18];
 
-static volatile float __windFrequency=-1;
-setWindFrequency(short value);
-int getWindFrequency(void);
-void clrWindFrequency(void);
+static volatile float __windPeriodTime = -1;
+setWindPeriodTime(short value);
+int getWindSpeed(void);
+void clrWindPeriodTime(void);
 
 void incr_SumFlowvolume(void);
 

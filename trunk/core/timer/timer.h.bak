@@ -12,7 +12,7 @@
 //
 //
 //
-static volatile short fintcount = -1;
+static volatile char fintcount = 0;
 static volatile short __windPeriod = -1;
 static volatile float _tmp = -1.0;
 static volatile long save_interrupts=0;
