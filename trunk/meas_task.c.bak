@@ -70,7 +70,8 @@ enum _LOG_ITEM_STATE meas_wind(char meas_op_key) {
                       {
                         // Force pin 0.28 to function as GPIO 'high' to power the current-source for the winddirection
                         PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P028_MASK) | PCB_PINSEL1_P028_GPIO;
-                        GPIO1_FIOSET |= GPIO_IO_P28;
+                        GPIO0_FIODIR |= GPIO_IO_P28;
+                        GPIO0_FIOSET |= GPIO_IO_P28;
                       }
                       /** TODO: start the measurement here */
                       //portENTER_CRITICAL ();
@@ -169,7 +170,8 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
     if(valuesReceived() == -1); // wait - do nothing
     else if(valuesReceived() == 0) {  // start measure
       doMeasure();
-      printf("MT: %d\r\n", meas_op_item[1].value);
+      if(valuesReceived())
+        printf("MT: %d\r\n", meas_op_item[1].value);
     }
     
 
