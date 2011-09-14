@@ -210,7 +210,7 @@ enum _LOG_ITEM_STATE meas_sm() {
                           
                           strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
-                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windspeed);
+                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windvelocity);
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
                           ret = f_close(&FileContLog);
                           #endif 

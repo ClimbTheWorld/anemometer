@@ -54,14 +54,14 @@ char time_buf[30];
 
 //void fillSlogEntryItem(char *datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
 //void fillSlogEntryItem(time_t datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
-void fillSlogEntryItem(unsigned short winddirection, unsigned short windspeed) {
+void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity) {
   /* YYYY-MM-DD_HH(24h)-mm-ss */
 
   //strcpy((char *)slog_entry_item.datetime, datetime); /* YYYY-MM-DD;HH(24h)-mm-ss */
  slog_entry_item.datetime = ts;
   //slog_entry_item.datetime = datetime;
   slog_entry_item.winddirection = winddirection;
-  slog_entry_item.windspeed = windspeed;
+  slog_entry_item.windvelocity = windvelocity;
   if(getMeasure_timestamp_diff()) {
     //slog_entry_item.power = (float) (temp_energy / getMeasure_timestamp_diff());
   }
@@ -648,29 +648,37 @@ void luk_strcpy(char *to, char *from, char howMany) {
   }
 }
 
-int getWindDirection(void)
+
+setWindFrequency(short value)
 {
-  meas_op_item[2].value = 360.0 / meas_op_item[3].value * meas_op_item[2].value + WindDirectionOffset;
-  return meas_op_item[2].value;
+  __windFrequency = value;
 }
 
-setWindPeriodTime(short value)
-{
-  __windPeriodTime = value;
-}
-
-int getWindSpeed(void)
+int getWindFrequency(void)
 {
   float tmpa=-1;
-   tmpa= __windPeriodTime / 4000.0; // Basiswechsel [4kHz=250us]=>[1s]
-  //__windFrequency /= 30.0; // 10T=>1T
-  __windPeriodTime = 1.0 / tmpa; // f=1/T
-  return __windPeriodTime;
+  if(meas_op_item[1].value > 0)
+  {
+    /*
+    c:  Countervalue (T1_CR3)
+    dT: timebase for one increment of T1_CR3 [100us]=48'000'000Hz/480=100'000
+    f:  Frequency
+    T:  Periodtime of the measured frequency
+    T[us] = c * 100us             T=500*100us=50000us    \
+                                                           => Factor=100us/1'000'000us=0.1
+    T[s]  = T / 1000000           T=50000/1000000=0.05s  /
+    f     = 1 / T[s]              f=1/0.05s=20Hz
+
+    */
+    tmpa= meas_op_item[1].value / 4000.0; // Basiswechsel [1ms]=>[1s] 1000.0-1kHz; 40000-4kHz; 
+    meas_op_item[1].value = 1.0 / tmpa; // f=1/T
+  }
+  return meas_op_item[1].value;
 }
 
-void clrWindPeriodTime(void)
+void clrWindFrequency(void)
 {
-  __windPeriodTime = 0;
+  __windFrequency = 0;
 }
 
 //*****************************************************************************

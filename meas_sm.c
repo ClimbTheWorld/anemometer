@@ -140,7 +140,6 @@ enum _LOG_ITEM_STATE meas_sm() {
                       #endif
                       fillSlogEntryItem((unsigned short)meas_op_item[0].value, (unsigned short)meas_op_item[1].value);
                       
-                      
             //LUK 2011-05-25: neu ist buf von 59 auf 20 verkleinert worden. Erhoffe mir weniger stack probleme.
 
                       state_LOGGER = SAVEVALUE; // go directly to the SAVEVALUE state
@@ -210,7 +209,7 @@ enum _LOG_ITEM_STATE meas_sm() {
                           
                           strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
-                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windspeed);
+                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windvelocity);
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
                           ret = f_close(&FileContLog);
                           #endif 
@@ -278,7 +277,7 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
   /* set structs to a defined state */
 //  strcpy(slog_entry_item.datetime, "00000000000000000000");       /* YYYY-MM-DD_HH-mm(24h)-ss */
   slog_entry_item.winddirection=-1;      /* Value 0-Aref(3300) [0-359°N] */
-  slog_entry_item.windspeed =-1;      /* Value 0-Aref(3300) [m/s] */
+  slog_entry_item.windvelocity =-1;      /* Value 0-Aref(3300) [m/s] */
   
   // meas_task_init is called at meas_task startup
     

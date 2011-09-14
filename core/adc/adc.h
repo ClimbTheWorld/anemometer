@@ -23,9 +23,21 @@ int adcInit0_2 (void);
 int adcRead0_3 (void);
 int adcInit0_3 (void);
 
+/* 10bit Conversion P0.25 */
+int adcRead0_4 (void);
+int adcInit0_4 (void);
+
 /* 10bit Conversion P0.8 */
 int adcRead1_1 (void);
 int adcInit1_1 (void);
+
+/* 10bit Conversion P0.12 */
+int adcRead1_3 (void);
+int adcInit1_3 (void);
+
+/* 10bit Conversion P0.13 */
+int adcRead1_4 (void);
+int adcInit1_4 (void);
 
 /* 10bit Conversion P0.21 */
 int adcRead1_6 (void);

@@ -69,7 +69,7 @@ _MEAS_OP_ITEM meas_op_item[MEAS_OP_ITEMS];
 
 /* declaration of measure functions */
 enum _LOG_ITEM_STATE meas_wind(char meas_op_key);
-enum _LOG_ITEM_STATE meas_wind(char meas_op_key);
+
  
 
 /** ADCPool enthält die InitFunktion- und ReadFunktion-Pointer der ADCs wiefolgt:
