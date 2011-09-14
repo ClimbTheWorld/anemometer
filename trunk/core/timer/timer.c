@@ -9,6 +9,7 @@
 //
 //  This timer code was contributed by Dave Madden
 //
+#include "lpc214x.h"
 #include <stdio.h>
 #include <time.h>
 #include "FreeRTOS.h"
@@ -47,7 +48,7 @@ int capture13Init(void)
      configCPU_CLOCK_HZ ^= 48MHz
     */
 
-  T1_PR =  11999;//Abtastfrequenz:4kHz//4799;//100us//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
+  T1_PR =  11999;//1199=250us^=4kHz;//4799=1ms^=1kHz;//100us// 4799//47999:1ms // ( configCPU_CLOCK_HZ / 48UL ) - 1UL;
 
   /* TimerCounter and MR3 enables the system to recognize that there is a flowrate=0.  
      After 10 seconds of no reaction we decide the system-pump is in halt mode / flowrate = 0.
@@ -56,13 +57,12 @@ int capture13Init(void)
   
   //  Reset timer counter and prescaler counter registers:  
   T1_TCR = 2;
-  T1_TCR = 1;
   // Configure capture channel 0 to capture on the rising edge: 
   #ifdef P021CAP13
   T1_CCR |= T_CCR_CAP3RE | T_CCR_CAP3I;
   T1_CCR &= ~T_CCR_CAP3FE;
   //Counter Mode: TC is incremented on rising edges on the CAP1.3@P0.21
-  T1_CTCR |= T_CTCR_MODE_PCLK | T_CTCR_CIS_CAPN3;
+  T1_CTCR |= (T_CTCR_MODE_PCLK | T_CTCR_CIS_CAPN3);
   #endif
   #ifdef P022CAP00
   T1_CCR |= (T_CCR_CAP0RE | T_CCR_CAP0I);
@@ -74,8 +74,8 @@ int capture13Init(void)
   VIC_IntSelect &= ~VIC_IntSelect_Timer1; // (IRQ Interrupt)
   VIC_VectAddr12 = (portLONG) timer1ISR; // VectAddr12 hab ich mal so gewählt (ohne Hintergründe)
   VIC_VectCntl12 = (VIC_VectCntl_ENABLE | VIC_Channel_Timer1);
-  
-  // Interrupt will be enabled as soon as the system wants to take a measurement
+  fintcount = 0;
+      // Interrupt will be enabled as soon as the system wants to take a measurement
   VIC_IntEnable |= VIC_IntEnable_Timer1;
   portEXIT_CRITICAL ();
   return 0;
@@ -92,16 +92,24 @@ void timer1ISR(void)
 
 static void timer1ISR_Handler (void)
 {
-  val = (long) T1_TC;
-
   T1_IR |= T_IR_CR3;
   //acknowledge timer1 interrupt (overflow)
+
+  val = T1_CR3;
   
   meas_op_item[1].value = 0;
   //if((fintcount >= 0) && (fintcount <= 1))
   if(fintcount == 1)
   {
       // Interrupt Disable
+      T1_TCR = 2;
+      VIC_IntEnClr |= VIC_IntEnable_Timer1;
+      SCB_PCONP &= ~SCB_PCONP_PCTIM1; // Powerdown timer1
+      //meas_op_item[1].value = val;
+      //setWindFrequency(val);
+      //fintcount = 0; -> will be done in meas_task; to be able to detect windless
+      //xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
+      //VIC_IntEnable = save_interrupts;
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
       SCB_PCONP |= SCB_PCONP_PCTIM1; // Powerdown timer1
       meas_op_item[1].value = val;
@@ -111,10 +119,13 @@ static void timer1ISR_Handler (void)
       // xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
       //VIC_IntEnable = save_interrupts;
   }
-  // first time in this routine; start timer. Do NOT enter this routine when finished, that's why the check on '&& (VIC_IntEnable & VIC_IntEnable_Timer1)'
+  // first time in this routine; start timer. Do NOT enter this routine when finished, that's why the check on '&& (VIC_IntEnable & VIC_IntEnable_Timer1)' 
   else if((fintcount == 0) && (VIC_IntEnable & VIC_IntEnable_Timer1)) 
   {
     fintcount=1;
+    //save_interrupts = VIC_IntEnable & ~VIC_IntEnable_Timer1;
+    //VIC_IntEnClr = save_interrupts;
+    VIC_IntEnable |= VIC_IntEnable_Timer1;
     T1_TCR = 2;
     T1_CR3 = 0;
     //save_interrupts = VIC_IntEnable & ~VIC_IntEnable_Timer1;
@@ -151,6 +162,18 @@ int getFIntCount(void)
   return fintcount;
 }
 
+void clrFIntCount(void)
+{
+  fintcount = 0;
+}
+
+long getVal(void)
+{
+  return val;
+}
+
+
+=======
 
 //void clrT1capIntCount(void)
 //{

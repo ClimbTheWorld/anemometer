@@ -121,6 +121,31 @@ int adcRead0_3 (void)
 
 /**************************************************************************/
 /*! 
+    Reads ADC 0.43 and returns to converted results.
+*/
+/**************************************************************************/
+int adcRead0_4 (void)
+{
+  // Deselects all channels and stops all conversions
+  AD0_CR &= ~(AD_CR_START_MASK | AD_CR_SELMASK);  
+
+  // Select channel 3
+  AD0_CR |=  (AD_CR_START_NONE | AD_CR_SEL4);     
+
+  // Manually start converting now (rather than waiting on an external input)
+  AD0_CR |=   AD_CR_START_NOW;                    
+
+  // Wait for the conversion to complete
+  while (!(AD0_DR4 & AD_DR_DONE))
+    ;
+
+  // Return the processed results
+  return ((AD0_DR4 & AD_DR_RESULTMASK)    // Read bits 6..15 on AD0 data register 3 (which contains our conversion results)
+          >> AD_DR_RESULTSHIFT);          // shift them to the end of a 32-bit value (giving us a 10-bit number)   
+}
+
+/**************************************************************************/
+/*! 
     Reads ADC 1.1 and returns to converted results.
 */
 /**************************************************************************/
@@ -144,6 +169,55 @@ int adcRead1_1 (void)
           >> AD_DR_RESULTSHIFT);          // shift them to the end of a 32-bit value (giving us a 10-bit number)   
 }
 
+/**************************************************************************/
+/*! 
+    Reads ADC 1.3 and returns to converted results.
+*/
+/**************************************************************************/
+int adcRead1_3 (void)
+{
+  // Deselects all channels and stops all conversions
+  AD1_CR &= ~(AD_CR_START_MASK | AD_CR_SELMASK);  
+
+  // Select channel 3
+  AD1_CR |=  (AD_CR_START_NONE | AD_CR_SEL3);     
+
+  // Manually start converting now (rather than waiting on an external input)
+  AD1_CR |=   AD_CR_START_NOW;                    
+
+  // Wait for the conversion to complete
+  while (!(AD1_DR3 & AD_DR_DONE))
+    ;
+
+  // Return the processed results
+  return ((AD1_DR3 & AD_DR_RESULTMASK)    // Read bits 6..15 on AD1 data register 6 (which contains our conversion results)
+          >> AD_DR_RESULTSHIFT);          // shift them to the end of a 32-bit value (giving us a 10-bit number)   
+}
+
+/**************************************************************************/
+/*! 
+    Reads ADC 1.4 and returns to converted results.
+*/
+/**************************************************************************/
+int adcRead1_4 (void)
+{
+  // Deselects all channels and stops all conversions
+  AD1_CR &= ~(AD_CR_START_MASK | AD_CR_SELMASK);  
+
+  // Select channel 6
+  AD1_CR |=  (AD_CR_START_NONE | AD_CR_SEL4);     
+
+  // Manually start converting now (rather than waiting on an external input)
+  AD1_CR |=   AD_CR_START_NOW;                    
+
+  // Wait for the conversion to complete
+  while (!(AD1_DR4 & AD_DR_DONE))
+    ;
+
+  // Return the processed results
+  return ((AD1_DR4 & AD_DR_RESULTMASK)    // Read bits 6..15 on AD1 data register 6 (which contains our conversion results)
+          >> AD_DR_RESULTSHIFT);          // shift them to the end of a 32-bit value (giving us a 10-bit number)   
+}
 
 /**************************************************************************/
 /*! 
@@ -266,6 +340,29 @@ int adcInit0_3 (void)
 
 /**************************************************************************/
 /*! 
+    Applies power and initialises Analog to Digital Converter 0.4 (ADC0.4).
+
+    \warning This code assumes that PCLK = 48MHz!
+*/
+/**************************************************************************/
+int adcInit0_4 (void)
+{
+  // Force pin 0.30 to function as AD0.3
+  PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AD04;
+
+  // Enable power for ADC0
+  SCB_PCONP |= SCB_PCONP_PCAD0;
+
+  // Initialise ADC converter
+  AD0_CR = AD_CR_CLKS10                     // 10-bit precision
+         | AD_CR_PDN                        // Exit power-down mode
+         | ((11 - 1) << AD_CR_CLKDIVSHIFT)  // 4.36MHz Clock (48.0MHz / 11)
+         | AD_CR_SEL3;                      // Use channel 3
+  return 0;            
+}
+
+/**************************************************************************/
+/*! 
     Applies power and initialises Analog to Digital Converter 1.1 (ADC1.1).
 
     \warning This code assumes that PCLK = 48MHz!
@@ -278,6 +375,52 @@ int adcInit1_1 (void)
 
   // Enable power for ADC1
   SCB_PCONP |= SCB_PCONP_PCAD0;
+
+  // Initialise ADC converter
+  AD1_CR = AD_CR_CLKS10                     // 10-bit precision
+         | AD_CR_PDN                        // Exit power-down mode
+         | ((11 - 1) << AD_CR_CLKDIVSHIFT)  // 4.36MHz Clock (48.0MHz / 11)
+         | AD_CR_SEL1;                      // Use channel 3
+  return 0;
+}
+
+/**************************************************************************/
+/*! 
+    Applies power and initialises Analog to Digital Converter 1.3 (ADC1.3).
+
+    \warning This code assumes that PCLK = 48MHz!
+*/
+/**************************************************************************/
+int adcInit1_3 (void)
+{
+  // Force pin 0.8 to function as AD1.1
+  PCB_PINSEL0 = (PCB_PINSEL0 & ~PCB_PINSEL0_P012_MASK) | PCB_PINSEL0_P012_AD13;
+
+  // Enable power for ADC1
+  SCB_PCONP |= SCB_PCONP_PCAD1;
+
+  // Initialise ADC converter
+  AD1_CR = AD_CR_CLKS10                     // 10-bit precision
+         | AD_CR_PDN                        // Exit power-down mode
+         | ((11 - 1) << AD_CR_CLKDIVSHIFT)  // 4.36MHz Clock (48.0MHz / 11)
+         | AD_CR_SEL1;                      // Use channel 3
+  return 0;
+}
+
+/**************************************************************************/
+/*! 
+    Applies power and initialises Analog to Digital Converter 1.4 (ADC1.4).
+
+    \warning This code assumes that PCLK = 48MHz!
+*/
+/**************************************************************************/
+int adcInit1_4 (void)
+{
+  // Force pin 0.8 to function as AD1.1
+  PCB_PINSEL0 = (PCB_PINSEL0 & ~PCB_PINSEL0_P013_MASK) | PCB_PINSEL0_P013_AD14;
+
+  // Enable power for ADC1
+  SCB_PCONP |= SCB_PCONP_PCAD1;
 
   // Initialise ADC converter
   AD1_CR = AD_CR_CLKS10                     // 10-bit precision

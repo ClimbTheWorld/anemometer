@@ -213,7 +213,7 @@
     </folder>
   </project>
   <configuration Name="ARM RAM Debug" inherited_configurations="ARM;RAM;Debug"/>
-  <configuration Name="ARM" Platform="ARM" arm_instruction_set="ARM" arm_library_instruction_set="ARM" build_debug_information="No" c_enforce_ansi_checking="No" c_preprocessor_definitions="__ARM" hidden="Yes"/>
+  <configuration Name="ARM" Platform="ARM" arm_instruction_set="ARM" arm_library_instruction_set="ARM" build_debug_information="Yes" c_enforce_ansi_checking="No" c_preprocessor_definitions="__ARM" hidden="Yes"/>
   <configuration Name="RAM" c_preprocessor_definitions="__RAM_BUILD" hidden="Yes"/>
   <configuration Name="Debug" build_debug_information="Yes" c_preprocessor_definitions="DEBUG" gcc_optimization_level="None" hidden="Yes" link_include_startup_code="No"/>
   <configuration Name="ARM RAM Release" inherited_configurations="ARM;RAM;Release"/>

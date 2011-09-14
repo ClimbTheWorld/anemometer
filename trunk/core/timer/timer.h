@@ -16,7 +16,7 @@ static volatile char fintcount = 0;
 static volatile short __windPeriod = -1;
 static volatile float _tmp = -1.0;
 static volatile long save_interrupts=0;
-static volatile long val=-1;
+static volatile unsigned long val=-1;
 void timer1Init (void);
 int capture13Init(void);
 void timer1FlowRateInit(void);
@@ -26,5 +26,9 @@ void timer1ISR(void) __attribute__ ((naked));
 
 int getWindPeriod(void);
 void clrWindPeriod(void);
+int getFIntCount(void);
+void clrFIntCount(void);
+long getVal(void);
+=======
 int getFIntCount(void);
 #endif
