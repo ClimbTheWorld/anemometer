@@ -112,11 +112,13 @@ static void timer1ISR_Handler (void)
       //VIC_IntEnable = save_interrupts;
       VIC_IntEnable &= ~VIC_IntEnable_Timer1;
       SCB_PCONP |= SCB_PCONP_PCTIM1; // Powerdown timer1
-      meas_op_item[1].value = val;
-      setWindPeriodTime(val);
+      setWindPeriod(val);
+      //meas_op_item[1].value = val;
+      //setWindPeriodTime(val);
       fintcount = 0;
       // not in use 'cause of the task is on-going and has to stop the interrupt when no interrupt fires(no wind)
       // xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
+      xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASSM]);
       //VIC_IntEnable = save_interrupts;
   }
   // first time in this routine; start timer. Do NOT enter this routine when finished, that's why the check on '&& (VIC_IntEnable & VIC_IntEnable_Timer1)' 
@@ -136,17 +138,6 @@ static void timer1ISR_Handler (void)
   VIC_VectAddr = (unsigned portLONG) 0;
 }
 
-
-int getWindPeriod(void)
-{
-//  float windFrequency = (10000./__windPeriod);
-//      // v(f) = 1/1.8112*f+0.7572 [m/s]
-//      //__windFrequency = 1/1.8112*__windFrequency+0.7572;
-//      float windVelocity = 1/1.8112*windFrequency+0.7572;
-//  return (short)windFrequency;
-  return __windPeriod;
-}
-
 void clrWindPeriod(void)
 {
   __windPeriod = -1;
@@ -155,6 +146,11 @@ void clrWindPeriod(void)
 void setWindPeriod(short value)
 {
   __windPeriod = value;
+}
+
+int getWindPeriod(void)
+{
+  return __windPeriod;
 }
 
 int getFIntCount(void)
@@ -173,7 +169,7 @@ long getVal(void)
 }
 
 
-=======
+
 
 //void clrT1capIntCount(void)
 //{

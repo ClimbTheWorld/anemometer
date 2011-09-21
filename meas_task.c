@@ -75,17 +75,13 @@ enum _LOG_ITEM_STATE meas_windspeed(char meas_op_key) {
                         if(getFIntCount() == 0)
                         {
                           T1_TCR=2;
-                          meas_op_item[1].value=0;
-                        }
-                        else
-                        {
-                          meas_op_item[1].value=getVal();
+                          setWindPeriod(0);
                         }
                         clrFIntCount();
                       }
                       //LUK enter critical
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
-                      //printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
+//                      printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
                       //LUK quit critical
                       portEXIT_CRITICAL ();
 
@@ -131,6 +127,12 @@ enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
 
                       while ( meas_op_item[meas_op_key].value == -1 ); // wait
 
+                      if(meas_op_key == 0)
+                      {
+                      printf("ADV: %d, ADVM: %d\r\n", meas_op_item[0].value, meas_op_item[2].value);
+                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value;
+                      }
+
                       // LED2 ausschalten
                       GPIO0_FIOSET |= (1<<11);
                      
@@ -160,7 +162,7 @@ void meas_task_init(void) {
   meas_op_item[1].value    =  -1;
   meas_op_item[1].pt2func  = meas_windspeed;
   meas_op_item[1].measInit = capture13Init;
-  meas_op_item[1].measRead = getWindFrequency;
+  meas_op_item[1].measRead = getWindSpeed;
   meas_op_item[1].state    = INIT;
   
   //  strcpy(meas_op_item[2].name, "WindDirectionPower FullScale");
@@ -215,22 +217,11 @@ static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
     if(valuesReceived() == -1); // wait - do nothing
     else if(valuesReceived() == 0) {  // start measure
       doMeasure();
-      if(valuesReceived())
-        //printf("WD_AD03: %d, Speed: %d, Power_AD01: %d\r\n", meas_op_item[0].value, meas_op_item[1].value, meas_op_item[2].value);
-        printf("P028: %d, Po29: %d, Speed: %d\r\n", meas_op_item[0].value, meas_op_item[2].value, meas_op_item[1].value);
-//        adcInit0_1();
-//        int tmp=-1;
-//        tmp = adcRead0_1();
-//        printf("AF01: %d\r\n", tmp);
-//        tmp = -1;
-//        adcInit0_2();
-//        tmp = adcRead0_2();
-//        printf("AF02: %d\r\n", tmp);
-
     }
     
 
     vTaskResume(taskHandles[TASKHANDLE_MEASSM]);
+    
     // suspend this task
     vTaskSuspend(NULL);
 

@@ -315,6 +315,22 @@ int adcInit0_2 (void)
   return 0;
 }
 
+int adcInit0_2_6bit (void)
+{
+  // Force pin 0.29 to function as AD0.2
+  PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P029_MASK) | PCB_PINSEL1_P029_AD02;
+
+  // Enable power for ADC0
+  SCB_PCONP |= SCB_PCONP_PCAD0;
+
+  // Initialise ADC converter
+  AD0_CR = AD_CR_CLKS6                      // 10-bit precision
+         | AD_CR_PDN                        // Exit power-down mode
+         | ((11 - 1) << AD_CR_CLKDIVSHIFT)  // 4.36MHz Clock (48.0MHz / 11)
+         | AD_CR_SEL2;                      // Use channel 2
+  return 0;
+}
+
 /**************************************************************************/
 /*! 
     Applies power and initialises Analog to Digital Converter 0.3 (ADC0.3).

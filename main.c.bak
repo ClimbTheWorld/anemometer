@@ -128,7 +128,6 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     //beepA_TEAM_THEME();
     #endif
 
-    debug_printf("ohi");
     // Remove startup task.  The monitor will only start after the current
     // task is deleted since 'Startup' has a higher priority.
     vTaskDelete(NULL);

@@ -13,11 +13,13 @@
 
 /* 10bit Conversion P0.28 */
 int adcRead0_1 (void);
+int adcInit0_1_6bit (void);
 int adcInit0_1 (void);
 
 /* 10bit Conversion P0.29 */
 int adcRead0_2 (void);
 int adcInit0_2 (void);
+int adcInit0_2_6bit (void);
 
 /* 10bit Conversion P0.30 */
 int adcRead0_3 (void);

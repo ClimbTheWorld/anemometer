@@ -80,7 +80,6 @@ enum _LOG_ITEM_STATE meas_sm() {
                         meas_op_item[i].pt2func(i);
                       }
                       
-                      
                       state_LOGGER = IDLE; /* state change from INIT to IDLE*/
                       clr_measure();
                       break; 
@@ -120,8 +119,7 @@ enum _LOG_ITEM_STATE meas_sm() {
 //#else
                       startMeasure();
                       vTaskResume(taskHandles[TASKHANDLE_MEASTASK]);
-                      int i = 0;
-                      for(i=0;i<100;i++){}
+                      
                       vTaskSuspend(NULL);
                       // waiting until 
                       while(!valuesReceived()) {
@@ -138,8 +136,11 @@ enum _LOG_ITEM_STATE meas_sm() {
                       #if testAllFunctions
                       //flowCount = 15.5;
                       #endif
-                      fillSlogEntryItem((unsigned short)meas_op_item[0].value, (unsigned short)meas_op_item[1].value);
-                      
+                      meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value;
+                      meas_op_item[1].value = windSpeedFromFrequency(meas_op_item[1].value);
+                      printf("Grad: %d\r\n", meas_op_item[0].value);
+                      printf("Speed: %d\r\n", meas_op_item[1].value);
+                      fillSlogEntryItem((unsigned short)meas_op_item[0].value, (unsigned short)meas_op_item[2].value, (unsigned short)meas_op_item[1].value);
                       
             //LUK 2011-05-25: neu ist buf von 59 auf 20 verkleinert worden. Erhoffe mir weniger stack probleme.
 
@@ -189,28 +190,30 @@ enum _LOG_ITEM_STATE meas_sm() {
                           else { /* if !FR_EXIST */
                             /* add header to file; which data is going to be logged in which order and unit. */
                             /* Move to end of the file to append data */
-                            ret = f_write(&FileContLog, "salue", strlen("salue"), &bw);
                             ret = f_lseek(&FileContLog, FileContLog.fsize); //LUK param2 von f_lseek war FileContLog->fsize --> error 2011-01-08
                             
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
-                            ret = f_write(&FileContLog, "Filename: YYYYcont.txt\r\n", strlen("Filename: YYYYcont.txt\r\n"), &bw);
+                            snprintf(buf, "%s", "Filename: ");
+                            strcat(buf, logFilename);
+                            strcat(buf, "\r\n");
+                            ret = f_write(&FileContLog, buf, strlen(buf), &bw);
                             ret = f_write(&FileContLog, "Content:  single log entry items each taking one line.\r\n", strlen("Content:  single log entry items each taking one line.\r\n"), &bw);
                             ret = f_write(&FileContLog, "Savetime: Data is going to be written every single minute.\r\n", strlen("Savetime: Data is going to be written every single minute.\r\n"), &bw);
                             ret = f_write(&FileContLog, "LineConf: YYYY-MM-DD;hh-mm-ss;\r\n", strlen("LineConf: YYYY-MM-DD;hh-mm-ss;\r\n"), &bw);
-                            ret = f_write(&FileContLog, "          Wind direction [0-360°N];\r\n", strlen("          Wind direction [0-360°N];\r\n"), &bw);
-                            ret = f_write(&FileContLog, "          Wind velocity [m/s];\r\n", strlen("          Wind velocity [m/s];\r\n"), &bw);
+                            ret = f_write(&FileContLog, "          Wind direction [0-360°N] (360°/(2^6bit)=5.6° Auflösung);\r\n", strlen("          Wind direction [0-360°N] (360°/(2^6bit)=5.6° Auflösung);\r\n"), &bw);
+                            ret = f_write(&FileContLog, "          Wind speed [m/s];\r\n", strlen("          Wind speed [m/s];\r\n"), &bw);
                             ret = f_write(&FileContLog, "Author:   Lukas Kempf, lukaskempf@gmail.com\r\n", strlen("Author:   Lukas Kempf, lukaskempf@gmail.com\r\n"), &bw);
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
-                            ret = f_write(&FileContLog, "YYYY-MM-DD;hh-mm-ss;Wind direction;Wind velocity;\r\n", strlen("YYYY-MM-DD;hh-mm-ss;Wind direction;Wind velocity;\r\n"), &bw);
+                            ret = f_write(&FileContLog, "YYYY-MM-DD;hh-mm-ss;Wind direction;Wind speed;\r\n", strlen("YYYY-MM-DD;hh-mm-ss;Wind direction;Wind speed;\r\n"), &bw);
                           }
                           
                           strftime(buf, sizeof("YYYY-MM-DD;HH-mm-ss;"), "%Y-%m-%d;%T;", ts); // length = 20
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
-                          sprintf(buf, "%d;%d;%d;%d;%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windvelocity);
+                          sprintf(buf, "%d;%d;\r\n", slog_entry_item.winddirection, slog_entry_item.windspeed);
                           ret = f_write(&FileContLog, buf, strlen(buf), &bw);
                           ret = f_close(&FileContLog);
                           #endif 
@@ -278,7 +281,7 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
   /* set structs to a defined state */
 //  strcpy(slog_entry_item.datetime, "00000000000000000000");       /* YYYY-MM-DD_HH-mm(24h)-ss */
   slog_entry_item.winddirection=-1;      /* Value 0-Aref(3300) [0-359°N] */
-  slog_entry_item.windvelocity =-1;      /* Value 0-Aref(3300) [m/s] */
+  slog_entry_item.windspeed =-1;      /* Value 0-Aref(3300) [m/s] */
   
   // meas_task_init is called at meas_task startup
     
@@ -316,6 +319,8 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
 //  timer1FlowRateStart();
   FRESULT res = f_mount(0, &Fatfs[0]);
 
+  vSemaphoreCreateBinary( xSemaphoreSDCard );
+
   state_LOGGER = INIT;
   // The code within the for loop is your actual
   // task that will continously execute
@@ -325,12 +330,10 @@ static portTASK_FUNCTION(vMeasSM, pvParameters __attribute__((unused)))
 //    #ifdef CFG_LCD
 //    vTaskSuspend(taskHandles[TASKHANDLE_LCD]);
 //    #endif
-
     if ( get_measure()==1 ) {
       set_measure(2);
       //updateMeasure_timestamp(mktime(ts));
       item_state = meas_sm();
-      debug_printf("WF: %d\r\n", meas_op_item[1].value);
     }
 
     //debug_printf("Counted: %d\r\n", timer1FlowRateStop());

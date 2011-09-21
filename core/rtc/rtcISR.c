@@ -53,7 +53,7 @@ static void rtcISR_Handler (void)
     U8 c = 0xff;
       startMeasure();
       
-      set_measure();
+      set_measure(1);
       xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASSM]);
       xTaskResumeFromISR(taskHandles[TASKHANDLE_MEASTASK]);
       

@@ -15,7 +15,7 @@ ARM\ Flash\ Release/telnetd.o: \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/list.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/queue.h \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/string.h \
- C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/uip/apps/telnetd/../../../core/usbser/usbser.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/uip/apps/telnetd/../../../core/uart/uart0.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/uip/apps/telnetd/../../uiptask.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/uip/apps/telnetd/../../uip/uip.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/uip/apps/telnetd/../../uip/uipopt.h \

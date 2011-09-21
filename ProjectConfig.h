@@ -33,7 +33,6 @@
 // drivers from your compiled code, saving space and reducing
 // any risk of errors
 
-#define CFG_LED 1
 #define CFG_LCD 0
 //#define CFG_TCS3414
 //#define CFG_TPS851
@@ -45,9 +44,9 @@
     General project settings
 */
 /**************************************************************************/
-#define CFG_PROJECT_NAME              (portCHAR *) "Olimex LPC-P2148 Evaluation Board"  // The name of this project if you wish to display it
-#define CFG_PROJECT_VERSION_MAJOR     0                                       // The 'major' version of this project
-#define CFG_PROJECT_VERSION_MINOR     1                                       // The 'minor' version of this project
+#define CFG_PROJECT_NAME              (portCHAR *) "Olimex LPC-P2148 Anemometer"  // The name of this project if you wish to display it
+#define CFG_PROJECT_VERSION_MAJOR     1                                       // The 'major' version of this project
+#define CFG_PROJECT_VERSION_MINOR     0                                       // The 'minor' version of this project
 #define CFG_PROJECT_COPYRIGHT         (portCHAR *) "(C) luki 2010-2011" // The copyright notice for this project if you wish to display it
 
 
@@ -112,20 +111,24 @@
   #define ADSPAN 1024 /* 10Bit conversion*/
   #define get_AD_mV(intval) (AREF/ADSPAN*intval)
 
-  /*<! Resolution of the flowmeter (2.5 liter per impuls)  */
-  #define flowrateMeterImpulsVolume 2.5f
+  
 
   /*<! Winddirection/AD values to log 
        - Winddirection: -[0-360°]
   */
   
   // P029
-  #define adcWindDirectionRead                 adcRead0_1
-  #define adcWindDirectionInit                 adcInit0_1
+  #define adcWindDirectionPwrRead                 adcRead0_1
+  #define adcWindDirectionPwrInit                 adcInit0_1
+  
 
-  // P028
-  #define adcWindDirectionPwrRead              adcRead0_2
-  #define adcWindDirectionPwrInit              adcInit0_2
+  // P028 - 6Bit Auflösung -> 360°/(2^6)=5.625° Winkelauflösung
+  #define adcWindDirectionRead                    adcRead0_2
+  //#define adcWindDirectionInit                    adcInit0_2
+  #define adcWindDirectionInit                    adcInit0_2_6bit
+
+  // calculate windspeed out of frequency
+  #define windSpeedFromFrequency(windfrequency)      ((short)(1/1.8112*windfrequency+0.7572))
 
   /* Winddirection Sensor:
    *   A LM334Z run by a 120Ohm/1% resistor delivers a constant current of Iset=67.7mV/Rset=67.7mV/120Ohm=564uA
@@ -272,8 +275,8 @@
     defined at a time!  By default both operate at 9600 Baud 8N1.
 */
 /**************************************************************************/
-//#define CFG_MONITOR_UART0                              // Use UART0 for the monitor console
-#define CFG_MONITOR_USBSER                                // Use USB Serial for the monitor console
+#define CFG_MONITOR_UART0                              // Use UART0 for the monitor console
+//#define CFG_MONITOR_USBSER                                // Use USB Serial for the monitor console
 #define CFG_MONITOR_PROMPT            "Command > "        // The 'command prompt' that will be displayed in the monitor
 #define CFG_MONITOR_ALLOWRESET        1                   // Whether the user is allowed to issue the reset command
 #define CFG_MONITOR_ALLOWI2C          1                   // Whether the user is allowed to send generic I2C commands
