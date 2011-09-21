@@ -84,7 +84,7 @@ volatile typedef struct
     //char  datetime[20];     /* YYYY-MM-DD_HH-mm(24h)-ss'\0' */
     time_t datetime;
     unsigned short winddirection;         /* Value 0-Aref(3300) [0-359°N] */
-    unsigned short windvelocity;    /* summed-up over a whole day */
+    unsigned short windspeed;    /* summed-up over a whole day */
 } /* __attribute__ ((packed)) */ _SLOG_ENTRY_ITEM;
 _SLOG_ENTRY_ITEM slog_entry_item;
 #define _SLOG_ENTRY_ITEM_SIZE 32
@@ -136,7 +136,8 @@ _CLOG_ENTRY_ITEM clog_entry_item;
 
 //void fillSlogEntryItem(char *datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4/*, unsigned short flowrate*/);
 //void fillSlogEntryItem(time_t datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4/*, unsigned short flowrate*/); --> the struct tm ts is already global, no need to give it as a parameter
-void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity);
+//void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity);
+void fillSlogEntryItem(unsigned short winddirection, unsigned short winddirection_max, unsigned short windspeed);
 void getLogFilename(char log, char *filename);
 
 static float WhPriceRappen; // price of a Wh in CHRp.
@@ -161,7 +162,7 @@ FIL FileContLog, FileDayLog, /*FileMonthLog,*/ FileAllTimeLog; /* File objects *
  */
 static char logFilename[18];
 
-static volatile float __windFrequency=-1;
+static volatile float __windFrequency=0;
 void setWindFrequency(short value);
 int getWindFrequency(void);
 void clrWindFrequency(void);

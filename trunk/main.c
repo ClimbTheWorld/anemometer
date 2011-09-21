@@ -78,7 +78,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
     GPIO0_FIOCLR |= (1<<11);
     
     #if 1
-    rtcSetAlarmCIIR(RTC_CIIR_IMMIN);
+    rtcSetAlarmCIIR(RTC_CIIR_IMMIN); // set 1-minute cyclic interrupt
     #endif
 
     #if defined CFG_LED && CFG_LED_RUNLEDONSTARTUP == 1

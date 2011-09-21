@@ -54,17 +54,14 @@ char time_buf[30];
 
 //void fillSlogEntryItem(char *datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
 //void fillSlogEntryItem(time_t datetime, unsigned short adc1, unsigned short adc2, unsigned short adc3, unsigned short adc4) {
-void fillSlogEntryItem(unsigned short winddirection, unsigned short windvelocity) {
+void fillSlogEntryItem(unsigned short winddirection, unsigned short winddirection_max, unsigned short windspeed) {
   /* YYYY-MM-DD_HH(24h)-mm-ss */
 
   //strcpy((char *)slog_entry_item.datetime, datetime); /* YYYY-MM-DD;HH(24h)-mm-ss */
  slog_entry_item.datetime = ts;
   //slog_entry_item.datetime = datetime;
   slog_entry_item.winddirection = winddirection;
-  slog_entry_item.windvelocity = windvelocity;
-  if(getMeasure_timestamp_diff()) {
-    //slog_entry_item.power = (float) (temp_energy / getMeasure_timestamp_diff());
-  }
+  slog_entry_item.windspeed = windspeed;
 }
 
 float getWhPriceRappen(void) {
@@ -654,6 +651,29 @@ setWindFrequency(short value)
   __windFrequency = value;
 }
 
+int getWindSpeed(void)
+{
+  /*
+  __windPeriod*250us=periodtime[us]
+  periodtime[us]/10^6=periodtime[s]
+  1/periodtime=frequency
+  ->summarized: frequency=4000/__windPeriod
+
+  */
+  float windFrequency;
+  if(getWindPeriod()==0)
+  {
+    windFrequency = 0;
+  }
+  else
+  {
+    windFrequency = (4000.0/getWindPeriod());
+    //v(f) = 1/1.8112*f+0.7572 [m/s]
+    windFrequency = 1/1.8112*windFrequency+0.7572;
+  }
+  return (short)windFrequency;
+}
+
 int getWindFrequency(void)
 {
   float tmpa=-1;
@@ -670,7 +690,7 @@ int getWindFrequency(void)
     f     = 1 / T[s]              f=1/0.05s=20Hz
 
     */
-    tmpa= meas_op_item[1].value / 40000.0; // Basiswechsel [1ms]=>[1s] 1000.0-1kHz; 40000-4kHz; 
+    tmpa= meas_op_item[1].value / 4000.0; // Basiswechsel [1ms]=>[1s] 1000.0-1kHz; 40000-4kHz; 
     meas_op_item[1].value = 1.0 / tmpa; // f=1/T
   }
   return meas_op_item[1].value;

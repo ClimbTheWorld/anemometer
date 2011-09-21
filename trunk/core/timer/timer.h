@@ -25,10 +25,11 @@ void timer0ISR(void);
 void timer1ISR(void) __attribute__ ((naked));
 
 int getWindPeriod(void);
+void setWindPeriod(short value);
 void clrWindPeriod(void);
 int getFIntCount(void);
 void clrFIntCount(void);
 long getVal(void);
-=======
+
 int getFIntCount(void);
 #endif

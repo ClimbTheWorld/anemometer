@@ -16,7 +16,7 @@ ARM\ Flash\ Release/rtcISR.o: \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/task.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/list.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/FreeRTOS/Source/include/queue.h \
- C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/core/rtc/../usbser/usbser.h \
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/core/rtc/../uart/uart0.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/core/rtc/rtcISR.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/core/rtc/rtc.h \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/time.h
