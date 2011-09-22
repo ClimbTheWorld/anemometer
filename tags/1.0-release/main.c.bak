@@ -1,0 +1,291 @@
+/**************************************************************************/
+/*! 
+    \file     main.c
+    \author   K. Townsend
+    \date     23 September 2009
+    \version  1.00
+*/
+/**************************************************************************/
+
+#include <stdlib.h>
+#include <time.h>
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "monitor/monitor.h"
+#include "core/cpu/cpu.h"
+#include "sysdefs.h"
+
+#ifdef CFG_LED && (CFG_LED_RUNLEDONSTARTUP == 1)
+#include "drivers/leds/leds.h"
+#endif
+
+#ifdef CFG_LCD
+#include "drivers/lcd/lcd204_4.h"
+#endif
+
+#if defined CFG_RTC
+#include "core/rtc/rtc.h"
+#endif
+
+#ifdef CFG_MONITOR_UART0
+  #include "core/uart/uart0.h"
+#endif
+
+#ifdef CFG_MONITOR_USBSER
+  #include "core/usbser/usbser.h"
+#endif
+
+#ifdef CFG_ADC
+  #include "core/adc/adc.h"
+#endif
+#if 1
+  #include "fatfs/ff.h"
+#endif
+#ifdef CFG_PLAY_STARTUP
+  #include "core/timer/beep.h"
+#endif
+
+#include "core/timer/timer.h"
+
+#ifdef CFG_DATALOGGER
+  #include "logging.h"/* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
+  #include "meas_sm.h"
+  #include "flowrate_sensor.h"
+#endif
+
+/**************************************************************************/
+/*! 
+    Starts the main monitor task and performs any initialisation activity
+*/
+/**************************************************************************/
+static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused))) 
+{
+  for (;;)
+  {    
+/* The LEDs are updated every 200 ticks, about 200 ms */
+  const long blinkDelay = 500;
+
+/* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
+    
+    #ifdef CFG_RTC
+    // Initialise RTC
+    rtcInit();
+    #endif
+
+    // LED2 einschalten
+    GPIO0_FIODIR |= (1<<11);
+    GPIO0_FIOCLR |= (1<<11);
+    
+    #if 1
+    rtcSetAlarmCIIR(RTC_CIIR_IMMIN);
+    #endif
+
+    #if defined CFG_LED && CFG_LED_RUNLEDONSTARTUP == 1
+    // Start LED flasher (for testing purposes)
+    ledsTaskStart();
+    #endif
+
+    #ifdef CFG_DATALOGGER
+//    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
+    #if 1
+    measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
+    measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
+    #endif
+    #endif
+
+    #if CFG_LCD == 1
+    #define LCDTEST
+    #if LCDTEST == 1
+    /** making the contrast of the display evaluated best round 2.6V */
+    PCB_PINSEL1 = (PCB_PINSEL1 & ~PCB_PINSEL1_P025_MASK) | PCB_PINSEL1_P025_AOUT;
+    // vDAC = VALUE / 1024 * vREF -> VALUE = 2.6V * 1024 / 3.3V = 806.8
+    DAC_CR = (DAC_CR & ~DAC_CR_VALUEMASK) | ((806 << DAC_CR_VALUESHIFT) & DAC_CR_VALUEMASK);
+    #endif
+    lcdTaskStart();
+    #endif
+
+    #if 0
+    /** winddirection init */
+    unsigned int direction=0, directionMax=0, directionMin=1024;
+    adcInit0_2();
+    while(1){
+      direction = adcRead0_2();
+      if(direction < directionMin) directionMin = direction;
+      if(direction > directionMax) directionMax = direction;
+      printf("Min: %d, Max: %d, Act: %d\r\n", directionMin, directionMax, direction);
+      delay(20);
+    }
+    #endif
+
+    
+    // Start monitor task
+    monitorTaskStart();
+    
+    #if CFG_PLAY_STARTUP
+    //beepMHALL();
+    //beepSMOTW();
+    //beepA_TEAM_THEME();
+    #endif
+
+    // Remove startup task.  The monitor will only start after the current
+    // task is deleted since 'Startup' has a higher priority.
+    vTaskDelete(NULL);
+  }
+}
+
+
+/**************************************************************************/
+/*! 
+    Starts the SetTime task
+*/
+/**************************************************************************/
+//static portTASK_FUNCTION(vSetTime, pvParameters __attribute__((unused))) 
+//{
+//  // Print out actual time and date
+//  int DD=0, MM=0, YYYY=0, HH=0, mm=0, ss=0;
+//  char cDD[2]="uu", cMM[2]="uu", cYYYY[4]="uuuu", cHH[2]="uu", cmm[2]="uu", css[2]="uu";
+//  DD = RTC_DOM, MM = RTC_MONTH, YYYY = RTC_YEAR, HH = RTC_HOUR, mm = RTC_MIN, ss = RTC_SEC;
+//
+//  /* The LEDs are updated every 200 ticks, about 200 ms */
+//  const long blinkDelay = 200;
+//
+//  // Print out actual time and date
+//  
+//  DD = RTC_DOM;
+//  MM = RTC_MONTH;
+//  YYYY = RTC_YEAR;
+//  HH = RTC_HOUR;
+//  mm = RTC_MIN;
+//  ss = RTC_SEC;
+//  printf("Actual Date and Time (YYYY-MM-DD_HH-mm-ss):\r\n%d-%d-%d_%d-%d-%d\r\nSet new date and time as suggested\r\n", YYYY,MM,DD,HH,mm,ss);
+//  
+//  static char datetime[20]="uuuuuuuuuuuuuuuuuu";
+//  while (1)
+//  {
+//    while(datetime[17]=='u') uart0GetRxQueue(&datetime);
+//    if (datetime[0]!='u') {
+//      cDD[2]=datetime[7], datetime[8];
+//      cMM[2]=datetime[5], datetime[6];
+//      cYYYY[4]=datetime[0], datetime[1], datetime[2], datetime[3];
+//      cHH[2]=datetime[10], datetime[11];
+//      cmm[2]=datetime[13], datetime[14];
+//      css[2]=datetime[16], datetime[17];
+//
+//      printf("New Date and Time (YYYY-MM-DD_HH-mm-ss):\r\n%s-%s-%s_%s-%s-%s\r\n", cYYYY, cMM, cDD, cHH, cmm, css);
+//    }
+//    
+//
+//    /* Block the task for the defined time */
+//    vTaskDelay(blinkDelay);
+//
+//  }
+//}
+
+
+
+/**************************************************************************/
+/*! 
+    The application entry point.  Initialise the CPU, open the monitor
+    'port', create the startup task and begin the task scheduler.
+*/
+/**************************************************************************/
+int main(void)
+{
+  // Setup the system clocks and put all peripherals in an appropriate default state
+  cpuSetupHardware();
+
+  #ifdef CFG_MONITOR_UART0
+  // Configure UART0 for Monitor input/output
+  uart0Init(9600, 80);
+  #endif
+
+  #ifdef CFG_MONITOR_USBSER
+  // Configure USB Serial Port for Monitor input/output (9600/8N1)
+  usbserInit();
+  #endif
+  
+  // Create the startup task
+  xTaskCreate (vStartupTask, (const signed portCHAR * const)"Startup", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES, &taskHandles[TASKHANDLE_STARTUP]);
+
+  // Start the task scheduler
+  vTaskStartScheduler();
+
+  
+  // You should only ever reach this point if there isn't enough memory to start the scheduler
+  return 0;
+}
+
+/**************************************************************************/
+/*! 
+    Configures Timer1 for FreeRTOS run time stat monitoring.  To enable
+    run time stats set configGENERATE_RUN_TIME_STATS to '1' in
+    FreeRTOSConfig.h.
+
+    \note For more information on run time stats monitoring see: 
+    http://www.freertos.org/rtos-run-time-stats.html
+*/
+/**************************************************************************/
+#if configGENERATE_RUN_TIME_STATS == 1
+void vConfigureTimerForRunTimeStats( void )
+{
+    const unsigned long TCR_COUNT_RESET = 2, CTCR_CTM_TIMER = 0x00, TCR_COUNT_ENABLE = 0x01;
+
+    // Power up timer1
+    SCB_PCONP |= SCB_PCONP_PCTIM1;
+	
+    // Reset the timer
+    T1_TCR = TCR_COUNT_RESET;
+	
+    // Just count up
+    T1_CTCR = CTCR_CTM_TIMER;
+
+    // Prescale to a frequency that is good enough to get a decent resolution,
+    // but not so fast that it overflows all the time.
+    T1_PR =  ( configCPU_CLOCK_HZ / 10000UL ) - 1UL;
+
+    // Start the counter
+    T1_TCR = TCR_COUNT_ENABLE;
+}
+#endif
+
+
+/**************************************************************************/
+/*! 
+    Hook when a stack overflow occurs if configCHECK_FOR_STACK_OVERFLOW
+    is set to 1 or 2 in FreeRTOSConfig.h
+
+    \note For more information on stack overflow in FreeRTOS see: 
+    http://www.freertos.org/Stacks-and-stack-overflow-checking.html
+*/
+/**************************************************************************/
+void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+{
+	/* Check pcTaskName for the name of the offending task, or pxCurrentTCB
+	if pcTaskName has itself been corrupted. */
+	( void ) pxTask;
+	( void ) pcTaskName;
+	for( ;; );
+}
+
+/**************************************************************************/
+/*! 
+    Redirects printf output to either UART0 or USBSER (as defined in
+    ProjectConfig.h)
+*/
+/**************************************************************************/
+void __putchar(char c) 
+{
+  // Use UART0 for printf output
+  #ifdef CFG_MONITOR_UART0
+  uart0PutChar(c, 5);
+  #endif
+
+  // Use USB Serial for printf output
+  #ifdef CFG_MONITOR_USBSER
+  usbserPutChar(c, 5);
+  #endif
+}
+
+
+

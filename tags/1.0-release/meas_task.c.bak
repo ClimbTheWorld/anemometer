@@ -1,0 +1,272 @@
+/**
+ * \addtogroup logging
+ * @{
+ *
+ * \author Lukas Kempf
+ * \brief Measurement state-machine
+ *
+ *
+ */
+
+//*****************************************************************************
+//
+// meas_sm.c - Measurement state-machine
+//
+//*****************************************************************************
+
+/* std lib includes */
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+#include "meas_task.h"
+
+/* FreeRTOS includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+
+/* FatFs includes */
+#include "logging.h"
+#include "fatfs/ff.h"
+#include "flowrate_sensor.h"
+#include "core/timer/timer.h" // for T1cap13
+
+/* Measurement driver includes*/
+#include "core/adc/adc.h"
+
+
+/**
+ * Mess Item -> Einzelner Messvorgang Panel Temperatur
+ *
+  \verbatim
+  \dot
+  digraph finite_state_machine {
+          rankdir=SS;
+          size="8,5";
+          node [shape = doublecircle]; OFF, IDLE;
+          node [shape = circle]; READ;
+          OFF -> IDLE [label = "measure()"]
+          IDLE -> READ [label = "measure()"]
+          READ -> IDLE [label = "meas_sm()"]
+  }
+  \enddot
+  \endverbatim
+ *
+ */
+enum _LOG_ITEM_STATE meas_windspeed(char meas_op_key) {
+  switch (meas_op_item[meas_op_key].state) {
+    case OFF:       { /* WILL NOT BE USED */ 
+                      break; }
+    case INIT:      { /* init P0.21, ADC1.6 */ 
+//                    meas_op_item[meas_op_key].state = IDLE; /*  going to wait */
+                      break; }
+    case IDLE:      { /* measure and calculate from int to voltage */ 
+                      meas_op_item[meas_op_key].state = START; /*  going to wait */
+                    }
+    case START:     { /* launch of measure */
+                      meas_op_item[meas_op_key].value = -1;
+
+                      /** TODO: start the measurement here */
+                      //portENTER_CRITICAL ();
+                      meas_op_item[meas_op_key].measInit(); // adcInit
+                      if(meas_op_key==1)
+                      {
+                        //vTaskSuspend(NULL);
+                        vTaskDelay(500 / portTICK_RATE_MS); // wait for 0.1s to let the measurement-task measure the frequency
+                        if(getFIntCount() == 0)
+                        {
+                          T1_TCR=2;
+                          setWindPeriod(0);
+                        }
+                        clrFIntCount();
+                      }
+                      //LUK enter critical
+                      meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
+//                      printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
+                      //LUK quit critical
+                      portEXIT_CRITICAL ();
+
+                      while ( meas_op_item[meas_op_key].value == -1 ); // wait
+
+                      // LED2 ausschalten
+                      GPIO0_FIOSET |= (1<<11);
+                     
+                      meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
+                    }
+//      WAITING:   { /* waiting on end of conversion */ 
+//                   break; }
+    case SAVEVALUE: { /** - data ready to be saved into queue, SD card / UART....., 
+                        * - meas_sm() sets the state back to idle afterwards
+                        * - switch off no longer required peripherals (AD...) */ 
+                      break; 
+                    }
+  }
+  return meas_op_item[meas_op_key].state;
+}
+
+enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
+  switch (meas_op_item[meas_op_key].state) {
+    case OFF:       { /* WILL NOT BE USED */ 
+                      break; }
+    case INIT:      { /* init P0.21, ADC1.6 */ 
+//                    meas_op_item[meas_op_key].state = IDLE; /*  going to wait */
+                      break; }
+    case IDLE:      { /* measure and calculate from int to voltage */ 
+                      meas_op_item[meas_op_key].state = START; /*  going to wait */
+                    }
+    case START:     { /* launch of measure */
+                      meas_op_item[meas_op_key].value = -1;
+
+                      /** TODO: start the measurement here */
+                      //portENTER_CRITICAL ();
+                      meas_op_item[meas_op_key].measInit(); // adcInit
+                      //LUK enter critical
+                      meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
+                      //printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
+                      //LUK quit critical
+                      portEXIT_CRITICAL ();
+
+                      while ( meas_op_item[meas_op_key].value == -1 ); // wait
+
+                      if(meas_op_key == 0)
+                      {
+                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value+;
+                      }
+
+                      // LED2 ausschalten
+                      GPIO0_FIOSET |= (1<<11);
+                     
+                      meas_op_item[meas_op_key].state = SAVEVALUE; /*  going to wait */
+                    }
+//      WAITING:   { /* waiting on end of conversion */ 
+//                   break; }
+    case SAVEVALUE: { /** - data ready to be saved into queue, SD card / UART....., 
+                        * - meas_sm() sets the state back to idle afterwards
+                        * - switch off no longer required peripherals (AD...) */ 
+                      break; 
+                    }
+  }
+  return meas_op_item[meas_op_key].state;
+}
+
+         
+void meas_task_init(void) {
+  //  strcpy(meas_op_item[0].name, "WindDirection");
+  meas_op_item[0].value    =  -1;
+  meas_op_item[0].pt2func  = meas_winddirection;
+  meas_op_item[0].measInit = adcWindDirectionInit;
+  meas_op_item[0].measRead = adcWindDirectionRead;
+  meas_op_item[0].state    = INIT;
+
+  //  strcpy(meas_op_item[1].name, "WindVelocity");
+  meas_op_item[1].value    =  -1;
+  meas_op_item[1].pt2func  = meas_windspeed;
+  meas_op_item[1].measInit = capture13Init;
+  meas_op_item[1].measRead = getWindSpeed;
+  meas_op_item[1].state    = INIT;
+  
+  //  strcpy(meas_op_item[2].name, "WindDirectionPower FullScale");
+  meas_op_item[2].value    =  -1;
+  meas_op_item[2].pt2func  = meas_winddirection;
+  meas_op_item[2].measInit = adcWindDirectionPwrInit;
+  meas_op_item[2].measRead = adcWindDirectionPwrRead;
+  meas_op_item[2].state    = INIT;
+  
+  /** meas_op_item: [0]:  Wind direction
+   *                [1]:  Wind velocity
+   *                [2]:  Wind direction power (full scale)
+   */
+}
+
+void doMeasure(void) {
+  /** here we call the ADCs and measure the impulstime from the flowrate. 
+      afterwards we set the values_received flag and kill ourselves from the tasklist 
+  */
+  int i=0;
+  enum _LOG_ITEM_STATE ret_state = START;
+  for(i=0; i< MEAS_OP_ITEMS; i++) {
+    ret_state = meas_op_item[i].pt2func(i);
+//      if(ret_state != SAVEVALUE)/* not every meas_op was successful (eventually there is some exception handling todo) */
+//        printf ("not every meas_op was successful");
+    meas_op_item[i].state = IDLE;
+  }
+  set_valuesReceived();
+}
+
+/**************************************************************************/
+/*! 
+    The main code that will execute as long as the task is active.
+    The first parameter (vMyTask in this case) needs to match the
+    name used when the task is created in the method just below.
+*/
+/**************************************************************************/
+static portTASK_FUNCTION(vMeasTask, pvParameters __attribute__((unused)))
+{
+  // Do any required initialisation or 
+  // set up any hardware before the task
+  // begins executing for the first time
+
+  // ToDo: ...
+
+  // The code within the for loop is your actual
+  // task that will continously execute
+  meas_task_init();
+
+  for (;;)
+  {
+    if(valuesReceived() == -1); // wait - do nothing
+    else if(valuesReceived() == 0) {  // start measure
+      doMeasure();
+    }
+    
+
+    vTaskResume(taskHandles[TASKHANDLE_MEASSM]);
+    
+    // suspend this task
+    vTaskSuspend(NULL);
+
+    // vTaskDelay will cause the task to be delayed for 
+    // a specified number of ticks
+    // vTaskDelay(100);  // Wait 100 ticks or 1 second
+  }
+}
+
+
+/**************************************************************************/
+/*! 
+    Creates a new task for the FreeRTOS Kernel and add it to the
+    scheduler.
+*/
+/**************************************************************************/
+signed portBASE_TYPE measTaskStart (void)
+{
+  return xTaskCreate (
+    vMeasTask,
+    (const signed portCHAR * const) "Measure_Task",
+    256, //configMINIMAL_STACK_SIZE, // ^= ((unsigned portSHORT) 128)^=configMINIMAL_STACK_SIZE
+    NULL,
+    (tskIDLE_PRIORITY + 4),
+    &taskHandles [TASKHANDLE_MEASTASK]);
+}
+
+/**************************************************************************/
+/*! 
+    Stops the task and deletes it from the task scheduler.
+*/
+/**************************************************************************/
+signed portBASE_TYPE measTaskStop (void)
+{
+  if (!taskHandles [TASKHANDLE_MEASTASK])
+    return 0;
+  
+  vTaskDelete (taskHandles [TASKHANDLE_MEASTASK]);
+  taskHandles [TASKHANDLE_MEASTASK] = NULL;
+
+  return 1;
+}
+
+//*****************************************************************************
+//
+// Close the Doxygen group.
+//! @}
+//
+//*****************************************************************************
