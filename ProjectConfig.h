@@ -100,11 +100,6 @@
       -P1.23     PIPESTAT  GPIO*                    LCD Pin 16 RS/CS     GPIO1_FIOPIN2,Bit7
   */
   //#define LOG_IF_FLOWRATE_NULL --> always log --> weather station
-  
-  /*<! Flowrate is going to be logged always over CAP0.0 at P0.30 */
-  #define LOG_FLOWRATE               1
-  //#define Rechnung Frequenz->Liter
-  
 
   /*<! conversion from adcRead...() to Millivolt  */
   #define AREF   3300 /* ARef is 3300mV */
@@ -115,7 +110,10 @@
 
   /*<! Winddirection/AD values to log 
        - Winddirection: -[0-360°]
+       - Winddirection Offset [°]
   */
+
+  static short windDirectionOffset = 0;
   
   // P029
   #define adcWindDirectionPwrRead                 adcRead0_1
@@ -136,31 +134,17 @@
    *   circuit:
    *   
 
-            +5V
-
-             |(2)
-            .-.
-    LM334Z  | | (1)
-            | |-----.
-            | |     |
-            '-'     |
-             |(3)   |
-             |     .-.
-             |     | |120Ohm
-             |     | |
-             |     '-'
-             |      |
-             0------.
+         Vcc +3.3V
              |
              |      
-             v Iset=564uA          
-             o---------------------o uADC
+             v 
+             o---------------------o meas_op_item[2]
              |                     
              |                    
-             | (schwarz)                      
+             | (rot)                      
             .-.                     
-            | |Sensor [3,4]kOhm; Ulow=3000*564uA=1.6925V, Uhigh=4000*564uA=2.2566V                  
-            | |                  dU=564.166mV @ (10Bit, 3.3V ADC) => 1024/3.3*0.564166=175 => 360°/175 => resolution 2.0564°
+            | |_____o  meas_op_item[0] Sensor [3,4]kOhm; 
+            | |                  
             '-'
              |(weiss)
              |

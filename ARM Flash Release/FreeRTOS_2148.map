@@ -225,7 +225,7 @@ Linker script and memory map
                 0x00000001                . = ASSERT (((__init_end__ >= __FLASH_segment_start__) && (__init_end__ <= (__FLASH_segment_start__ + 0x80000))), error: .init is too large to fit in FLASH memory segment)
                 0x00000298                __text_load_start__ = ALIGN (__init_end__, 0x4)
 
-.text           0x00000298    0x1735c
+.text           0x00000298    0x1734c
                 0x00000298                __text_start__ = .
  *(.text .text.* .glue_7t .glue_7 .gnu.linkonce.t.* .gcc_except_table)
  .glue_7        0x00000000        0x0 linker stubs
@@ -474,458 +474,457 @@ Linker script and memory map
                 0x00007e88                MeasSMTaskStop
                 0x00007ebc                measSMTaskStart
                 0x00007f08                meas_sm
- .text          0x000084c0      0x3e4 ARM Flash Release/meas_task.o
+ .text          0x000084c0      0x3dc ARM Flash Release/meas_task.o
                 0x000084c0                meas_task_init
                 0x00008550                measTaskStop
                 0x00008584                measTaskStart
                 0x000085d0                doMeasure
                 0x00008668                meas_winddirection
-                0x000087a4                meas_windspeed
- .text          0x000088a4        0x0 ARM Flash Release/crt0.o
- .text          0x000088a4        0x0 ARM Flash Release/Philips_LPC210X_Startup.o
- .text          0x000088a4       0xc8 ARM Flash Release/LPC210x.o
-                0x000088d4                ctl_get_ticks_per_second
-                0x000088dc                ctl_start_timer
- .text          0x0000896c      0x1b0 ARM Flash Release/VIC.o
-                0x0000896c                ctl_set_isr
-                0x00008aec                ctl_unmask_isr
-                0x00008b04                ctl_mask_isr
- .text          0x00008b1c       0x44 ARM Flash Release/VIC_irq_handler.o
-                0x00008b1c                irq_handler
- .text          0x00008b60      0x22c ARM Flash Release/portISR.o
-                0x00008b60                vPortISRStartFirstTask
-                0x00008bac                vTickISR
-                0x00008c6c                vPortEnterCritical
-                0x00008c98                vPortExitCritical
-                0x00008ce0                swi_handler
- .text          0x00008d8c      0x18c ARM Flash Release/port.o
-                0x00008d8c                pxPortInitialiseStack
-                0x00008e98                vPortEndScheduler
-                0x00008e9c                xPortStartScheduler
- .text          0x00008f18      0x1b4 ARM Flash Release/heap_2.o
-                0x00008f18                xPortGetFreeHeapSize
-                0x00008f28                vPortInitialiseBlocks
-                0x00008f2c                vPortFree
-                0x00008f90                pvPortMalloc
- .text          0x000090cc     0x1410 ARM Flash Release/tasks.o
-                0x000090cc                xTaskIsTaskSuspended
-                0x00009108                vTaskSuspendAll
-                0x00009120                uxTaskGetNumberOfTasks
-                0x00009130                vTaskSetTimeOutState
-                0x0000914c                vTaskMissedYield
-                0x00009160                usTaskCheckFreeStackSpace
-                0x00009194                uxTaskGetStackHighWaterMark
-                0x000091b8                xTaskGetCurrentTaskHandle
-                0x000091c8                vTaskPriorityDisinherit
-                0x0000923c                vTaskPriorityInherit
-                0x000092f0                xTaskRemoveFromEventList
-                0x000093a0                vTaskIncrementTick
-                0x000094ac                xTaskResumeFromISR
-                0x00009554                prvDeleteTCB
-                0x00009574                prvListTaskWithinSingleList
-                0x00009630                prvAllocateTCBAndStack
-                0x0000968c                xTaskCheckForTimeOut
-                0x00009728                ulTaskEndTrace
-                0x00009768                vTaskStartTrace
-                0x000097c0                xTaskGetTickCount
-                0x000097e4                xTaskResumeAll
-                0x00009928                vTaskList
-                0x00009a3c                prvCheckTasksWaitingTermination
-                0x00009ac8                prvIdleTask
-                0x00009ad8                vTaskResume
-                0x00009b74                vTaskSuspend
-                0x00009bf0                vTaskPrioritySet
-                0x00009ce0                uxTaskPriorityGet
-                0x00009d10                vTaskDelete
-                0x00009db4                prvInitialiseTaskLists
-                0x00009e3c                prvInitialiseTCBVariables
-                0x00009e94                vTaskPlaceOnEventList
-                0x00009f40                vTaskDelay
-                0x00009fd0                vTaskDelayUntil
-                0x0000a0c0                vTaskSwitchContext
-                0x0000a2ac                vTaskEndScheduler
-                0x0000a2e0                xTaskGenericCreate
-                0x0000a464                vTaskStartScheduler
- .text          0x0000a4dc      0xb54 ARM Flash Release/queue.o
-                0x0000a4dc                uxQueueMessagesWaitingFromISR
-                0x0000a4e4                xQueueIsQueueEmptyFromISR
-                0x0000a4f4                xQueueIsQueueFullFromISR
-                0x0000a50c                vQueueAddToRegistry
-                0x0000a558                vQueueDelete
-                0x0000a5c4                uxQueueMessagesWaiting
-                0x0000a684                xQueueReceiveFromISR
-                0x0000a6fc                xQueueAltGenericReceive
-                0x0000a93c                xQueueGenericReceive
-                0x0000aaf4                xQueueTakeMutexRecursive
-                0x0000ac04                xQueueGenericSendFromISR
-                0x0000ac78                xQueueAltGenericSend
-                0x0000ad80                xQueueGenericSend
-                0x0000aecc                xQueueGiveMutexRecursive
-                0x0000af20                xQueueCreateMutex
-                0x0000af94                xQueueCreate
- .text          0x0000b030      0x108 ARM Flash Release/list.o
-                0x0000b030                vListInitialise
-                0x0000b054                vListInitialiseItem
-                0x0000b060                vListInsertEnd
-                0x0000b098                vListInsert
-                0x0000b0f8                vListRemove
- .text          0x0000b138      0x71c ARM Flash Release/dhcpc.o
-                0x0000b15c                dhcpc_request
-                0x0000b47c                dhcpc_appcall
-                0x0000b7dc                dhcpc_init
- .text          0x0000b854      0x2b4 ARM Flash Release/sntp.o
-                0x0000b854                sntp_appcall
-                0x0000ba98                sntpSync
- .text          0x0000bb08      0x604 ARM Flash Release/telnetd.o
-                0x0000bb24                telnetdDisconnect
-                0x0000bce0                telnetd_appcall
-                0x0000c00c                telnetd_init
-                0x0000c070                telnetdPutChar
- .text          0x0000c10c      0x9c4 ARM Flash Release/httpd.o
-                0x0000c10c                httpd_init
-                0x0000c9b4                httpd_appcall
- .text          0x0000cad0      0x448 ARM Flash Release/httpd-cgi.o
-                0x0000cae0                httpd_cgi
- .text          0x0000cf18      0x174 ARM Flash Release/httpd-fs.o
-                0x0000cf8c                httpd_fs_open
-                0x0000d00c                httpd_fs_init
-                0x0000d030                httpd_fs_count
- .text          0x0000d08c        0x0 ARM Flash Release/http-strings.o
- .text          0x0000d08c      0x88c ARM Flash Release/enc28j60.o
-                0x0000d130                enc28j60WaitForData
-                0x0000d2b4                enc28j60Send
-                0x0000d430                enc28j60Deinit
-                0x0000d450                enc28j60Init
-                0x0000d7b0                enc28j60Receive
- .text          0x0000d918      0x124 ARM Flash Release/memb.o
-                0x0000d918                memb_alloc
-                0x0000d988                memb_free
-                0x0000da04                memb_init
- .text          0x0000da3c      0x608 ARM Flash Release/psock.o
-                0x0000dad4                psock_datalen
-                0x0000daec                psock_newdata
-                0x0000db28                psock_readto
-                0x0000dc94                psock_init
-                0x0000dcd0                psock_readbuf
-                0x0000dedc                psock_generator_send
-                0x0000dfac                psock_send
- .text          0x0000e044     0x1e30 ARM Flash Release/uip.o
-                0x0000e044                uip_setipid
-                0x0000e054                uip_init
-                0x0000e0c0                uip_unlisten
-                0x0000e16c                uip_listen
-                0x0000e214                htons
-                0x0000e22c                uip_connect
-                0x0000e3f4                htonl
-                0x0000e41c                uip_iszeroaddr
-                0x0000e43c                uip_send
-                0x0000e4e0                uip_process
-                0x0000fb34                uip_udp_new
-                0x0000fca0                uip_printstats
- .text          0x0000fe74      0x444 ARM Flash Release/uip_arch.o
-                0x0000fe74                uip_add32
-                0x0000ffe0                uip_udpchksum
-                0x0001003c                uip_chksum
-                0x00010128                uip_ipchksum
-                0x00010144                uip_tcpchksum
- .text          0x000102b8      0x768 ARM Flash Release/uip_arp.o
-                0x00010454                uip_arp_ipin
-                0x000104ec                uip_arp_arpin
-                0x000106ac                uip_arp_out
-                0x00010928                uip_arp_timer
-                0x000109c4                uip_arp_init
- .text          0x00010a20       0x70 ARM Flash Release/uip_timer.o
-                0x00010a20                timer_reset
-                0x00010a30                timer_expired
-                0x00010a5c                timer_restart
-                0x00010a74                timer_set
- .text          0x00010a90      0x41c ARM Flash Release/uip-fw.o
-                0x00010a90                uip_fw_init
-                0x00010acc                uip_fw_output
-                0x00010c0c                uip_fw_register
-                0x00010c24                uip_fw_default
-                0x00010c34                uip_fw_periodic
-                0x00010c7c                uip_fw_forward
- .text          0x00010eac       0x98 ARM Flash Release/uiplib.o
-                0x00010eac                uiplib_ipaddrconv
- .text          0x00010f44      0x1e4 ARM Flash Release/uip-neighbor.o
-                0x00010f44                uip_neighbor_init
-                0x00010f68                uip_neighbor_periodic
-                0x00010fe8                uip_neighbor_update
-                0x00011004                uip_neighbor_lookup
-                0x00011020                uip_neighbor_add
- .text          0x00011128       0x10 ARM Flash Release/clock.o
-                0x00011128                clock_time
- .text          0x00011138      0x3d0 ARM Flash Release/uiptask.o
-                0x00011138                uipIsRunning
-                0x00011150                dispatch_tcp_appcall
-                0x00011154                dispatch_udp_appcall
-                0x00011158                dhcpc_configured
-                0x0001115c                uipStop
-                0x00011198                uipStart
-                0x000114d0                uipFastPoll
- .text          0x00011508      0x3ac ARM Flash Release/disk.o
-                0x00011508                diskShutdown
-                0x00011524                diskStatus
-                0x00011534                diskErrorText
-                0x00011584                diskErrorTextPrint
-                0x000115ac                diskPresent
-                0x000115bc                diskIoctl
-                0x00011734                diskWrite
-                0x00011794                diskRead
-                0x000117e0                diskInitialize
- .text          0x000118b4     0x2dc8 ARM Flash Release/ff.o
-                0x00011a28                f_ferrorlookup
-                0x00011a78                f_mount
-                0x00011ad4                f_mkfs
-                0x00012ad4                f_readdir
-                0x00012b90                f_lseek
-                0x00012d88                f_write
-                0x00013038                f_read
-                0x00013714                f_getfree
-                0x00013b7c                f_rename
-                0x00013ca4                f_chmod
-                0x00013d34                f_unlink
-                0x00013eb0                f_stat
-                0x00013f24                f_opendir
-                0x00013fe0                f_mkdir
-                0x00014248                f_sync
-                0x00014354                f_close
-                0x00014374                f_open
-                0x00014654                f_printerror
- .text          0x0001467c        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
+                0x0000879c                meas_windspeed
+ .text          0x0000889c        0x0 ARM Flash Release/crt0.o
+ .text          0x0000889c        0x0 ARM Flash Release/Philips_LPC210X_Startup.o
+ .text          0x0000889c       0xc8 ARM Flash Release/LPC210x.o
+                0x000088cc                ctl_get_ticks_per_second
+                0x000088d4                ctl_start_timer
+ .text          0x00008964      0x1b0 ARM Flash Release/VIC.o
+                0x00008964                ctl_set_isr
+                0x00008ae4                ctl_unmask_isr
+                0x00008afc                ctl_mask_isr
+ .text          0x00008b14       0x44 ARM Flash Release/VIC_irq_handler.o
+                0x00008b14                irq_handler
+ .text          0x00008b58      0x22c ARM Flash Release/portISR.o
+                0x00008b58                vPortISRStartFirstTask
+                0x00008ba4                vTickISR
+                0x00008c64                vPortEnterCritical
+                0x00008c90                vPortExitCritical
+                0x00008cd8                swi_handler
+ .text          0x00008d84      0x18c ARM Flash Release/port.o
+                0x00008d84                pxPortInitialiseStack
+                0x00008e90                vPortEndScheduler
+                0x00008e94                xPortStartScheduler
+ .text          0x00008f10      0x1b4 ARM Flash Release/heap_2.o
+                0x00008f10                xPortGetFreeHeapSize
+                0x00008f20                vPortInitialiseBlocks
+                0x00008f24                vPortFree
+                0x00008f88                pvPortMalloc
+ .text          0x000090c4     0x1410 ARM Flash Release/tasks.o
+                0x000090c4                xTaskIsTaskSuspended
+                0x00009100                vTaskSuspendAll
+                0x00009118                uxTaskGetNumberOfTasks
+                0x00009128                vTaskSetTimeOutState
+                0x00009144                vTaskMissedYield
+                0x00009158                usTaskCheckFreeStackSpace
+                0x0000918c                uxTaskGetStackHighWaterMark
+                0x000091b0                xTaskGetCurrentTaskHandle
+                0x000091c0                vTaskPriorityDisinherit
+                0x00009234                vTaskPriorityInherit
+                0x000092e8                xTaskRemoveFromEventList
+                0x00009398                vTaskIncrementTick
+                0x000094a4                xTaskResumeFromISR
+                0x0000954c                prvDeleteTCB
+                0x0000956c                prvListTaskWithinSingleList
+                0x00009628                prvAllocateTCBAndStack
+                0x00009684                xTaskCheckForTimeOut
+                0x00009720                ulTaskEndTrace
+                0x00009760                vTaskStartTrace
+                0x000097b8                xTaskGetTickCount
+                0x000097dc                xTaskResumeAll
+                0x00009920                vTaskList
+                0x00009a34                prvCheckTasksWaitingTermination
+                0x00009ac0                prvIdleTask
+                0x00009ad0                vTaskResume
+                0x00009b6c                vTaskSuspend
+                0x00009be8                vTaskPrioritySet
+                0x00009cd8                uxTaskPriorityGet
+                0x00009d08                vTaskDelete
+                0x00009dac                prvInitialiseTaskLists
+                0x00009e34                prvInitialiseTCBVariables
+                0x00009e8c                vTaskPlaceOnEventList
+                0x00009f38                vTaskDelay
+                0x00009fc8                vTaskDelayUntil
+                0x0000a0b8                vTaskSwitchContext
+                0x0000a2a4                vTaskEndScheduler
+                0x0000a2d8                xTaskGenericCreate
+                0x0000a45c                vTaskStartScheduler
+ .text          0x0000a4d4      0xb54 ARM Flash Release/queue.o
+                0x0000a4d4                uxQueueMessagesWaitingFromISR
+                0x0000a4dc                xQueueIsQueueEmptyFromISR
+                0x0000a4ec                xQueueIsQueueFullFromISR
+                0x0000a504                vQueueAddToRegistry
+                0x0000a550                vQueueDelete
+                0x0000a5bc                uxQueueMessagesWaiting
+                0x0000a67c                xQueueReceiveFromISR
+                0x0000a6f4                xQueueAltGenericReceive
+                0x0000a934                xQueueGenericReceive
+                0x0000aaec                xQueueTakeMutexRecursive
+                0x0000abfc                xQueueGenericSendFromISR
+                0x0000ac70                xQueueAltGenericSend
+                0x0000ad78                xQueueGenericSend
+                0x0000aec4                xQueueGiveMutexRecursive
+                0x0000af18                xQueueCreateMutex
+                0x0000af8c                xQueueCreate
+ .text          0x0000b028      0x108 ARM Flash Release/list.o
+                0x0000b028                vListInitialise
+                0x0000b04c                vListInitialiseItem
+                0x0000b058                vListInsertEnd
+                0x0000b090                vListInsert
+                0x0000b0f0                vListRemove
+ .text          0x0000b130      0x71c ARM Flash Release/dhcpc.o
+                0x0000b154                dhcpc_request
+                0x0000b474                dhcpc_appcall
+                0x0000b7d4                dhcpc_init
+ .text          0x0000b84c      0x2b4 ARM Flash Release/sntp.o
+                0x0000b84c                sntp_appcall
+                0x0000ba90                sntpSync
+ .text          0x0000bb00      0x604 ARM Flash Release/telnetd.o
+                0x0000bb1c                telnetdDisconnect
+                0x0000bcd8                telnetd_appcall
+                0x0000c004                telnetd_init
+                0x0000c068                telnetdPutChar
+ .text          0x0000c104      0x9c4 ARM Flash Release/httpd.o
+                0x0000c104                httpd_init
+                0x0000c9ac                httpd_appcall
+ .text          0x0000cac8      0x448 ARM Flash Release/httpd-cgi.o
+                0x0000cad8                httpd_cgi
+ .text          0x0000cf10      0x174 ARM Flash Release/httpd-fs.o
+                0x0000cf84                httpd_fs_open
+                0x0000d004                httpd_fs_init
+                0x0000d028                httpd_fs_count
+ .text          0x0000d084        0x0 ARM Flash Release/http-strings.o
+ .text          0x0000d084      0x88c ARM Flash Release/enc28j60.o
+                0x0000d128                enc28j60WaitForData
+                0x0000d2ac                enc28j60Send
+                0x0000d428                enc28j60Deinit
+                0x0000d448                enc28j60Init
+                0x0000d7a8                enc28j60Receive
+ .text          0x0000d910      0x124 ARM Flash Release/memb.o
+                0x0000d910                memb_alloc
+                0x0000d980                memb_free
+                0x0000d9fc                memb_init
+ .text          0x0000da34      0x608 ARM Flash Release/psock.o
+                0x0000dacc                psock_datalen
+                0x0000dae4                psock_newdata
+                0x0000db20                psock_readto
+                0x0000dc8c                psock_init
+                0x0000dcc8                psock_readbuf
+                0x0000ded4                psock_generator_send
+                0x0000dfa4                psock_send
+ .text          0x0000e03c     0x1e30 ARM Flash Release/uip.o
+                0x0000e03c                uip_setipid
+                0x0000e04c                uip_init
+                0x0000e0b8                uip_unlisten
+                0x0000e164                uip_listen
+                0x0000e20c                htons
+                0x0000e224                uip_connect
+                0x0000e3ec                htonl
+                0x0000e414                uip_iszeroaddr
+                0x0000e434                uip_send
+                0x0000e4d8                uip_process
+                0x0000fb2c                uip_udp_new
+                0x0000fc98                uip_printstats
+ .text          0x0000fe6c      0x444 ARM Flash Release/uip_arch.o
+                0x0000fe6c                uip_add32
+                0x0000ffd8                uip_udpchksum
+                0x00010034                uip_chksum
+                0x00010120                uip_ipchksum
+                0x0001013c                uip_tcpchksum
+ .text          0x000102b0      0x768 ARM Flash Release/uip_arp.o
+                0x0001044c                uip_arp_ipin
+                0x000104e4                uip_arp_arpin
+                0x000106a4                uip_arp_out
+                0x00010920                uip_arp_timer
+                0x000109bc                uip_arp_init
+ .text          0x00010a18       0x70 ARM Flash Release/uip_timer.o
+                0x00010a18                timer_reset
+                0x00010a28                timer_expired
+                0x00010a54                timer_restart
+                0x00010a6c                timer_set
+ .text          0x00010a88      0x41c ARM Flash Release/uip-fw.o
+                0x00010a88                uip_fw_init
+                0x00010ac4                uip_fw_output
+                0x00010c04                uip_fw_register
+                0x00010c1c                uip_fw_default
+                0x00010c2c                uip_fw_periodic
+                0x00010c74                uip_fw_forward
+ .text          0x00010ea4       0x98 ARM Flash Release/uiplib.o
+                0x00010ea4                uiplib_ipaddrconv
+ .text          0x00010f3c      0x1e4 ARM Flash Release/uip-neighbor.o
+                0x00010f3c                uip_neighbor_init
+                0x00010f60                uip_neighbor_periodic
+                0x00010fe0                uip_neighbor_update
+                0x00010ffc                uip_neighbor_lookup
+                0x00011018                uip_neighbor_add
+ .text          0x00011120       0x10 ARM Flash Release/clock.o
+                0x00011120                clock_time
+ .text          0x00011130      0x3d0 ARM Flash Release/uiptask.o
+                0x00011130                uipIsRunning
+                0x00011148                dispatch_tcp_appcall
+                0x0001114c                dispatch_udp_appcall
+                0x00011150                dhcpc_configured
+                0x00011154                uipStop
+                0x00011190                uipStart
+                0x000114c8                uipFastPoll
+ .text          0x00011500      0x3ac ARM Flash Release/disk.o
+                0x00011500                diskShutdown
+                0x0001151c                diskStatus
+                0x0001152c                diskErrorText
+                0x0001157c                diskErrorTextPrint
+                0x000115a4                diskPresent
+                0x000115b4                diskIoctl
+                0x0001172c                diskWrite
+                0x0001178c                diskRead
+                0x000117d8                diskInitialize
+ .text          0x000118ac     0x2dc8 ARM Flash Release/ff.o
+                0x00011a20                f_ferrorlookup
+                0x00011a70                f_mount
+                0x00011acc                f_mkfs
+                0x00012acc                f_readdir
+                0x00012b88                f_lseek
+                0x00012d80                f_write
+                0x00013030                f_read
+                0x0001370c                f_getfree
+                0x00013b74                f_rename
+                0x00013c9c                f_chmod
+                0x00013d2c                f_unlink
+                0x00013ea8                f_stat
+                0x00013f1c                f_opendir
+                0x00013fd8                f_mkdir
+                0x00014240                f_sync
+                0x0001434c                f_close
+                0x0001436c                f_open
+                0x0001464c                f_printerror
+ .text          0x00014674        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
  .text.liblpc2000
-                0x0001467c       0x30 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
-                0x0001467c                liblpc2000_lpc21xx_get_cclk
-                0x0001467c                liblpc2000_get_cclk
- .text          0x000146ac        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
+                0x00014674       0x30 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
+                0x00014674                liblpc2000_lpc21xx_get_cclk
+                0x00014674                liblpc2000_get_cclk
+ .text          0x000146a4        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
  .text.liblpc2000
-                0x000146ac       0x2c C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
-                0x000146ac                liblpc2000_lpc21xx_get_pclk
-                0x000146ac                liblpc2000_get_pclk
- .text          0x000146d8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
- *fill*         0x000146d8        0x8 00
- .text.libc     0x000146e0       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
-                0x000146e0                __int32_to_float32
-                0x000146e0                __floatsisf
-                0x000146e0                __aeabi_i2f
-                0x000146f4                __int32_to_float32_common
- .text          0x00014750        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
- .text.libc     0x00014750       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
-                0x00014750                __aeabi_i2d
-                0x00014750                __int32_to_float64
-                0x00014750                __floatsidf
- .text          0x000147c0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
- .text.libc     0x000147c0       0x10 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
-                0x000147c0                __aeabi_ui2f
-                0x000147c0                __floatunsisf
-                0x000147c0                __uint32_to_float32
- .text          0x000147d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
- .text.libc     0x000147d0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
-                0x000147d0                __float32_to_int32
-                0x000147d0                __aeabi_f2iz
-                0x000147d0                __fixsfsi
- .text          0x00014820        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
- .text.libc     0x00014820       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
-                0x00014820                __aeabi_f2uiz
-                0x00014820                __fixunssfsi
-                0x00014820                __float32_to_uint32
- .text          0x00014860        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
- .text.libc     0x00014860       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
-                0x00014860                __aeabi_d2iz
-                0x00014860                __float64_to_int32
-                0x00014860                __fixdfsi
- .text          0x000148c0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
- .text.libc     0x000148c0       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
-                0x000148c0                __float32_to_float64
-                0x000148c0                __aeabi_f2d
-                0x000148c0                __extendsfdf2
- .text          0x00014900        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
- .text.libc     0x00014900       0x80 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
-                0x00014900                __truncdfsf2
-                0x00014900                __float64_to_float32
-                0x00014900                __aeabi_d2f
- .text          0x00014980        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
- .text.libc     0x00014980      0x100 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
-                0x00014980                __mulsf3
-                0x00014980                __float32_mul
- .text          0x00014a80        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
- .text.libc     0x00014a80      0x350 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
-                0x00014a80                __aeabi_drsub
-                0x00014a88                __aeabi_dsub
-                0x00014a88                __float64_sub
-                0x00014a88                __subdf3
-                0x00014a8c                __aeabi_dadd
-                0x00014a8c                __float64_add
-                0x00014a8c                __adddf3
- .text          0x00014dd0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
- .text.libc     0x00014dd0      0x1b0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
-                0x00014dd0                __muldf3
-                0x00014dd0                __float64_mul
- .text          0x00014f80        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
- .text.libc     0x00014f80      0x330 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
-                0x00014f80                __divdf3
-                0x00014f80                __float64_div
-                0x00014f80                __aeabi_ddiv
- .text          0x000152b0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
- .text.libc     0x000152b0      0x2c0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
-                0x000152b0                log
- .text          0x00015570        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
- .text.libc     0x00015570       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
-                0x00015570                __eqdf2
-                0x00015570                __gtdf2
-                0x00015570                __ltdf2
-                0x00015570                __ledf2
-                0x00015570                __nedf2
-                0x00015570                __gedf2
-                0x00015570                __cmpdf2
- .text          0x000155e0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
- .text.libc     0x000155e0       0x20 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
-                0x000155e0                __float64_isnan
- .text          0x00015600        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
- .text.libc     0x00015600        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
- .text          0x00015600        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
- .text.libc     0x00015600        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
- .text          0x00015600        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
- .text.libc     0x00015600       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
-                0x00015600                __poly1_eval
- .text          0x00015670        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
- .text.libc     0x00015670       0x5c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
-                0x00015670                __poly_eval
- .text          0x000156cc        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
- .text.libc     0x000156cc       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
-                0x000156cc                frexp
- .text          0x0001572c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
- .text.libc     0x0001572c       0x84 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
-                0x0001572c                ldexp
- .text          0x000157b0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
- .text.libc     0x000157b0       0x20 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
-                0x000157b0                __int32_umod
-                0x000157b0                __umodsi3
- .text          0x000157d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
- .text.libc     0x000157d0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
-                0x000157d0                __divsi3
-                0x000157d0                __int32_div
- .text          0x00015820        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
- .text.libc     0x00015820       0x30 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
-                0x00015820                __int32_udivmod
-                0x00015820                __udivsi3
-                0x00015820                __int32_udiv
- .text          0x00015850        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
- .text.libc     0x00015850       0x90 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
-                0x00015850                strlen
- .text          0x000158e0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
- .text.libc     0x000158e0       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
-                0x000158e0                memcpy
- .text          0x00015940        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
- .text.libc     0x00015940       0xa0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
-                0x00015940                memset
- .text          0x000159e0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
- .text.libc     0x000159e0       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
-                0x000159e0                strcpy
- .text          0x00015a40        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
- .text.libc     0x00015a40       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
-                0x00015a40                strcmp
- .text          0x00015ab0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
- .text.libc     0x00015ab0       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
-                0x00015ab0                memcmp
- .text          0x00015b04        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
- .text.libc     0x00015b04       0x3c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
-                0x00015b04                strcat
- .text          0x00015b40        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
- .text.libc     0x00015b40       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
-                0x00015b40                strchr
- .text          0x00015b80        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
- .text.libc     0x00015b80       0x64 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
-                0x00015b80                strncmp
- .text          0x00015be4        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
- .text.libc     0x00015be4       0x74 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
-                0x00015be4                strncpy
- .text          0x00015c58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
- .text.libc     0x00015c58       0x44 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
-                0x00015c58                strrchr
- .text          0x00015c9c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
- .text.libc     0x00015c9c       0x98 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
-                0x00015c9c                strstr
- .text          0x00015d34        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
- .text.libc     0x00015d34      0x17c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
-                0x00015d34                isalpha
-                0x00015d50                isupper
-                0x00015d64                islower
-                0x00015d78                isdigit
-                0x00015d8c                isxdigit
-                0x00015db8                isspace
-                0x00015dd0                ispunct
-                0x00015e0c                isalnum
-                0x00015e38                isprint
-                0x00015e4c                isgraph
-                0x00015e60                iscntrl
-                0x00015e74                tolower
-                0x00015e88                toupper
-                0x00015e9c                isblank
- .text          0x00015eb0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
- .text.libc     0x00015eb0      0x250 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
-                0x00015eb0                free
-                0x00015fa4                malloc
-                0x00016088                realloc
-                0x000160d0                calloc
- .text          0x00016100        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
- .text.libc     0x00016100       0x38 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
-                0x00016100                atoi
- .text          0x00016138        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
- .text.libc     0x00016138      0x75c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
-                0x00016138                difftime
-                0x0001614c                checktm
-                0x00016394                mktime
-                0x000165dc                localtime_r
-                0x000167e8                localtime
-                0x00016808                gmtime_r
-                0x00016820                gmtime
-                0x00016840                ctime_r
-                0x00016870                ctime
- .text          0x00016894        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
- .text.libc     0x00016894      0x18c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
-                0x000168c0                asctime_r
-                0x00016a08                asctime
- .text          0x00016a20        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
- .text.libc     0x00016a20      0x82c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
-                0x000171f8                strftime
- .text          0x0001724c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
- .text.libc     0x0001724c       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
-                0x0001724c                div
- .text          0x000172a0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
- .text.libc     0x000172a0       0xd4 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
-                0x000172a0                strtol
- .text          0x00017374        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
- .text.libc     0x00017374       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
-                0x00017374                ldiv
- .text          0x000173c8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
- *fill*         0x000173c8        0x8 00
- .text.libc     0x000173d0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
-                0x000173d0                __modsi3
-                0x000173d0                __int32_mod
- .text          0x00017420        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
- .text.libc     0x00017420      0x128 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
-                0x00017420                __strtoul
- .text          0x00017548        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
- .text.libc     0x00017548       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
-                0x00017548                __digit
- .text          0x0001759c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
- .text.libc     0x0001759c       0x2c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
-                0x0001759c                putchar
- .text          0x000175c8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
- .text.libc     0x000175c8       0x2c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
-                0x000175c8                __errno
-                0x000175d4                __heap_lock
-                0x000175d8                __heap_unlock
-                0x000175dc                __printf_lock
-                0x000175e0                __printf_unlock
-                0x000175e4                __scanf_lock
-                0x000175e8                __scanf_unlock
-                0x000175ec                __debug_io_lock
-                0x000175f0                __debug_io_unlock
-                0x000175f4                __text_end__ = (__text_start__ + SIZEOF (.text))
-                0x000175f4                __text_load_end__ = __text_end__
+                0x000146a4       0x2c C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
+                0x000146a4                liblpc2000_lpc21xx_get_pclk
+                0x000146a4                liblpc2000_get_pclk
+ .text          0x000146d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
+ .text.libc     0x000146d0       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
+                0x000146d0                __int32_to_float32
+                0x000146d0                __floatsisf
+                0x000146d0                __aeabi_i2f
+                0x000146e4                __int32_to_float32_common
+ .text          0x00014740        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
+ .text.libc     0x00014740       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
+                0x00014740                __aeabi_i2d
+                0x00014740                __int32_to_float64
+                0x00014740                __floatsidf
+ .text          0x000147b0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
+ .text.libc     0x000147b0       0x10 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
+                0x000147b0                __aeabi_ui2f
+                0x000147b0                __floatunsisf
+                0x000147b0                __uint32_to_float32
+ .text          0x000147c0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
+ .text.libc     0x000147c0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
+                0x000147c0                __float32_to_int32
+                0x000147c0                __aeabi_f2iz
+                0x000147c0                __fixsfsi
+ .text          0x00014810        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
+ .text.libc     0x00014810       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
+                0x00014810                __aeabi_f2uiz
+                0x00014810                __fixunssfsi
+                0x00014810                __float32_to_uint32
+ .text          0x00014850        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
+ .text.libc     0x00014850       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
+                0x00014850                __aeabi_d2iz
+                0x00014850                __float64_to_int32
+                0x00014850                __fixdfsi
+ .text          0x000148b0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
+ .text.libc     0x000148b0       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
+                0x000148b0                __float32_to_float64
+                0x000148b0                __aeabi_f2d
+                0x000148b0                __extendsfdf2
+ .text          0x000148f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
+ .text.libc     0x000148f0       0x80 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
+                0x000148f0                __truncdfsf2
+                0x000148f0                __float64_to_float32
+                0x000148f0                __aeabi_d2f
+ .text          0x00014970        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
+ .text.libc     0x00014970      0x100 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
+                0x00014970                __mulsf3
+                0x00014970                __float32_mul
+ .text          0x00014a70        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
+ .text.libc     0x00014a70      0x350 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
+                0x00014a70                __aeabi_drsub
+                0x00014a78                __aeabi_dsub
+                0x00014a78                __float64_sub
+                0x00014a78                __subdf3
+                0x00014a7c                __aeabi_dadd
+                0x00014a7c                __float64_add
+                0x00014a7c                __adddf3
+ .text          0x00014dc0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
+ .text.libc     0x00014dc0      0x1b0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
+                0x00014dc0                __muldf3
+                0x00014dc0                __float64_mul
+ .text          0x00014f70        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
+ .text.libc     0x00014f70      0x330 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
+                0x00014f70                __divdf3
+                0x00014f70                __float64_div
+                0x00014f70                __aeabi_ddiv
+ .text          0x000152a0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
+ .text.libc     0x000152a0      0x2c0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
+                0x000152a0                log
+ .text          0x00015560        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
+ .text.libc     0x00015560       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
+                0x00015560                __eqdf2
+                0x00015560                __gtdf2
+                0x00015560                __ltdf2
+                0x00015560                __ledf2
+                0x00015560                __nedf2
+                0x00015560                __gedf2
+                0x00015560                __cmpdf2
+ .text          0x000155d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
+ .text.libc     0x000155d0       0x20 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
+                0x000155d0                __float64_isnan
+ .text          0x000155f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
+ .text.libc     0x000155f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
+ .text          0x000155f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
+ .text.libc     0x000155f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
+ .text          0x000155f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
+ .text.libc     0x000155f0       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
+                0x000155f0                __poly1_eval
+ .text          0x00015660        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
+ .text.libc     0x00015660       0x5c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
+                0x00015660                __poly_eval
+ .text          0x000156bc        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
+ .text.libc     0x000156bc       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
+                0x000156bc                frexp
+ .text          0x0001571c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
+ .text.libc     0x0001571c       0x84 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
+                0x0001571c                ldexp
+ .text          0x000157a0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
+ .text.libc     0x000157a0       0x20 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
+                0x000157a0                __int32_umod
+                0x000157a0                __umodsi3
+ .text          0x000157c0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
+ .text.libc     0x000157c0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
+                0x000157c0                __divsi3
+                0x000157c0                __int32_div
+ .text          0x00015810        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
+ .text.libc     0x00015810       0x30 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
+                0x00015810                __int32_udivmod
+                0x00015810                __udivsi3
+                0x00015810                __int32_udiv
+ .text          0x00015840        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
+ .text.libc     0x00015840       0x90 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
+                0x00015840                strlen
+ .text          0x000158d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
+ .text.libc     0x000158d0       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
+                0x000158d0                memcpy
+ .text          0x00015930        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
+ .text.libc     0x00015930       0xa0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
+                0x00015930                memset
+ .text          0x000159d0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
+ .text.libc     0x000159d0       0x60 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
+                0x000159d0                strcpy
+ .text          0x00015a30        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
+ .text.libc     0x00015a30       0x70 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
+                0x00015a30                strcmp
+ .text          0x00015aa0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
+ .text.libc     0x00015aa0       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
+                0x00015aa0                memcmp
+ .text          0x00015af4        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
+ .text.libc     0x00015af4       0x3c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
+                0x00015af4                strcat
+ .text          0x00015b30        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
+ .text.libc     0x00015b30       0x40 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
+                0x00015b30                strchr
+ .text          0x00015b70        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
+ .text.libc     0x00015b70       0x64 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
+                0x00015b70                strncmp
+ .text          0x00015bd4        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
+ .text.libc     0x00015bd4       0x74 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
+                0x00015bd4                strncpy
+ .text          0x00015c48        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
+ .text.libc     0x00015c48       0x44 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
+                0x00015c48                strrchr
+ .text          0x00015c8c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
+ .text.libc     0x00015c8c       0x98 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
+                0x00015c8c                strstr
+ .text          0x00015d24        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
+ .text.libc     0x00015d24      0x17c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
+                0x00015d24                isalpha
+                0x00015d40                isupper
+                0x00015d54                islower
+                0x00015d68                isdigit
+                0x00015d7c                isxdigit
+                0x00015da8                isspace
+                0x00015dc0                ispunct
+                0x00015dfc                isalnum
+                0x00015e28                isprint
+                0x00015e3c                isgraph
+                0x00015e50                iscntrl
+                0x00015e64                tolower
+                0x00015e78                toupper
+                0x00015e8c                isblank
+ .text          0x00015ea0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
+ .text.libc     0x00015ea0      0x250 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
+                0x00015ea0                free
+                0x00015f94                malloc
+                0x00016078                realloc
+                0x000160c0                calloc
+ .text          0x000160f0        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
+ .text.libc     0x000160f0       0x38 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
+                0x000160f0                atoi
+ .text          0x00016128        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
+ .text.libc     0x00016128      0x75c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
+                0x00016128                difftime
+                0x0001613c                checktm
+                0x00016384                mktime
+                0x000165cc                localtime_r
+                0x000167d8                localtime
+                0x000167f8                gmtime_r
+                0x00016810                gmtime
+                0x00016830                ctime_r
+                0x00016860                ctime
+ .text          0x00016884        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
+ .text.libc     0x00016884      0x18c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
+                0x000168b0                asctime_r
+                0x000169f8                asctime
+ .text          0x00016a10        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
+ .text.libc     0x00016a10      0x82c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
+                0x000171e8                strftime
+ .text          0x0001723c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
+ .text.libc     0x0001723c       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
+                0x0001723c                div
+ .text          0x00017290        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
+ .text.libc     0x00017290       0xd4 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
+                0x00017290                strtol
+ .text          0x00017364        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
+ .text.libc     0x00017364       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
+                0x00017364                ldiv
+ .text          0x000173b8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
+ *fill*         0x000173b8        0x8 00
+ .text.libc     0x000173c0       0x50 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
+                0x000173c0                __modsi3
+                0x000173c0                __int32_mod
+ .text          0x00017410        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
+ .text.libc     0x00017410      0x128 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
+                0x00017410                __strtoul
+ .text          0x00017538        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
+ .text.libc     0x00017538       0x54 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
+                0x00017538                __digit
+ .text          0x0001758c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
+ .text.libc     0x0001758c       0x2c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
+                0x0001758c                putchar
+ .text          0x000175b8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
+ .text.libc     0x000175b8       0x2c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
+                0x000175b8                __errno
+                0x000175c4                __heap_lock
+                0x000175c8                __heap_unlock
+                0x000175cc                __printf_lock
+                0x000175d0                __printf_unlock
+                0x000175d4                __scanf_lock
+                0x000175d8                __scanf_unlock
+                0x000175dc                __debug_io_lock
+                0x000175e0                __debug_io_unlock
+                0x000175e4                __text_end__ = (__text_start__ + SIZEOF (.text))
+                0x000175e4                __text_load_end__ = __text_end__
 
 .vfp11_veneer   0x00000000        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
@@ -933,187 +932,189 @@ Linker script and memory map
 .v4_bx          0x00000000        0x0
  .v4_bx         0x00000000        0x0 linker stubs
                 0x00000001                . = ASSERT (((__text_end__ >= __FLASH_segment_start__) && (__text_end__ <= (__FLASH_segment_start__ + 0x80000))), error: .text is too large to fit in FLASH memory segment)
-                0x000175f4                __dtors_load_start__ = ALIGN (__text_end__, 0x4)
+                0x000175e4                __dtors_load_start__ = ALIGN (__text_end__, 0x4)
 
-.dtors          0x000175f4        0x0
-                0x000175f4                __dtors_start__ = .
+.dtors          0x000175e4        0x0
+                0x000175e4                __dtors_start__ = .
  *(SORT(.dtors.*))
  *(.dtors)
-                0x000175f4                __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
-                0x000175f4                __dtors_load_end__ = __dtors_end__
+                0x000175e4                __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
+                0x000175e4                __dtors_load_end__ = __dtors_end__
                 0x00000001                . = ASSERT (((__dtors_end__ >= __FLASH_segment_start__) && (__dtors_end__ <= (__FLASH_segment_start__ + 0x80000))), error: .dtors is too large to fit in FLASH memory segment)
-                0x000175f4                __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
+                0x000175e4                __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
 
-.ctors          0x000175f4        0x0
-                0x000175f4                __ctors_start__ = .
+.ctors          0x000175e4        0x0
+                0x000175e4                __ctors_start__ = .
  *(SORT(.ctors.*))
  *(.ctors)
-                0x000175f4                __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
-                0x000175f4                __ctors_load_end__ = __ctors_end__
+                0x000175e4                __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
+                0x000175e4                __ctors_load_end__ = __ctors_end__
                 0x00000001                . = ASSERT (((__ctors_end__ >= __FLASH_segment_start__) && (__ctors_end__ <= (__FLASH_segment_start__ + 0x80000))), error: .ctors is too large to fit in FLASH memory segment)
-                0x000175f4                __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
+                0x000175e4                __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
 
-.rodata         0x000175f4     0x797c
-                0x000175f4                __rodata_start__ = .
+.rodata         0x000175e4     0x7968
+                0x000175e4                __rodata_start__ = .
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.str1.4
-                0x000175f4        0x8 ARM Flash Release/main.o
- .rodata        0x000175fc       0xb0 ARM Flash Release/i2c.o
+                0x000175e4        0x8 ARM Flash Release/main.o
+ .rodata        0x000175ec       0xb0 ARM Flash Release/i2c.o
  .rodata.str1.4
-                0x000176ac      0x19e ARM Flash Release/i2c.o
+                0x0001769c      0x19e ARM Flash Release/i2c.o
                                 0x1a0 (size before relaxing)
- *fill*         0x0001784a        0x2 00
+ *fill*         0x0001783a        0x2 00
  .rodata.str1.4
-                0x0001784c        0x8 ARM Flash Release/i2cInt.o
+                0x0001783c        0x8 ARM Flash Release/i2cInt.o
                                   0xc (size before relaxing)
- .rodata        0x00017854       0x90 ARM Flash Release/usbser.o
- .rodata        0x000178e4        0xc ARM Flash Release/rtc.o
- .rodata        0x000178f0      0x2b4 ARM Flash Release/beep.o
+ .rodata        0x00017844       0x90 ARM Flash Release/usbser.o
+ .rodata        0x000178d4        0xc ARM Flash Release/rtc.o
+ .rodata        0x000178e0      0x2b4 ARM Flash Release/beep.o
  .rodata.str1.4
-                0x00017ba4        0x7 ARM Flash Release/args.o
+                0x00017b94        0x7 ARM Flash Release/args.o
                                  0x10 (size before relaxing)
- *fill*         0x00017bab        0x1 00
+ *fill*         0x00017b9b        0x1 00
  .rodata.str1.4
-                0x00017bac       0x7b ARM Flash Release/argsdispatch.o
+                0x00017b9c       0x7b ARM Flash Release/argsdispatch.o
                                  0x84 (size before relaxing)
- *fill*         0x00017c27        0x1 00
- .rodata        0x00017c28      0x330 ARM Flash Release/monitor.o
+ *fill*         0x00017c17        0x1 00
+ .rodata        0x00017c18      0x330 ARM Flash Release/monitor.o
  .rodata.str1.4
-                0x00017f58      0xcdf ARM Flash Release/monitor.o
+                0x00017f48      0xcdf ARM Flash Release/monitor.o
                                 0xcfc (size before relaxing)
- *fill*         0x00018c37        0x1 00
+ *fill*         0x00018c27        0x1 00
  .rodata.str1.4
-                0x00018c38        0x7 ARM Flash Release/printf-stdarg.o
+                0x00018c28        0x7 ARM Flash Release/printf-stdarg.o
                                   0x8 (size before relaxing)
  .rodata.str1.4
                 0x00000000        0x7 ARM Flash Release/leds.o
                                   0x4 (size before relaxing)
- *fill*         0x00018c3f        0x1 00
+ *fill*         0x00018c2f        0x1 00
  .rodata.str1.4
-                0x00018c40        0x8 ARM Flash Release/tcs3414.o
- .rodata        0x00018c48      0x210 ARM Flash Release/mmc.o
+                0x00018c30        0x8 ARM Flash Release/tcs3414.o
+ .rodata        0x00018c38      0x210 ARM Flash Release/mmc.o
  .rodata.str1.4
-                0x00018e58       0x11 ARM Flash Release/mmc.o
+                0x00018e48       0x11 ARM Flash Release/mmc.o
                                  0x14 (size before relaxing)
- *fill*         0x00018e69        0x3 00
- .rodata        0x00018e6c        0xc ARM Flash Release/logging.o
+ *fill*         0x00018e59        0x3 00
+ .rodata        0x00018e5c        0xc ARM Flash Release/logging.o
  .rodata.str1.4
-                0x00018e78       0xa0 ARM Flash Release/logging.o
+                0x00018e68       0xa0 ARM Flash Release/logging.o
                                  0xa4 (size before relaxing)
  .rodata.str1.4
-                0x00018f18      0x1e5 ARM Flash Release/meas_sm.o
+                0x00018f08      0x1e5 ARM Flash Release/meas_sm.o
                                 0x1f0 (size before relaxing)
+ *fill*         0x000190ed        0x3 00
+ .rodata.str1.4
+                0x000190f0        0xd ARM Flash Release/meas_task.o
+                                 0x10 (size before relaxing)
  *fill*         0x000190fd        0x3 00
+ .rodata        0x00019100       0x14 ARM Flash Release/tasks.o
  .rodata.str1.4
-                0x00019100       0x24 ARM Flash Release/meas_task.o
- .rodata        0x00019124       0x14 ARM Flash Release/tasks.o
- .rodata.str1.4
-                0x00019138       0x19 ARM Flash Release/tasks.o
+                0x00019114       0x19 ARM Flash Release/tasks.o
                                  0x20 (size before relaxing)
- *fill*         0x00019151        0x3 00
- .rodata        0x00019154        0x8 ARM Flash Release/dhcpc.o
+ *fill*         0x0001912d        0x3 00
+ .rodata        0x00019130        0x8 ARM Flash Release/dhcpc.o
  .rodata.str1.4
                 0x00000000        0xc ARM Flash Release/telnetd.o
  .rodata.str1.4
-                0x0001915c       0x13 ARM Flash Release/httpd.o
+                0x00019138       0x13 ARM Flash Release/httpd.o
                                  0x18 (size before relaxing)
- *fill*         0x0001916f        0x1 00
- .rodata        0x00019170       0xa8 ARM Flash Release/httpd-cgi.o
+ *fill*         0x0001914b        0x1 00
+ .rodata        0x0001914c       0xa8 ARM Flash Release/httpd-cgi.o
  .rodata.str1.4
-                0x00019218       0xdb ARM Flash Release/httpd-cgi.o
+                0x000191f4       0xdb ARM Flash Release/httpd-cgi.o
                                  0xe0 (size before relaxing)
- *fill*         0x000192f3        0x1 00
- .rodata        0x000192f4     0x51d8 ARM Flash Release/httpd-fs.o
-                0x000192f4                file_tcp_shtml
-                0x00019308                file_404_html
-                0x0001931c                file_fade_png
-                0x00019330                file_files_shtml
-                0x00019344                file_footer_html
-                0x00019358                file_header_html
-                0x0001936c                file_index_html
-                0x00019380                file_led_shtml
-                0x00019394                file_lpc2148_jpg
-                0x000193a8                file_stats_shtml
-                0x000193bc                file_style_css
- .rodata        0x0001e4cc      0x288 ARM Flash Release/http-strings.o
-                0x0001e4cc                http_http
-                0x0001e4d4                http_200
-                0x0001e4dc                http_301
-                0x0001e4e4                http_302
-                0x0001e4ec                http_get
-                0x0001e4f4                http_10
-                0x0001e500                http_11
-                0x0001e50c                http_content_type
-                0x0001e51c                http_texthtml
-                0x0001e528                http_location
-                0x0001e534                http_host
-                0x0001e53c                http_crnl
-                0x0001e540                http_index_html
-                0x0001e54c                http_404_html
-                0x0001e558                http_referer
-                0x0001e564                http_header_200
-                0x0001e5b8                http_header_404
-                0x0001e614                http_content_type_plain
-                0x0001e634                http_content_type_html
-                0x0001e650                http_content_type_css
-                0x0001e66c                http_content_type_text
-                0x0001e688                http_content_type_png
-                0x0001e6a4                http_content_type_gif
-                0x0001e6c0                http_content_type_jpg
-                0x0001e6e0                http_content_type_binary
-                0x0001e70c                http_html
-                0x0001e714                http_shtml
-                0x0001e71c                http_htm
-                0x0001e724                http_css
-                0x0001e72c                http_png
-                0x0001e734                http_gif
-                0x0001e73c                http_jpg
-                0x0001e744                http_text
-                0x0001e74c                http_txt
+ *fill*         0x000192cf        0x1 00
+ .rodata        0x000192d0     0x51d8 ARM Flash Release/httpd-fs.o
+                0x000192d0                file_tcp_shtml
+                0x000192e4                file_404_html
+                0x000192f8                file_fade_png
+                0x0001930c                file_files_shtml
+                0x00019320                file_footer_html
+                0x00019334                file_header_html
+                0x00019348                file_index_html
+                0x0001935c                file_led_shtml
+                0x00019370                file_lpc2148_jpg
+                0x00019384                file_stats_shtml
+                0x00019398                file_style_css
+ .rodata        0x0001e4a8      0x288 ARM Flash Release/http-strings.o
+                0x0001e4a8                http_http
+                0x0001e4b0                http_200
+                0x0001e4b8                http_301
+                0x0001e4c0                http_302
+                0x0001e4c8                http_get
+                0x0001e4d0                http_10
+                0x0001e4dc                http_11
+                0x0001e4e8                http_content_type
+                0x0001e4f8                http_texthtml
+                0x0001e504                http_location
+                0x0001e510                http_host
+                0x0001e518                http_crnl
+                0x0001e51c                http_index_html
+                0x0001e528                http_404_html
+                0x0001e534                http_referer
+                0x0001e540                http_header_200
+                0x0001e594                http_header_404
+                0x0001e5f0                http_content_type_plain
+                0x0001e610                http_content_type_html
+                0x0001e62c                http_content_type_css
+                0x0001e648                http_content_type_text
+                0x0001e664                http_content_type_png
+                0x0001e680                http_content_type_gif
+                0x0001e69c                http_content_type_jpg
+                0x0001e6bc                http_content_type_binary
+                0x0001e6e8                http_html
+                0x0001e6f0                http_shtml
+                0x0001e6f8                http_htm
+                0x0001e700                http_css
+                0x0001e708                http_png
+                0x0001e710                http_gif
+                0x0001e718                http_jpg
+                0x0001e720                http_text
+                0x0001e728                http_txt
  .rodata.str1.4
-                0x0001e754      0x30c ARM Flash Release/uip.o
- .rodata        0x0001ea60        0x8 ARM Flash Release/uip_arp.o
+                0x0001e730      0x30c ARM Flash Release/uip.o
+ .rodata        0x0001ea3c        0x8 ARM Flash Release/uip_arp.o
  .rodata.str1.4
-                0x0001ea68       0x41 ARM Flash Release/uip-neighbor.o
+                0x0001ea44       0x41 ARM Flash Release/uip-neighbor.o
                                  0x44 (size before relaxing)
- *fill*         0x0001eaa9        0x3 00
+ *fill*         0x0001ea85        0x3 00
  .rodata.str1.4
-                0x0001eaac       0x1f ARM Flash Release/uiptask.o
+                0x0001ea88       0x1f ARM Flash Release/uiptask.o
                                  0x20 (size before relaxing)
- *fill*         0x0001eacb        0x1 00
- .rodata        0x0001eacc       0x28 ARM Flash Release/disk.o
+ *fill*         0x0001eaa7        0x1 00
+ .rodata        0x0001eaa8       0x28 ARM Flash Release/disk.o
  .rodata.str1.4
-                0x0001eaf4       0x51 ARM Flash Release/disk.o
+                0x0001ead0       0x51 ARM Flash Release/disk.o
                                  0x54 (size before relaxing)
- *fill*         0x0001eb45        0x3 00
- .rodata        0x0001eb48       0x70 ARM Flash Release/ff.o
+ *fill*         0x0001eb21        0x3 00
+ .rodata        0x0001eb24       0x70 ARM Flash Release/ff.o
  .rodata.str1.4
-                0x0001ebb8       0xd5 ARM Flash Release/ff.o
+                0x0001eb94       0xd5 ARM Flash Release/ff.o
                                  0xf8 (size before relaxing)
- *fill*         0x0001ec8d        0x3 00
- .rodata.libc   0x0001ec90       0x28 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
- .rodata.libc   0x0001ecb8        0x8 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
-                0x0001ecb8                __float64_infinity
- .rodata.libc   0x0001ecc0        0x8 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
-                0x0001ecc0                __float64_nan
- .rodata.libc   0x0001ecc8       0x84 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
-                0x0001ecc8                __ctype
- .rodata.libc   0x0001ed4c       0x68 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
- .rodata.libc   0x0001edb4       0x4c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
- .rodata.libc   0x0001ee00       0x4c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
+ *fill*         0x0001ec69        0x3 00
+ .rodata.libc   0x0001ec6c       0x28 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
+ .rodata.libc   0x0001ec94        0x8 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
+                0x0001ec94                __float64_infinity
+ .rodata.libc   0x0001ec9c        0x8 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
+                0x0001ec9c                __float64_nan
+ .rodata.libc   0x0001eca4       0x84 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
+                0x0001eca4                __ctype
+ .rodata.libc   0x0001ed28       0x68 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
+ .rodata.libc   0x0001ed90       0x4c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
+ .rodata.libc   0x0001eddc       0x4c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
  .rodata.libc.str1.4
-                0x0001ee4c      0x124 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
+                0x0001ee28      0x124 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
                                 0x130 (size before relaxing)
-                0x0001ef70                __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
-                0x0001ef70                __rodata_load_end__ = __rodata_end__
+                0x0001ef4c                __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
+                0x0001ef4c                __rodata_load_end__ = __rodata_end__
                 0x00000001                . = ASSERT (((__rodata_end__ >= __FLASH_segment_start__) && (__rodata_end__ <= (__FLASH_segment_start__ + 0x80000))), error: .rodata is too large to fit in FLASH memory segment)
-                0x0001ef70                __fast_load_start__ = ALIGN (__rodata_end__, 0x4)
+                0x0001ef4c                __fast_load_start__ = ALIGN (__rodata_end__, 0x4)
 
-.fast           0x4000003c        0x0 load address 0x0001ef70
+.fast           0x4000003c        0x0 load address 0x0001ef4c
                 0x4000003c                __fast_start__ = .
  *(.fast .fast.*)
                 0x4000003c                __fast_end__ = (__fast_start__ + SIZEOF (.fast))
-                0x0001ef70                __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
+                0x0001ef4c                __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
                 0x00000001                . = ASSERT ((((__fast_load_start__ + SIZEOF (.fast)) >= __FLASH_segment_start__) && ((__fast_load_start__ + SIZEOF (.fast)) <= (__FLASH_segment_start__ + 0x80000))), error: .fast is too large to fit in FLASH memory segment)
 
 .fast_run       0x4000003c        0x0
@@ -1122,9 +1123,9 @@ Linker script and memory map
                 0x4000003c                __fast_run_end__ = (__fast_run_start__ + SIZEOF (.fast_run))
                 0x4000003c                __fast_run_load_end__ = __fast_run_end__
                 0x00000001                . = ASSERT (((__fast_run_end__ >= __SRAM_segment_start__) && (__fast_run_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .fast_run is too large to fit in SRAM memory segment)
-                0x0001ef70                __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
+                0x0001ef4c                __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
 
-.data           0x4000003c       0x60 load address 0x0001ef70
+.data           0x4000003c       0x60 load address 0x0001ef4c
                 0x4000003c                __data_start__ = .
  *(.data .data.* .gnu.linkonce.d.*)
  .data          0x4000003c        0x0 ARM Flash Release/main.o
@@ -1258,10 +1259,10 @@ Linker script and memory map
  .data          0x4000009c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
  .data          0x4000009c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
                 0x4000009c                __data_end__ = (__data_start__ + SIZEOF (.data))
-                0x0001efd0                __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
+                0x0001efac                __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
                 0x00000001                . = ASSERT ((((__data_load_start__ + SIZEOF (.data)) >= __FLASH_segment_start__) && ((__data_load_start__ + SIZEOF (.data)) <= (__FLASH_segment_start__ + 0x80000))), error: .data is too large to fit in FLASH memory segment)
 
-.data_run       0x4000003c       0x60 load address 0x0001ef70
+.data_run       0x4000003c       0x60 load address 0x0001ef4c
                 0x4000003c                __data_run_start__ = .
                 0x4000009c                . = MAX ((__data_run_start__ + SIZEOF (.data)), .)
  *fill*         0x4000003c       0x60 00
@@ -1270,7 +1271,7 @@ Linker script and memory map
                 0x00000001                . = ASSERT (((__data_run_end__ >= __SRAM_segment_start__) && (__data_run_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .data_run is too large to fit in SRAM memory segment)
                 0x4000009c                __bss_load_start__ = ALIGN (__data_run_end__, 0x4)
 
-.bss            0x4000009c     0x6368
+.bss            0x4000009c     0x6378
                 0x4000009c                __bss_start__ = .
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss           0x4000009c        0x0 ARM Flash Release/main.o
@@ -1282,311 +1283,312 @@ Linker script and memory map
  .bss           0x40000100        0x0 ARM Flash Release/pwm.o
  .bss           0x40000100        0x0 ARM Flash Release/spi.o
  .bss           0x40000100        0xc ARM Flash Release/uart0.o
- .bss           0x4000010c        0xc ARM Flash Release/uart0ISR.o
- .bss           0x40000118        0xc ARM Flash Release/uart1.o
- .bss           0x40000124        0xc ARM Flash Release/uart1ISR.o
- .bss           0x40000130       0x34 ARM Flash Release/usbcontrol.o
- .bss           0x40000164        0x8 ARM Flash Release/usbinit.o
- .bss           0x4000016c       0x48 ARM Flash Release/usbISR.o
- .bss           0x400001b4        0xc ARM Flash Release/usbstdreq.o
- .bss           0x400001c0       0x58 ARM Flash Release/usbser.o
- .bss           0x40000218        0x0 ARM Flash Release/rtc.o
- .bss           0x40000218        0x4 ARM Flash Release/rtcISR.o
- .bss           0x4000021c        0x0 ARM Flash Release/reset.o
- .bss           0x4000021c        0x0 ARM Flash Release/eint0.o
- .bss           0x4000021c        0x0 ARM Flash Release/eint0ISR.o
- .bss           0x4000021c        0x0 ARM Flash Release/eint2.o
- .bss           0x4000021c        0x0 ARM Flash Release/eint2ISR.o
- .bss           0x4000021c        0x0 ARM Flash Release/eint3.o
- .bss           0x4000021c        0x4 ARM Flash Release/eint3ISR.o
-                0x4000021c                count
- .bss           0x40000220        0x0 ARM Flash Release/eint1.o
- .bss           0x40000220        0x0 ARM Flash Release/eint1ISR.o
- .bss           0x40000220        0x0 ARM Flash Release/beep.o
- .bss           0x40000220        0x1 ARM Flash Release/timer.o
- .bss           0x40000221        0x0 ARM Flash Release/dac.o
- .bss           0x40000221        0x0 ARM Flash Release/args.o
- .bss           0x40000221        0x0 ARM Flash Release/argsdispatch.o
- *fill*         0x40000221        0x3 00
- .bss           0x40000224      0x3d8 ARM Flash Release/monitor.o
-                0x400005f8                activeCommandList
- .bss           0x400005fc        0x0 ARM Flash Release/printf-stdarg.o
- .bss           0x400005fc        0x0 ARM Flash Release/leds.o
- .bss           0x400005fc        0x1 ARM Flash Release/tcs3414.o
- *fill*         0x400005fd        0x3 00
- .bss           0x40000600       0x2c ARM Flash Release/mmc.o
- .bss           0x4000062c        0x0 ARM Flash Release/ssp.o
- .bss           0x4000062c        0x0 ARM Flash Release/Lcd204_4.o
- .bss           0x4000062c      0x23c ARM Flash Release/logging.o
- .bss           0x40000868       0x1c ARM Flash Release/meas_sm.o
- .bss           0x40000884        0x0 ARM Flash Release/meas_task.o
- .bss           0x40000884        0x0 ARM Flash Release/crt0.o
- .bss           0x40000884        0x0 ARM Flash Release/Philips_LPC210X_Startup.o
- .bss           0x40000884        0x4 ARM Flash Release/LPC210x.o
- .bss           0x40000888       0x80 ARM Flash Release/VIC.o
- .bss           0x40000908        0x0 ARM Flash Release/VIC_irq_handler.o
- .bss           0x40000908        0x0 ARM Flash Release/portISR.o
- .bss           0x40000908        0x0 ARM Flash Release/port.o
- .bss           0x40000908     0x4018 ARM Flash Release/heap_2.o
- .bss           0x40004920       0x34 ARM Flash Release/tasks.o
-                0x40004920                uxSchedulerSuspended
-                0x40004924                uxCurrentNumberOfTasks
-                0x40004928                xNumOfOverflows
-                0x4000492c                xTickCount
-                0x40004930                xMissedYield
-                0x40004934                pxCurrentTCB
-                0x40004938                uxTopReadyPriority
-                0x4000493c                uxMissedTicks
-                0x40004940                xTracing
-                0x40004944                uxTopUsedPriority
-                0x40004948                uxTasksDeleted
-                0x4000494c                uxTaskNumber
-                0x40004950                xSchedulerRunning
- .bss           0x40004954        0x0 ARM Flash Release/queue.o
- .bss           0x40004954        0x0 ARM Flash Release/list.o
- .bss           0x40004954        0x4 ARM Flash Release/dhcpc.o
- .bss           0x40004958        0x4 ARM Flash Release/sntp.o
- .bss           0x4000495c      0x294 ARM Flash Release/telnetd.o
- .bss           0x40004bf0        0x0 ARM Flash Release/httpd.o
- .bss           0x40004bf0        0x0 ARM Flash Release/httpd-cgi.o
- .bss           0x40004bf0       0x18 ARM Flash Release/httpd-fs.o
- .bss           0x40004c08        0x0 ARM Flash Release/http-strings.o
- .bss           0x40004c08        0x8 ARM Flash Release/enc28j60.o
-                0x40004c08                xENC28J60Semaphore
-                0x40004c0c                ethRxPointer
- .bss           0x40004c10        0x0 ARM Flash Release/memb.o
- .bss           0x40004c10        0x0 ARM Flash Release/psock.o
- .bss           0x40004c10       0x1c ARM Flash Release/uip.o
-                0x40004c20                uip_timeoffset
-                0x40004c24                uip_ethaddr
- .bss           0x40004c2c        0x0 ARM Flash Release/uip_arch.o
- .bss           0x40004c2c       0x64 ARM Flash Release/uip_arp.o
- .bss           0x40004c90        0x0 ARM Flash Release/uip_timer.o
- .bss           0x40004c90       0x28 ARM Flash Release/uip-fw.o
- .bss           0x40004cb8        0x0 ARM Flash Release/uiplib.o
- .bss           0x40004cb8       0x80 ARM Flash Release/uip-neighbor.o
- .bss           0x40004d38        0x0 ARM Flash Release/clock.o
- .bss           0x40004d38        0xc ARM Flash Release/uiptask.o
- .bss           0x40004d44        0xc ARM Flash Release/disk.o
- .bss           0x40004d50        0x8 ARM Flash Release/ff.o
- .bss           0x40004d58        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
- .bss           0x40004d58        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
- .bss           0x40004d58        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
- .bss.libc      0x40004d58       0x24 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
- .bss           0x40004d7c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
- .bss.libc      0x40004d7c       0x1c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
- .bss           0x40004d98        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
- .bss.libc      0x40004d98        0x4 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
+ .bss           0x4000010c       0x10 ARM Flash Release/uart0ISR.o
+ .bss           0x4000011c        0xc ARM Flash Release/uart1.o
+ .bss           0x40000128       0x10 ARM Flash Release/uart1ISR.o
+ .bss           0x40000138       0x34 ARM Flash Release/usbcontrol.o
+ .bss           0x4000016c        0x8 ARM Flash Release/usbinit.o
+ .bss           0x40000174       0x48 ARM Flash Release/usbISR.o
+ .bss           0x400001bc        0xc ARM Flash Release/usbstdreq.o
+ .bss           0x400001c8       0x58 ARM Flash Release/usbser.o
+ .bss           0x40000220        0x0 ARM Flash Release/rtc.o
+ .bss           0x40000220        0x8 ARM Flash Release/rtcISR.o
+ .bss           0x40000228        0x0 ARM Flash Release/reset.o
+ .bss           0x40000228        0x0 ARM Flash Release/eint0.o
+ .bss           0x40000228        0x0 ARM Flash Release/eint0ISR.o
+ .bss           0x40000228        0x0 ARM Flash Release/eint2.o
+ .bss           0x40000228        0x2 ARM Flash Release/eint2ISR.o
+ .bss           0x4000022a        0x0 ARM Flash Release/eint3.o
+ *fill*         0x4000022a        0x2 00
+ .bss           0x4000022c        0x4 ARM Flash Release/eint3ISR.o
+                0x4000022c                count
+ .bss           0x40000230        0x0 ARM Flash Release/eint1.o
+ .bss           0x40000230        0x0 ARM Flash Release/eint1ISR.o
+ .bss           0x40000230        0x0 ARM Flash Release/beep.o
+ .bss           0x40000230        0x1 ARM Flash Release/timer.o
+ .bss           0x40000231        0x0 ARM Flash Release/dac.o
+ .bss           0x40000231        0x0 ARM Flash Release/args.o
+ .bss           0x40000231        0x0 ARM Flash Release/argsdispatch.o
+ *fill*         0x40000231        0x3 00
+ .bss           0x40000234      0x3d8 ARM Flash Release/monitor.o
+                0x40000608                activeCommandList
+ .bss           0x4000060c        0x0 ARM Flash Release/printf-stdarg.o
+ .bss           0x4000060c        0x0 ARM Flash Release/leds.o
+ .bss           0x4000060c        0x1 ARM Flash Release/tcs3414.o
+ *fill*         0x4000060d        0x3 00
+ .bss           0x40000610       0x2c ARM Flash Release/mmc.o
+ .bss           0x4000063c        0x0 ARM Flash Release/ssp.o
+ .bss           0x4000063c        0x0 ARM Flash Release/Lcd204_4.o
+ .bss           0x4000063c      0x23c ARM Flash Release/logging.o
+ .bss           0x40000878       0x1c ARM Flash Release/meas_sm.o
+ .bss           0x40000894        0x0 ARM Flash Release/meas_task.o
+ .bss           0x40000894        0x0 ARM Flash Release/crt0.o
+ .bss           0x40000894        0x0 ARM Flash Release/Philips_LPC210X_Startup.o
+ .bss           0x40000894        0x4 ARM Flash Release/LPC210x.o
+ .bss           0x40000898       0x80 ARM Flash Release/VIC.o
+ .bss           0x40000918        0x0 ARM Flash Release/VIC_irq_handler.o
+ .bss           0x40000918        0x0 ARM Flash Release/portISR.o
+ .bss           0x40000918        0x0 ARM Flash Release/port.o
+ .bss           0x40000918     0x4018 ARM Flash Release/heap_2.o
+ .bss           0x40004930       0x34 ARM Flash Release/tasks.o
+                0x40004930                uxSchedulerSuspended
+                0x40004934                uxCurrentNumberOfTasks
+                0x40004938                xNumOfOverflows
+                0x4000493c                xTickCount
+                0x40004940                xMissedYield
+                0x40004944                pxCurrentTCB
+                0x40004948                uxTopReadyPriority
+                0x4000494c                uxMissedTicks
+                0x40004950                xTracing
+                0x40004954                uxTopUsedPriority
+                0x40004958                uxTasksDeleted
+                0x4000495c                uxTaskNumber
+                0x40004960                xSchedulerRunning
+ .bss           0x40004964        0x0 ARM Flash Release/queue.o
+ .bss           0x40004964        0x0 ARM Flash Release/list.o
+ .bss           0x40004964        0x4 ARM Flash Release/dhcpc.o
+ .bss           0x40004968        0x4 ARM Flash Release/sntp.o
+ .bss           0x4000496c      0x294 ARM Flash Release/telnetd.o
+ .bss           0x40004c00        0x0 ARM Flash Release/httpd.o
+ .bss           0x40004c00        0x0 ARM Flash Release/httpd-cgi.o
+ .bss           0x40004c00       0x18 ARM Flash Release/httpd-fs.o
+ .bss           0x40004c18        0x0 ARM Flash Release/http-strings.o
+ .bss           0x40004c18        0x8 ARM Flash Release/enc28j60.o
+                0x40004c18                xENC28J60Semaphore
+                0x40004c1c                ethRxPointer
+ .bss           0x40004c20        0x0 ARM Flash Release/memb.o
+ .bss           0x40004c20        0x0 ARM Flash Release/psock.o
+ .bss           0x40004c20       0x1c ARM Flash Release/uip.o
+                0x40004c30                uip_timeoffset
+                0x40004c34                uip_ethaddr
+ .bss           0x40004c3c        0x0 ARM Flash Release/uip_arch.o
+ .bss           0x40004c3c       0x64 ARM Flash Release/uip_arp.o
+ .bss           0x40004ca0        0x0 ARM Flash Release/uip_timer.o
+ .bss           0x40004ca0       0x28 ARM Flash Release/uip-fw.o
+ .bss           0x40004cc8        0x0 ARM Flash Release/uiplib.o
+ .bss           0x40004cc8       0x80 ARM Flash Release/uip-neighbor.o
+ .bss           0x40004d48        0x0 ARM Flash Release/clock.o
+ .bss           0x40004d48        0xc ARM Flash Release/uiptask.o
+ .bss           0x40004d54        0xc ARM Flash Release/disk.o
+ .bss           0x40004d60        0x8 ARM Flash Release/ff.o
+ .bss           0x40004d68        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_cclk.o)
+ .bss           0x40004d68        0x0 C:/Users/lukas/AppData/Local/Rowley Associates Limited/CrossWorks for ARM/packages/lib/liblpc2000_v4t_a_le.a(liblpc2000_lpc21xx_get_pclk.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__int32_to_float64.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__uint32_to_float32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_int32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_uint32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_int32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_to_float64.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_to_float32.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float32_mul.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_add.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_mul.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_div.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(log.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_cmp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_isnan.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_infinity.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__float64_nan.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly1_eval.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(__poly_eval.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(frexp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libm_v4t_a_le.a(ldexp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_umod.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_div.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_udivmod.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strlen.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcpy.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memset.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcpy.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcmp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(memcmp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strcat.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strchr.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncmp.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strncpy.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strrchr.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strstr.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ctype.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(malloc.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(atoi.o)
+ .bss           0x40004d68        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
+ .bss.libc      0x40004d68       0x24 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(time.o)
+ .bss           0x40004d8c        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
+ .bss.libc      0x40004d8c       0x1c C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(asctime.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strftime.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(div.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(strtol.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(ldiv.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__int32_mod.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__strtoul.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_v4t_a_le.a(__digit.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_targetio_impl_v4t_a_le.a(putchar.o)
+ .bss           0x40004da8        0x0 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
+ .bss.libc      0x40004da8        0x4 C:/Program Files/Rowley Associates Limited/CrossWorks for ARM 2.0/lib/libc_user_libc_v4t_a_le.a(user_libc.o)
  *(COMMON)
- COMMON         0x40004d9c      0x930 ARM Flash Release/main.o
-                0x40004d9c                Fatfs
-                0x40004fcc                ts
-                0x40004fd0                LOG_ITEM_STATE
-                0x40004fd4                FileAllTimeLog
-                0x400051f8                FileContLog
-                0x4000541c                FileDayLog
-                0x40005640                xSemaphoreSDCard
-                0x40005644                slog_entry_item
-                0x4000564c                buf
-                0x40005664                measure_timestamp
-                0x40005670                meas_op_item
-                0x400056ac                taskHandles
-                0x400056c8                log_file
- COMMON         0x400056cc       0x1e ARM Flash Release/logging.o
-                0x400056cc                time_buf
- *fill*         0x400056ea        0x2 00
- COMMON         0x400056ec      0x110 ARM Flash Release/tasks.o
-                0x400056ec                pxReadyTasksLists
-                0x40005750                xPendingReadyList
-                0x40005764                pcTraceBuffer
-                0x40005768                xSuspendedTaskList
-                0x4000577c                pxDelayedTaskList
-                0x40005780                pxOverflowDelayedTaskList
-                0x40005784                pcTraceBufferEnd
-                0x40005788                pcTraceBufferStart
-                0x4000578c                xDelayedTaskList1
-                0x400057a0                xTasksWaitingTermination
-                0x400057b4                pcStatusString
-                0x400057e8                xDelayedTaskList2
- COMMON         0x400057fc       0x50 ARM Flash Release/queue.o
-                0x400057fc                xQueueRegistry
- COMMON         0x4000584c      0xbb8 ARM Flash Release/uip.o
-                0x4000584c                uip_len
-                0x40005850                uip_sappdata
-                0x40005854                uip_acc32
-                0x40005858                uip_flags
-                0x4000585c                uip_udp_conn
-                0x40005860                uip_appdata
-                0x40005864                uip_conn
-                0x40005868                uip_conns
-                0x40005ca0                uip_sntpaddr
-                0x40005ca4                uip_listenports
-                0x40005cac                uip_draddr
-                0x40005cb0                uip_stat
-                0x40005ce4                uip_netmask
-                0x40005ce8                uip_hostaddr
-                0x40005cec                uip_buf
-                0x400062d0                uip_slen
-                0x400062d4                uip_udp_conns
-                0x40006404                __bss_end__ = (__bss_start__ + SIZEOF (.bss))
-                0x40006404                __bss_load_end__ = __bss_end__
+ COMMON         0x40004dac      0x930 ARM Flash Release/main.o
+                0x40004dac                Fatfs
+                0x40004fdc                ts
+                0x40004fe0                LOG_ITEM_STATE
+                0x40004fe4                FileAllTimeLog
+                0x40005208                FileContLog
+                0x4000542c                FileDayLog
+                0x40005650                xSemaphoreSDCard
+                0x40005654                slog_entry_item
+                0x4000565c                buf
+                0x40005674                measure_timestamp
+                0x40005680                meas_op_item
+                0x400056bc                taskHandles
+                0x400056d8                log_file
+ COMMON         0x400056dc       0x1e ARM Flash Release/logging.o
+                0x400056dc                time_buf
+ *fill*         0x400056fa        0x2 00
+ COMMON         0x400056fc      0x110 ARM Flash Release/tasks.o
+                0x400056fc                pxReadyTasksLists
+                0x40005760                xPendingReadyList
+                0x40005774                pcTraceBuffer
+                0x40005778                xSuspendedTaskList
+                0x4000578c                pxDelayedTaskList
+                0x40005790                pxOverflowDelayedTaskList
+                0x40005794                pcTraceBufferEnd
+                0x40005798                pcTraceBufferStart
+                0x4000579c                xDelayedTaskList1
+                0x400057b0                xTasksWaitingTermination
+                0x400057c4                pcStatusString
+                0x400057f8                xDelayedTaskList2
+ COMMON         0x4000580c       0x50 ARM Flash Release/queue.o
+                0x4000580c                xQueueRegistry
+ COMMON         0x4000585c      0xbb8 ARM Flash Release/uip.o
+                0x4000585c                uip_len
+                0x40005860                uip_sappdata
+                0x40005864                uip_acc32
+                0x40005868                uip_flags
+                0x4000586c                uip_udp_conn
+                0x40005870                uip_appdata
+                0x40005874                uip_conn
+                0x40005878                uip_conns
+                0x40005cb0                uip_sntpaddr
+                0x40005cb4                uip_listenports
+                0x40005cbc                uip_draddr
+                0x40005cc0                uip_stat
+                0x40005cf4                uip_netmask
+                0x40005cf8                uip_hostaddr
+                0x40005cfc                uip_buf
+                0x400062e0                uip_slen
+                0x400062e4                uip_udp_conns
+                0x40006414                __bss_end__ = (__bss_start__ + SIZEOF (.bss))
+                0x40006414                __bss_load_end__ = __bss_end__
                 0x00000001                . = ASSERT (((__bss_end__ >= __SRAM_segment_start__) && (__bss_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .bss is too large to fit in SRAM memory segment)
-                0x40006404                __non_init_load_start__ = ALIGN (__bss_end__, 0x4)
+                0x40006414                __non_init_load_start__ = ALIGN (__bss_end__, 0x4)
 
-.non_init       0x40006404        0x0
-                0x40006404                __non_init_start__ = .
+.non_init       0x40006414        0x0
+                0x40006414                __non_init_start__ = .
  *(.non_init .non_init.*)
-                0x40006404                __non_init_end__ = (__non_init_start__ + SIZEOF (.non_init))
-                0x40006404                __non_init_load_end__ = __non_init_end__
+                0x40006414                __non_init_end__ = (__non_init_start__ + SIZEOF (.non_init))
+                0x40006414                __non_init_load_end__ = __non_init_end__
                 0x00000001                . = ASSERT (((__non_init_end__ >= __SRAM_segment_start__) && (__non_init_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .non_init is too large to fit in SRAM memory segment)
-                0x40006404                __heap_load_start__ = ALIGN (__non_init_end__, 0x4)
+                0x40006414                __heap_load_start__ = ALIGN (__non_init_end__, 0x4)
 
-.heap           0x40006404      0x400
-                0x40006404                __heap_start__ = .
+.heap           0x40006414      0x400
+                0x40006414                __heap_start__ = .
  *(.heap .heap.*)
- .heap          0x40006404        0x0 ARM Flash Release/crt0.o
-                0x40006804                . = ALIGN (MAX ((__heap_start__ + __HEAPSIZE__), .), 0x4)
- *fill*         0x40006404      0x400 00
-                0x40006804                __heap_end__ = (__heap_start__ + SIZEOF (.heap))
-                0x40006804                __heap_load_end__ = __heap_end__
+ .heap          0x40006414        0x0 ARM Flash Release/crt0.o
+                0x40006814                . = ALIGN (MAX ((__heap_start__ + __HEAPSIZE__), .), 0x4)
+ *fill*         0x40006414      0x400 00
+                0x40006814                __heap_end__ = (__heap_start__ + SIZEOF (.heap))
+                0x40006814                __heap_load_end__ = __heap_end__
                 0x00000001                . = ASSERT (((__heap_end__ >= __SRAM_segment_start__) && (__heap_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .heap is too large to fit in SRAM memory segment)
-                0x40006804                __stack_load_start__ = ALIGN (__heap_end__, 0x4)
+                0x40006814                __stack_load_start__ = ALIGN (__heap_end__, 0x4)
 
-.stack          0x40006804      0x400
-                0x40006804                __stack_start__ = .
+.stack          0x40006814      0x400
+                0x40006814                __stack_start__ = .
  *(.stack .stack.*)
- .stack         0x40006804        0x0 ARM Flash Release/crt0.o
-                0x40006c04                . = ALIGN (MAX ((__stack_start__ + __STACKSIZE__), .), 0x4)
- *fill*         0x40006804      0x400 00
-                0x40006c04                __stack_end__ = (__stack_start__ + SIZEOF (.stack))
-                0x40006c04                __stack_load_end__ = __stack_end__
+ .stack         0x40006814        0x0 ARM Flash Release/crt0.o
+                0x40006c14                . = ALIGN (MAX ((__stack_start__ + __STACKSIZE__), .), 0x4)
+ *fill*         0x40006814      0x400 00
+                0x40006c14                __stack_end__ = (__stack_start__ + SIZEOF (.stack))
+                0x40006c14                __stack_load_end__ = __stack_end__
                 0x00000001                . = ASSERT (((__stack_end__ >= __SRAM_segment_start__) && (__stack_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack is too large to fit in SRAM memory segment)
-                0x40006c04                __stack_irq_load_start__ = ALIGN (__stack_end__, 0x4)
+                0x40006c14                __stack_irq_load_start__ = ALIGN (__stack_end__, 0x4)
 
-.stack_irq      0x40006c04      0x400
-                0x40006c04                __stack_irq_start__ = .
+.stack_irq      0x40006c14      0x400
+                0x40006c14                __stack_irq_start__ = .
  *(.stack_irq .stack_irq.*)
- .stack_irq     0x40006c04        0x0 ARM Flash Release/crt0.o
-                0x40007004                . = ALIGN (MAX ((__stack_irq_start__ + __STACKSIZE_IRQ__), .), 0x4)
- *fill*         0x40006c04      0x400 00
-                0x40007004                __stack_irq_end__ = (__stack_irq_start__ + SIZEOF (.stack_irq))
-                0x40007004                __stack_irq_load_end__ = __stack_irq_end__
+ .stack_irq     0x40006c14        0x0 ARM Flash Release/crt0.o
+                0x40007014                . = ALIGN (MAX ((__stack_irq_start__ + __STACKSIZE_IRQ__), .), 0x4)
+ *fill*         0x40006c14      0x400 00
+                0x40007014                __stack_irq_end__ = (__stack_irq_start__ + SIZEOF (.stack_irq))
+                0x40007014                __stack_irq_load_end__ = __stack_irq_end__
                 0x00000001                . = ASSERT (((__stack_irq_end__ >= __SRAM_segment_start__) && (__stack_irq_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack_irq is too large to fit in SRAM memory segment)
-                0x40007004                __stack_fiq_load_start__ = ALIGN (__stack_irq_end__, 0x4)
+                0x40007014                __stack_fiq_load_start__ = ALIGN (__stack_irq_end__, 0x4)
 
-.stack_fiq      0x40007004       0x20
-                0x40007004                __stack_fiq_start__ = .
+.stack_fiq      0x40007014       0x20
+                0x40007014                __stack_fiq_start__ = .
  *(.stack_fiq .stack_fiq.*)
- .stack_fiq     0x40007004        0x0 ARM Flash Release/crt0.o
-                0x40007024                . = ALIGN (MAX ((__stack_fiq_start__ + __STACKSIZE_FIQ__), .), 0x4)
- *fill*         0x40007004       0x20 00
-                0x40007024                __stack_fiq_end__ = (__stack_fiq_start__ + SIZEOF (.stack_fiq))
-                0x40007024                __stack_fiq_load_end__ = __stack_fiq_end__
+ .stack_fiq     0x40007014        0x0 ARM Flash Release/crt0.o
+                0x40007034                . = ALIGN (MAX ((__stack_fiq_start__ + __STACKSIZE_FIQ__), .), 0x4)
+ *fill*         0x40007014       0x20 00
+                0x40007034                __stack_fiq_end__ = (__stack_fiq_start__ + SIZEOF (.stack_fiq))
+                0x40007034                __stack_fiq_load_end__ = __stack_fiq_end__
                 0x00000001                . = ASSERT (((__stack_fiq_end__ >= __SRAM_segment_start__) && (__stack_fiq_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack_fiq is too large to fit in SRAM memory segment)
-                0x40007024                __stack_svc_load_start__ = ALIGN (__stack_fiq_end__, 0x4)
+                0x40007034                __stack_svc_load_start__ = ALIGN (__stack_fiq_end__, 0x4)
 
-.stack_svc      0x40007024      0x100
-                0x40007024                __stack_svc_start__ = .
+.stack_svc      0x40007034      0x100
+                0x40007034                __stack_svc_start__ = .
  *(.stack_svc .stack_svc.*)
- .stack_svc     0x40007024        0x0 ARM Flash Release/crt0.o
-                0x40007124                . = ALIGN (MAX ((__stack_svc_start__ + __STACKSIZE_SVC__), .), 0x4)
- *fill*         0x40007024      0x100 00
-                0x40007124                __stack_svc_end__ = (__stack_svc_start__ + SIZEOF (.stack_svc))
-                0x40007124                __stack_svc_load_end__ = __stack_svc_end__
+ .stack_svc     0x40007034        0x0 ARM Flash Release/crt0.o
+                0x40007134                . = ALIGN (MAX ((__stack_svc_start__ + __STACKSIZE_SVC__), .), 0x4)
+ *fill*         0x40007034      0x100 00
+                0x40007134                __stack_svc_end__ = (__stack_svc_start__ + SIZEOF (.stack_svc))
+                0x40007134                __stack_svc_load_end__ = __stack_svc_end__
                 0x00000001                . = ASSERT (((__stack_svc_end__ >= __SRAM_segment_start__) && (__stack_svc_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack_svc is too large to fit in SRAM memory segment)
-                0x40007124                __stack_abt_load_start__ = ALIGN (__stack_svc_end__, 0x4)
+                0x40007134                __stack_abt_load_start__ = ALIGN (__stack_svc_end__, 0x4)
 
-.stack_abt      0x40007124        0x8
-                0x40007124                __stack_abt_start__ = .
+.stack_abt      0x40007134        0x8
+                0x40007134                __stack_abt_start__ = .
  *(.stack_abt .stack_abt.*)
- .stack_abt     0x40007124        0x0 ARM Flash Release/crt0.o
-                0x4000712c                . = ALIGN (MAX ((__stack_abt_start__ + __STACKSIZE_ABT__), .), 0x4)
- *fill*         0x40007124        0x8 00
-                0x4000712c                __stack_abt_end__ = (__stack_abt_start__ + SIZEOF (.stack_abt))
-                0x4000712c                __stack_abt_load_end__ = __stack_abt_end__
+ .stack_abt     0x40007134        0x0 ARM Flash Release/crt0.o
+                0x4000713c                . = ALIGN (MAX ((__stack_abt_start__ + __STACKSIZE_ABT__), .), 0x4)
+ *fill*         0x40007134        0x8 00
+                0x4000713c                __stack_abt_end__ = (__stack_abt_start__ + SIZEOF (.stack_abt))
+                0x4000713c                __stack_abt_load_end__ = __stack_abt_end__
                 0x00000001                . = ASSERT (((__stack_abt_end__ >= __SRAM_segment_start__) && (__stack_abt_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack_abt is too large to fit in SRAM memory segment)
-                0x4000712c                __stack_und_load_start__ = ALIGN (__stack_abt_end__, 0x4)
+                0x4000713c                __stack_und_load_start__ = ALIGN (__stack_abt_end__, 0x4)
 
-.stack_und      0x4000712c        0x8
-                0x4000712c                __stack_und_start__ = .
+.stack_und      0x4000713c        0x8
+                0x4000713c                __stack_und_start__ = .
  *(.stack_und .stack_und.*)
- .stack_und     0x4000712c        0x0 ARM Flash Release/crt0.o
-                0x40007134                . = ALIGN (MAX ((__stack_und_start__ + __STACKSIZE_UND__), .), 0x4)
- *fill*         0x4000712c        0x8 00
-                0x40007134                __stack_und_end__ = (__stack_und_start__ + SIZEOF (.stack_und))
-                0x40007134                __stack_und_load_end__ = __stack_und_end__
+ .stack_und     0x4000713c        0x0 ARM Flash Release/crt0.o
+                0x40007144                . = ALIGN (MAX ((__stack_und_start__ + __STACKSIZE_UND__), .), 0x4)
+ *fill*         0x4000713c        0x8 00
+                0x40007144                __stack_und_end__ = (__stack_und_start__ + SIZEOF (.stack_und))
+                0x40007144                __stack_und_load_end__ = __stack_und_end__
                 0x00000001                . = ASSERT (((__stack_und_end__ >= __SRAM_segment_start__) && (__stack_und_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .stack_und is too large to fit in SRAM memory segment)
-                0x40007134                __tbss_load_start__ = ALIGN (__stack_und_end__, 0x4)
+                0x40007144                __tbss_load_start__ = ALIGN (__stack_und_end__, 0x4)
 
-.tbss           0x40007134        0x0
-                0x40007134                __tbss_start__ = .
+.tbss           0x40007144        0x0
+                0x40007144                __tbss_start__ = .
  *(.tbss .tbss.*)
-                0x40007134                __tbss_end__ = (__tbss_start__ + SIZEOF (.tbss))
-                0x40007134                __tbss_load_end__ = __tbss_end__
+                0x40007144                __tbss_end__ = (__tbss_start__ + SIZEOF (.tbss))
+                0x40007144                __tbss_load_end__ = __tbss_end__
                 0x00000001                . = ASSERT (((__tbss_end__ >= __SRAM_segment_start__) && (__tbss_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .tbss is too large to fit in SRAM memory segment)
-                0x0001efd0                __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
+                0x0001efac                __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
 
-.tdata          0x40007134        0x0 load address 0x0001efd0
-                0x40007134                __tdata_start__ = .
+.tdata          0x40007144        0x0 load address 0x0001efac
+                0x40007144                __tdata_start__ = .
  *(.tdata .tdata.*)
-                0x40007134                __tdata_end__ = (__tdata_start__ + SIZEOF (.tdata))
-                0x0001efd0                __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
-                0x0001efd0                __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
+                0x40007144                __tdata_end__ = (__tdata_start__ + SIZEOF (.tdata))
+                0x0001efac                __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
+                0x0001efac                __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
                 0x00000001                . = ASSERT ((((__tdata_load_start__ + SIZEOF (.tdata)) >= __FLASH_segment_start__) && ((__tdata_load_start__ + SIZEOF (.tdata)) <= (__FLASH_segment_start__ + 0x80000))), error: .tdata is too large to fit in FLASH memory segment)
 
-.tdata_run      0x40007134        0x0
-                0x40007134                __tdata_run_start__ = .
-                0x40007134                . = MAX ((__tdata_run_start__ + SIZEOF (.tdata)), .)
-                0x40007134                __tdata_run_end__ = (__tdata_run_start__ + SIZEOF (.tdata_run))
-                0x40007134                __tdata_run_load_end__ = __tdata_run_end__
-                0x40007134                __SRAM_segment_used_end__ = (ALIGN (__tbss_end__, 0x4) + SIZEOF (.tdata_run))
+.tdata_run      0x40007144        0x0
+                0x40007144                __tdata_run_start__ = .
+                0x40007144                . = MAX ((__tdata_run_start__ + SIZEOF (.tdata)), .)
+                0x40007144                __tdata_run_end__ = (__tdata_run_start__ + SIZEOF (.tdata_run))
+                0x40007144                __tdata_run_load_end__ = __tdata_run_end__
+                0x40007144                __SRAM_segment_used_end__ = (ALIGN (__tbss_end__, 0x4) + SIZEOF (.tdata_run))
                 0x00000001                . = ASSERT (((__tdata_run_end__ >= __SRAM_segment_start__) && (__tdata_run_end__ <= (__SRAM_segment_start__ + 0x8000))), error: .tdata_run is too large to fit in SRAM memory segment)
 START GROUP
 LOAD ARM Flash Release/main.o

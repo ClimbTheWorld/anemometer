@@ -129,8 +129,7 @@ enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
 
                       if(meas_op_key == 0)
                       {
-                      printf("ADV: %d, ADVM: %d\r\n", meas_op_item[0].value, meas_op_item[2].value);
-                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value;
+                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value+windDirectionOffset;
                       }
 
                       // LED2 ausschalten
