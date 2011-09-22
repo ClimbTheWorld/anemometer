@@ -80,7 +80,6 @@ enum _LOG_ITEM_STATE meas_windspeed(char meas_op_key) {
                         clrFIntCount();
                       }
                       //LUK enter critical
-                      setWindPeriod(100);
                       meas_op_item[meas_op_key].value = meas_op_item[meas_op_key].measRead(); // adcRead
 //                      printf("get: %d, wf: %d\r\n", meas_op_item[meas_op_key].value, __windFrequency);
                       //LUK quit critical
@@ -130,8 +129,7 @@ enum _LOG_ITEM_STATE meas_winddirection(char meas_op_key) {
 
                       if(meas_op_key == 0)
                       {
-                      printf("ADV: %d, ADVM: %d\r\n", meas_op_item[0].value, meas_op_item[2].value);
-                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value;
+                        meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value+;
                       }
 
                       // LED2 ausschalten
