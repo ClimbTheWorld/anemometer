@@ -48,10 +48,13 @@
 
 #include "core/timer/timer.h"
 
+#ifdef CFG_XBEE
+  #include "drivers/802.15.4/xbee.h"
+#endif
+
 #ifdef CFG_DATALOGGER
   #include "logging.h"/* stündlich wird die Queue auf die SD Karte geschrieben, daher 12 Einträge der Länge _SLOG_ENTRY_ITEM */
   #include "meas_sm.h"
-  #include "flowrate_sensor.h"
 #endif
 
 /**************************************************************************/
@@ -88,7 +91,7 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
 
     #ifdef CFG_DATALOGGER
 //    trackLogTaskStart(); /* creates tracker(does daily and monthly savings to SD card) state-machine and add it to the kernel */
-    #if 1
+    #if 0
     measTaskStart(); /* creates measurement task (does the AD conversion and impuls-time-measurement) and add it to the kernel */
     measSMTaskStart(); /* creates measurement state-machine and add it to the kernel */
     #endif
@@ -116,6 +119,10 @@ static portTASK_FUNCTION(vStartupTask, pvParameters __attribute__((unused)))
       printf("Min: %d, Max: %d, Act: %d\r\n", directionMin, directionMax, direction);
       delay(20);
     }
+    #endif
+
+    #if 1
+    xbeeInit();
     #endif
 
     
@@ -215,7 +222,7 @@ int main(void)
   // You should only ever reach this point if there isn't enough memory to start the scheduler
   return 0;
 }
-
+    
 /**************************************************************************/
 /*! 
     Configures Timer1 for FreeRTOS run time stat monitoring.  To enable

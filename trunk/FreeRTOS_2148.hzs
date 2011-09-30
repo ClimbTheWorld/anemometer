@@ -4,7 +4,7 @@
  <Breakpoints/>
  <ExecutionCountWindow/>
  <Memory1>
-  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="4" radix="10" addressSpace="" />
+  <MemoryWindow autoEvaluate="0" addressText="0x40000f0c" numColumns="8" sizeText="4" dataSize="4" radix="10" addressSpace="" />
  </Memory1>
  <Memory2>
   <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
@@ -18,10 +18,14 @@
  <Project>
   <ProjectSessionItem path="FreeRTOS_2148" name="unnamed" />
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;FreeRTOS" name="unnamed" />
   <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Drivers" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;Source Files;Drivers;802.15.4" name="unnamed" />
+  <ProjectSessionItem path="FreeRTOS_2148;FreeRTOS_2148;System Files" name="unnamed" />
  </Project>
  <Register1>
-  <RegisterWindow openNodes="CPU - All/spsr_irq;CPU - Current Mode;CPU - Current Mode/cpsr;SCB/APBDIV;TIMER1/T1TCR;TIMER1/T1CTCR;VIC/VICIntEnable" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="VIC;TIMER1;SCB;CPU - Current Mode;CPU - All;RTC" decimalNodes="RTC/SEC;TIMER1/T1TC;TIMER1/T1PR;TIMER1/T1CR3;VIC/VICIntEnable" octalNodes="" asciiNodes="" />
+  <RegisterWindow openNodes="CPU - All/spsr_irq;CPU - Current Mode;CPU - Current Mode/cpsr;SCB/APBDIV;TIMER1/T1TCR;TIMER1/T1CTCR;UART1;VIC/VICIntEnable" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="VIC;TIMER1;SCB;CPU - Current Mode;CPU - All;RTC;UART1" decimalNodes="RTC/SEC;TIMER1/T1TC;TIMER1/T1PR;TIMER1/T1CR3;VIC/VICIntEnable" octalNodes="" asciiNodes="" />
  </Register1>
  <Register2>
   <RegisterWindow openNodes="TIMER1;TIMER1/T1TCR" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="TIMER1" decimalNodes="TIMER1/T1TC;TIMER1/T1PR;TIMER1/T1PC;TIMER1/T1CR3" octalNodes="" asciiNodes="" />
@@ -38,9 +42,14 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Each Second" >
-   <Watchpoint evalMode="2" linenumber="0" numelements="3" evalType="0" radix="-1" name="meas_op_item" expression="meas_op_item" filename="" />
-   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="-1" name="buf" expression="buf" filename="" />
-   <Watchpoint linenumber="0" radix="-1" name="slog_entry_item" expression="slog_entry_item" filename="" />
+   <Watchpoint evalMode="1" linenumber="0" evalType="1" radix="10" name="pvBuffer" expression="pvBuffer" filename="" />
+   <Watchpoint linenumber="0" radix="1" name="*cBuf" expression="*cBuf" filename="" />
+   <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="1" name="sBuf" expression="sBuf" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="i" expression="i" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="tmp" expression="tmp" filename="" />
+   <Watchpoint linenumber="0" radix="-1" name="taaa" expression="taaa" filename="" />
+   <Watchpoint linenumber="0" radix="10" name="slog_entry_item" expression="slog_entry_item" filename="" />
+   <Watchpoint evalMode="2" linenumber="0" numelements="3" evalType="0" radix="10" name="meas_op_item" expression="meas_op_item" filename="" />
    <Watchpoint evalMode="3" linenumber="0" evalType="0" radix="10" name="logFilename" expression="logFilename" filename="" />
   </Watches>
  </Watch1>
@@ -54,16 +63,14 @@
   <Watches active="0" update="Never" />
  </Watch4>
  <Files>
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\meas_sm.c" y="138" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\meas_sm.c" left="0" selected="0" name="unnamed" top="138" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\meas_task.c" y="131" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\meas_task.c" left="0" selected="0" name="unnamed" top="131" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" y="145" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.c" left="0" selected="0" name="unnamed" top="144" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.c" y="56" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.c" left="0" selected="0" name="unnamed" top="56" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" y="193" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" left="0" selected="0" name="unnamed" top="220" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\adc\adc.c" y="76" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\adc\adc.c" left="0" selected="0" name="unnamed" top="60" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" y="1580" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\tasks.c" left="0" selected="0" name="unnamed" top="1550" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" y="118" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" left="0" selected="0" name="unnamed" top="111" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="37" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\ProjectConfig.h" y="115" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\ProjectConfig.h" left="0" selected="1" name="unnamed" top="94" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" y="26" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\timer\timer.h" left="0" selected="0" name="unnamed" top="26" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" y="200" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\main.c" left="0" selected="0" name="unnamed" top="182" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\drivers\802.15.4\xbee.h" y="37" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\drivers\802.15.4\xbee.h" left="0" selected="1" name="unnamed" top="32" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.c" y="0" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.h" y="350" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\logging.h" left="0" selected="0" name="unnamed" top="329" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\uart\uart1.c" y="135" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\uart\uart1.c" left="0" selected="0" name="unnamed" top="135" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="38" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\drivers\802.15.4\xbee.c" y="207" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\drivers\802.15.4\xbee.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\AppData\Local\Rowley Associates Limited\CrossWorks for ARM\packages\targets\Philips_LPC210X\Philips_LPC210X_Startup.s" y="294" path="C:\Users\lukas\AppData\Local\Rowley Associates Limited\CrossWorks for ARM\packages\targets\Philips_LPC210X\Philips_LPC210X_Startup.s" left="0" selected="0" name="unnamed" top="269" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" y="121" path="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\FreeRTOS\Source\portable\GCC\ARM7_LPC2000\portISR.c" left="0" selected="0" name="unnamed" top="96" />
  </Files>
- <ARMCrossStudioWindow activeProject="FreeRTOS_2148" autoConnectTarget="Olimex ARM-USB-OCD" debugSearchFileMap="" fileDialogInitialDirectory="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\core\adc" fileDialogDefaultFilter="*.c" autoConnectCapabilities="388479" debugSearchPath="" buildConfiguration="ARM Flash Release" />
+ <ARMCrossStudioWindow activeProject="FreeRTOS_2148" autoConnectTarget="Olimex ARM-USB-OCD" debugSearchFileMap="" fileDialogInitialDirectory="C:\Users\lukas\Documents\Anemometer__LPC2148CodeBase_v0.1__ff-v0-04\src\drivers\802.15.4" fileDialogDefaultFilter="" autoConnectCapabilities="388479" debugSearchPath="" buildConfiguration="ARM Flash Debug" />
 </session>

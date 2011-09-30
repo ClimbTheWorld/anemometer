@@ -646,7 +646,7 @@ void luk_strcpy(char *to, char *from, char howMany) {
 }
 
 
-setWindFrequency(short value)
+void setWindFrequency(short value)
 {
   __windFrequency = value;
 }
