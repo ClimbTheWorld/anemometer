@@ -653,7 +653,7 @@ setWindFrequency(short value)
 
 int getWindSpeed(void)
 {
-  /*
+  /* each count of __windPeriod is based on a 4kHz sampling rate and takes effective time of 250us.
   __windPeriod*250us=periodtime[us]
   periodtime[us]/10^6=periodtime[s]
   1/periodtime=frequency

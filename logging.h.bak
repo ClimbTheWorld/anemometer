@@ -164,6 +164,7 @@ static char logFilename[18];
 
 static volatile float __windFrequency=0;
 void setWindFrequency(short value);
+int getWindSpeed(void);
 int getWindFrequency(void);
 void clrWindFrequency(void);
 

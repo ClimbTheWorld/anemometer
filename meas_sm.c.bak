@@ -136,8 +136,6 @@ enum _LOG_ITEM_STATE meas_sm() {
                       #if testAllFunctions
                       //flowCount = 15.5;
                       #endif
-                      meas_op_item[0].value = 360.0/meas_op_item[2].value*meas_op_item[0].value;
-                      meas_op_item[1].value = windSpeedFromFrequency(meas_op_item[1].value);
                       printf("Grad: %d\r\n", meas_op_item[0].value);
                       printf("Speed: %d\r\n", meas_op_item[1].value);
                       fillSlogEntryItem((unsigned short)meas_op_item[0].value, (unsigned short)meas_op_item[2].value, (unsigned short)meas_op_item[1].value);
@@ -195,9 +193,10 @@ enum _LOG_ITEM_STATE meas_sm() {
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
-                            snprintf(buf, "%s", "Filename: ");
-                            strcat(buf, logFilename);
-                            strcat(buf, "\r\n");
+//                            snprintf(buf, "%s", "Filename: ");
+//                            // strcpy(buf, "Filename: "); // oder so?
+//                            strcat(buf, logFilename);
+//                            strcat(buf, "\r\n");
                             ret = f_write(&FileContLog, buf, strlen(buf), &bw);
                             ret = f_write(&FileContLog, "Content:  single log entry items each taking one line.\r\n", strlen("Content:  single log entry items each taking one line.\r\n"), &bw);
                             ret = f_write(&FileContLog, "Savetime: Data is going to be written every single minute.\r\n", strlen("Savetime: Data is going to be written every single minute.\r\n"), &bw);

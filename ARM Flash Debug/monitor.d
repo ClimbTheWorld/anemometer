@@ -29,5 +29,4 @@ ARM\ Flash\ Debug/monitor.o: \
  C:/Program\ Files/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM\ 2.0/include/time.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/monitor/../fatfs/disk.h \
  C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/monitor/../fatfs/ff.h \
- C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/monitor/../fatfs/disk.h \
- C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/monitor/../drivers/leds/leds.h
+ C:/Users/lukas/Documents/Anemometer__LPC2148CodeBase_v0.1__ff-v0-04/src/monitor/../fatfs/disk.h

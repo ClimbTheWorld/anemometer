@@ -194,6 +194,7 @@ enum _LOG_ITEM_STATE meas_sm() {
                             ret = f_write(&FileContLog, "####################", strlen("####################"), &bw);
                             ret = f_write(&FileContLog, "####################\r\n", strlen("####################\r\n"), &bw);
                             snprintf(buf, "%s", "Filename: ");
+                            // strcpy(buf, "Filename: "); // oder so?
                             strcat(buf, logFilename);
                             strcat(buf, "\r\n");
                             ret = f_write(&FileContLog, buf, strlen(buf), &bw);

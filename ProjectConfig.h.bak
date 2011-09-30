@@ -77,29 +77,28 @@
   /*! available Ports WITH special functions available and how are they used at Olimex's LPC-P2148 Evaluation Board.
       It would be possible using just AD0 with the advantage of power reduction, nevertheless I use both (AD0 and AD1) considering leave AOUT free for future uses
 
-      -P0.0      TXD0      PWM1        GPIO         (NOT yet used, perhabs for extern multiple ADC)
-      -P0.1      RXD0      PWM3        EINT0        (NOT yet used, perhabs for extern multiple ADC)
-      -P0.2      SCL0      CAP0.0      GPIO*        LCD Backlight { L:off; H:on }
-      -P0.3      SDA0      MAT0.0      EINT1*       Pumpenstellsignal detektieren
-
-      -P0.8      TXD1      PWM4        AD1.1        (NOT yet used, perhabs UART1 needed for future Ethernet/WLAN/XBee/Bluetooth use)
-      -P0.9      RXD1      PWM6        EINT3        (NOT yet used, perhabs UART1 needed for future Ethernet/XBee/Bluetooth use)
-      -P0.21     AD1.6*    CAP13       PWM          Panel (_SLOG_ENTRY_ITEM.val_adc1)
-      -P0.22     AD1.7*    CAP0.0      MAT0.0       Rücklauf (_SLOG_ENTRY_ITEM.val_adc2)
-      -P0.25     AD0.4     AOUT                     contrast of display
-      -P0.28     AD0.1*    CAP0.2      MAT0.2       Boiler oben (_SLOG_ENTRY_ITEM.val_adc3)
-      -P0.29     AD0.2*    CAP0.3      MAT0.3       Boiler unten (_SLOG_ENTRY_ITEM.val_adc4) entspricht der Vorlauftemperatur
-      -P0.30     AD0.3     EINT3*      CAP0.0       Volumenstrom; Poti on LPC-P2148 EvalBoard (_SLOG_ENTRY_ITEM.val_flowrate)
-      -P1.16     PIPESTAT  GPIO*                    LCD Pin 16 Reset     GPIO1_FIOPIN2,Bit0
-      -P1.17     PIPESTAT  GPIO*                    LCD Pin 14 Data7     GPIO1_FIOPIN2,Bit1
-      -P1.18     PIPESTAT  GPIO*                    LCD Pin 13 Data6     GPIO1_FIOPIN2,Bit2
-      -P1.19     PIPESTAT  GPIO*                    LCD Pin 12 Data5     GPIO1_FIOPIN2,Bit3
-      -P1.20     PIPESTAT  GPIO*                    LCD Pin 11 Data4     GPIO1_FIOPIN2,Bit4
-      -P1.21     PIPESTAT  GPIO*                    LCD Pin 6 E1         GPIO1_FIOPIN2,Bit5
-      -P1.22     PIPESTAT  GPIO*                    LCD Pin 5 R/W        GPIO1_FIOPIN2,Bit6
-      -P1.23     PIPESTAT  GPIO*                    LCD Pin 16 RS/CS     GPIO1_FIOPIN2,Bit7
+      -P0.0      TXD0      PWM1        GPIO                (NOT yet used, perhabs for extern multiple ADC)
+      -P0.1      RXD0      PWM3        EINT0               (NOT yet used, perhabs for extern multiple ADC)
+      -P0.2      SCL0      CAP0.0      GPIO                (NOT YET USED)
+      -P0.3      SDA0      MAT0.0      EINT1               Pumpenstellsignal detektieren
+      -P0.7      SSEL0     PWM2        EINT2      GPIO*    SLEEP_RQ for XBee Modul
+      -P0.8      TXD1*     PWM4        AD1.1               UART1 for XBee
+      -P0.9      RXD1*     PWM6        EINT3               UART1 for XBee
+      -P0.21     AD1.6     CAP13*      PWM                 Windspeed
+      -P0.22     AD1.7     CAP0.0      MAT0.0              (NOT YET USED)
+      -P0.25     AD0.4     AOUT                            (NOT YET USED)
+      -P0.28     AD0.1*    CAP0.2      MAT0.2              (NOT YET USED)
+      -P0.29     AD0.2*    CAP0.3      MAT0.3              (NOT YET USED)
+      -P0.30     AD0.3     EINT3       CAP0.0              (NOT YET USED)
+      -P1.16     PIPESTAT  GPIO*                           LCD Pin 16 Reset     GPIO1_FIOPIN2,Bit0
+      -P1.17     PIPESTAT  GPIO*                           LCD Pin 14 Data7     GPIO1_FIOPIN2,Bit1
+      -P1.18     PIPESTAT  GPIO*                           LCD Pin 13 Data6     GPIO1_FIOPIN2,Bit2
+      -P1.19     PIPESTAT  GPIO*                           LCD Pin 12 Data5     GPIO1_FIOPIN2,Bit3
+      -P1.20     PIPESTAT  GPIO*                           LCD Pin 11 Data4     GPIO1_FIOPIN2,Bit4
+      -P1.21     PIPESTAT  GPIO*                           LCD Pin 6 E1         GPIO1_FIOPIN2,Bit5
+      -P1.22     PIPESTAT  GPIO*                           LCD Pin 5 R/W        GPIO1_FIOPIN2,Bit6
+      -P1.23     PIPESTAT  GPIO*                           LCD Pin 16 RS/CS     GPIO1_FIOPIN2,Bit7
   */
-  //#define LOG_IF_FLOWRATE_NULL --> always log --> weather station
 
   /*<! conversion from adcRead...() to Millivolt  */
   #define AREF   3300 /* ARef is 3300mV */
@@ -113,7 +112,7 @@
        - Winddirection Offset [°]
   */
 
-  static short windDirectionOffset = 180;
+  static short windDirectionOffset = 0;
   
   // P029
   #define adcWindDirectionPwrRead                 adcRead0_1
@@ -194,7 +193,7 @@
 */
 /**************************************************************************/
 #define CFG_LED_RUNLEDONSTARTUP       1                                       // Run the led task on startup (to confirm board is OK)
-#define CFG_PLAY_STARTUP              1
+#define CFG_PLAY_STARTUP              0
 
 /**************************************************************************/
 /*! 
